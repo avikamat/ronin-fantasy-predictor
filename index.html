@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ronin Fantasy Predictor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0D1117; /* Dark Ronin-like background */
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: #010409; /* Deeper black for premium feel */
+            padding: 20px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #58A6FF; /* Ronin blue accent */
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #58A6FF;
+        }
+
+        .wallet-btn {
+            background: linear-gradient(45deg, #1F6FEB, #58A6FF); /* Gradient for premium look */
+            padding: 10px 20px;
+            border-radius: 30px;
+            color: #ffffff;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(88, 166, 255, 0.3);
+        }
+
+        .wallet-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(88, 166, 255, 0.5);
+        }
+
+        .wallet-btn i {
+            margin-right: 10px;
+        }
+
+        /* Main Sections */
+        section {
+            padding: 80px 0;
+            display: none; /* Hidden by default, shown via JS */
+        }
+
+        section.active {
+            display: block;
+        }
+
+        #home {
+            background: linear-gradient(to bottom, #0D1117, #010409);
+            text-align: center;
+        }
+
+        #home h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #58A6FF;
+            text-shadow: 0 2px 4px rgba(88, 166, 255, 0.5);
+        }
+
+        #home p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+
+        .cta-btn {
+            background: linear-gradient(45deg, #58A6FF, #1F6FEB);
+            padding: 15px 30px;
+            border-radius: 30px;
+            color: #ffffff;
+            font-weight: bold;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(88, 166, 255, 0.3);
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Predictions Section */
+        #predictions .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .prediction-card {
+            background-color: #1a1f2b; /* Dark card bg */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .prediction-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .prediction-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #58A6FF;
+        }
+
+        .prediction-card p {
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #2c3344;
+            border: none;
+            border-radius: 10px;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .option-btn.selected {
+            background-color: #58A6FF;
+        }
+
+        .option-btn:hover {
+            background-color: #3a4256;
+        }
+
+        .bet-input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #2c3344;
+            border: none;
+            border-radius: 10px;
+            color: #ffffff;
+        }
+
+        .place-bet-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #1F6FEB, #58A6FF);
+            border: none;
+            border-radius: 10px;
+            color: #ffffff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .place-bet-btn:hover {
+            transform: scale(1.02);
+        }
+
+        /* NFTs Section */
+        #nfts .nft-mint {
+            background-color: #1a1f2b;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        #nfts h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #58A6FF;
+            text-align: center;
+        }
+
+        #nfts select {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #2c3344;
+            border: none;
+            border-radius: 10px;
+            color: #ffffff;
+        }
+
+        .mint-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #58A6FF, #1F6FEB);
+            border: none;
+            border-radius: 10px;
+            color: #ffffff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .mint-btn:hover {
+            transform: scale(1.02);
+        }
+
+        /* Dashboard Section */
+        #dashboard {
+            text-align: center;
+        }
+
+        #dashboard h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #58A6FF;
+        }
+
+        #dashboard p {
+            font-size: 18px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #010409;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        footer p {
+            font-size: 14px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        section.active {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: #010409;
+                display: none;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            .menu-toggle {
+                display: block;
+                cursor: pointer;
+                font-size: 24px;
+                color: #ffffff;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">Ronin Fantasy Predictor</div>
+            <nav>
+                <ul id="nav-links">
+                    <li><a href="#home" onclick="showSection('home')">Home</a></li>
+                    <li><a href="#predictions" onclick="showSection('predictions')">Predictions</a></li>
+                    <li><a href="#nfts" onclick="showSection('nfts')">NFTs</a></li>
+                    <li><a href="#dashboard" onclick="showSection('dashboard')">Dashboard</a></li>
+                </ul>
+            </nav>
+            <div class="wallet-btn" onclick="connectWallet()">
+                <i class="fas fa-wallet"></i>
+                <span id="wallet-text">Connect Wallet</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="active">
+            <div class="container">
+                <h1>Welcome to Ronin Fantasy Predictor</h1>
+                <p>Predict outcomes in your favorite Ronin games, place bets, and boost your winnings with exclusive NFTs. Experience premium gaming predictions with low fees and high rewards.</p>
+                <a href="#predictions" class="cta-btn" onclick="showSection('predictions')">View Predictions</a>
+                <a href="#nfts" class="cta-btn" onclick="showSection('nfts')">Mint NFTs</a>
+            </div>
+        </section>
+
+        <section id="predictions">
+            <div class="container">
+                <h2 style="text-align: center; font-size: 36px; color: #58A6FF; margin-bottom: 40px;">Active Predictions</h2>
+                <div class="grid">
+                    <!-- Prediction Card 1 -->
+                    <div class="prediction-card">
+                        <h3>Pixels Daily Top Farmer</h3>
+                        <p>Who will be the top farmer in Pixels today?</p>
+                        <button class="option-btn" onclick="selectOption(this)">Player A</button>
+                        <button class="option-btn" onclick="selectOption(this)">Player B</button>
+                        <button class="option-btn" onclick="selectOption(this)">Player C</button>
+                        <input type="number" class="bet-input" placeholder="Bet amount (RON)" id="bet-amount-1">
+                        <button class="place-bet-btn" onclick="placeBet(1)">Place Bet</button>
+                    </div>
+
+                    <!-- Prediction Card 2 -->
+                    <div class="prediction-card">
+                        <h3>Fableborne Season Winner</h3>
+                        <p>Predict the winner of the current Fableborne season.</p>
+                        <button class="option-btn" onclick="selectOption(this)">Team X</button>
+                        <button class="option-btn" onclick="selectOption(this)">Team Y</button>
+                        <button class="option-btn" onclick="selectOption(this)">Team Z</button>
+                        <input type="number" class="bet-input" placeholder="Bet amount (RON)" id="bet-amount-2">
+                        <button class="place-bet-btn" onclick="placeBet(2)">Place Bet</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="nfts">
+            <div class="container">
+                <div class="nft-mint">
+                    <h3>Mint Predictor Badge NFT</h3>
+                    <select id="nft-tier">
+                        <option value="0">Bronze (0.1 RON)</option>
+                        <option value="1">Silver (0.5 RON)</option>
+                        <option value="2">Gold (1 RON)</option>
+                    </select>
+                    <button class="mint-btn" onclick="mintNFT()">Mint NFT</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="dashboard">
+            <div class="container">
+                <h2>Your Dashboard</h2>
+                <p>Wallet: <span id="dashboard-wallet">Not connected</span></p>
+                <p>Your Bets: None yet</p>
+                <p>Your NFTs: None yet</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Ronin Fantasy Predictor. Built on Ronin Network. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Show Section
+        function showSection(sectionId) {
+            document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        // Connect Wallet (Mock)
+        let walletConnected = false;
+        let walletAddress = '';
+
+        function connectWallet() {
+            if (!walletConnected) {
+                // Mock connection
+                walletAddress = 'ronin:1234...abcd';
+                document.getElementById('wallet-text').innerText = walletAddress.slice(0,6) + '...' + walletAddress.slice(-4);
+                document.getElementById('dashboard-wallet').innerText = walletAddress;
+                walletConnected = true;
+                alert('Wallet connected: ' + walletAddress);
+            } else {
+                alert('Wallet already connected.');
+            }
+        }
+
+        // Select Option
+        function selectOption(btn) {
+            const card = btn.closest('.prediction-card');
+            card.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+
+        // Place Bet (Mock)
+        function placeBet(cardId) {
+            const amount = document.getElementById('bet-amount-' + cardId).value;
+            if (!walletConnected) {
+                alert('Please connect wallet first.');
+                return;
+            }
+            if (!amount || amount <= 0) {
+                alert('Enter a valid bet amount.');
+                return;
+            }
+            alert('Bet placed: ' + amount + ' RON');
+            // In real, interact with smart contract
+        }
+
+        // Mint NFT (Mock)
+        function mintNFT() {
+            const tier = document.getElementById('nft-tier').value;
+            if (!walletConnected) {
+                alert('Please connect wallet first.');
+                return;
+            }
+            alert('NFT Minted: Tier ' + tier);
+            // In real, call contract
+        }
+
+        // Show home by default
+        showSection('home');
+    </script>
+</body>
+</html>
