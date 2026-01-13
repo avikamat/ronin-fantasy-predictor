@@ -3,1476 +3,615 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ronin Fantasy Predictor - Predict game outcomes, place bets, and mint NFTs on the Ronin Network. Premium gaming predictions with low fees and high rewards.">
-    <meta name="keywords" content="Ronin, Fantasy Predictor, Web3 Gaming, NFTs, Bets, Pixels, Fableborne, Ronin Network">
-    <meta name="author" content="Chick-Verse">
-    <meta property="og:title" content="Ronin Fantasy Predictor">
-    <meta property="og:description" content="Predict outcomes in your favorite Ronin games and boost winnings with NFTs.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://your-vercel-url.vercel.app">
-    <meta property="og:image" content="https://example.com/ronin-logo.png"> <!-- Placeholder for social image -->
-    <title>Ronin Fantasy Predictor - Premium Web3 Gaming Predictions</title>
+    <meta name="description" content="Ronin Fantasy Predictor - Predict game outcomes, place bets, and mint NFTs on the Ronin Network.">
+    <title>Ronin Fantasy Predictor</title>
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22></text></svg>"> <!-- Favicon placeholder -->
+    
     <style>
         /* ================================================ */
-        /* PROFESSIONAL GLOBAL STYLES - EXPANDED FOR PRODUCTION */
+        /* TAILWIND & THEME MAPPING - MATCHING PUBLISHED SITE */
         /* ================================================ */
-
-    /* Reset and Base */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
-
-    html {
-        scroll-behavior: smooth;
-        font-size: 16px;
-        line-height: 1.5;
-    }
-
-    body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        background: linear-gradient(180deg, #0a0e17 0%, #010409 100%);
-        color: #e0e0ff;
-        min-height: 100vh;
-        overflow-x: hidden;
-        position: relative;
-    }
-
-    a {
-        text-decoration: none;
-        color: inherit;
-    }
-
-    button {
-        cursor: pointer;
-        border: none;
-        background: none;
-        font-family: inherit;
-    }
-
-    input, select {
-        font-family: inherit;
-        color: inherit;
-    }
-
-    /* Typography */
-    h1 {
-        font-size: 3rem;
-        font-weight: 800;
-        margin-bottom: 1rem;
-        color: #58A6FF;
-        text-shadow: 0 2px 8px rgba(88, 166, 255, 0.4);
-    }
-
-    h2 {
-        font-size: 2.25rem;
-        font-weight: 700;
-        margin-bottom: 1.5rem;
-        color: #58A6FF;
-        text-shadow: 0 1px 4px rgba(88, 166, 255, 0.3);
-    }
-
-    h3 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-        color: #58A6FF;
-    }
-
-    p {
-        font-size: 1rem;
-        font-weight: 400;
-        margin-bottom: 1rem;
-    }
-
-    /* Utilities */
-    .container {
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 0 1.5rem;
-    }
-
-    .flex-center {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .text-center {
-        text-align: center;
-    }
-
-    .hidden {
-        display: none;
-    }
-
-    .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0,0,0,0);
-        white-space: nowrap;
-        border: 0;
-    }
-
-    /* Header Styles */
-    header {
-        background: rgba(1, 4, 9, 0.85);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-        border-bottom: 1px solid rgba(88, 166, 255, 0.15);
-        transition: background 0.3s ease, border-color 0.3s ease;
-    }
-
-    header.scrolled {
-        background: rgba(1, 4, 9, 0.95);
-        border-bottom-color: rgba(88, 166, 255, 0.25);
-    }
-
-    header .container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 72px;
-    }
-
-    .logo {
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: #58A6FF;
-        letter-spacing: 0.5px;
-        transition: color 0.3s ease;
-    }
-
-    .logo:hover {
-        color: #1F6FEB;
-    }
-
-    nav ul {
-        display: flex;
-        gap: 32px;
-        list-style: none;
-    }
-
-    nav a {
-        color: #ffffff;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.9375rem;
-        transition: color 0.3s ease, opacity 0.3s ease;
-    }
-
-    nav a:hover {
-        color: #58A6FF;
-        opacity: 0.9;
-    }
-
-    nav a:focus {
-        outline: 2px solid #58A6FF;
-        outline-offset: 4px;
-        border-radius: 4px;
-    }
-
-    .wallet-btn {
-        background: linear-gradient(135deg, #1F6FEB 0%, #58A6FF 100%);
-        padding: 10px 24px;
-        border-radius: 9999px;
-        font-weight: 600;
-        font-size: 0.9375rem;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3);
-    }
-
-    .wallet-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(88, 166, 255, 0.5);
-    }
-
-    .wallet-btn:focus {
-        outline: 2px solid #ffffff;
-        outline-offset: 2px;
-    }
-
-    .menu-toggle {
-        display: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: #ffffff;
-        transition: color 0.3s ease;
-    }
-
-    .menu-toggle:hover {
-        color: #58A6FF;
-    }
-
-    /* Main Sections */
-    section {
-        padding: 120px 0 80px;
-        display: none;
-        opacity: 0;
-        transition: opacity 0.5s ease, transform 0.5s ease;
-        transform: translateY(20px);
-    }
-
-    section.active {
-        display: block;
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    #home {
-        text-align: center;
-        background: linear-gradient(to bottom, rgba(10,14,23,0.9) 0%, rgba(1,4,9,0.9) 100%);
-        padding-top: 160px;
-        padding-bottom: 120px;
-    }
-
-    #home h1 {
-        font-size: 3rem;
-        font-weight: 800;
-        margin-bottom: 16px;
-        color: #58A6FF;
-        text-shadow: 0 2px 8px rgba(88,166,255,0.4);
-        line-height: 1.2;
-    }
-
-    #home p {
-        font-size: 1.125rem;
-        font-weight: 400;
-        max-width: 720px;
-        margin: 0 auto 32px;
-        opacity: 0.9;
-    }
-
-    .cta-container {
-        display: flex;
-        justify-content: center;
-        gap: 16px;
-        margin-top: 24px;
-    }
-
-    .cta-btn {
-        background: linear-gradient(135deg, #58A6FF 0%, #1F6FEB 100%);
-        padding: 14px 28px;
-        border-radius: 9999px;
-        color: #ffffff;
-        font-weight: 600;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(88,166,255,0.3);
-    }
-
-    .cta-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(88,166,255,0.5);
-    }
-
-    .cta-btn:focus {
-        outline: 2px solid #ffffff;
-        outline-offset: 2px;
-    }
-
-    .cta-btn secondary {
-        background: transparent;
-        border: 1px solid #58A6FF;
-        color: #58A6FF;
-    }
-
-    .cta-btn secondary:hover {
-        background: #58A6FF;
-        color: #ffffff;
-    }
-
-    /* Predictions Section */
-    #predictions h2 {
-        font-size: 2.25rem;
-        font-weight: 700;
-        margin-bottom: 48px;
-        color: #58A6FF;
-        text-shadow: 0 1px 4px rgba(88,166,255,0.3);
-        text-align: center;
-    }
-
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 32px;
-    }
-
-    .prediction-card {
-        background: rgba(26,31,43,0.95);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border-radius: 16px;
-        padding: 32px;
-        border: 1px solid rgba(88,166,255,0.1);
-        transition: all 0.4s ease;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-    }
-
-    .prediction-card:hover {
-        transform: translateY(-8px);
-        border-color: #58A6FF;
-        box-shadow: 0 16px 32px rgba(88,166,255,0.2);
-    }
-
-    .prediction-card:focus-within {
-        outline: 2px solid #58A6FF;
-        outline-offset: 4px;
-    }
-
-    .prediction-card h3 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin-bottom: 16px;
-        color: #58A6FF;
-    }
-
-    .prediction-card p {
-        font-size: 1rem;
-        margin-bottom: 24px;
-        opacity: 0.85;
-    }
-
-    .option-btn {
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 12px;
-        background: #2c3344;
-        border: none;
-        border-radius: 8px;
-        color: #ffffff;
-        font-weight: 500;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .option-btn.selected {
-        background: #58A6FF;
-        box-shadow: 0 4px 12px rgba(88,166,255,0.3);
-    }
-
-    .option-btn:hover {
-        background: #3a4256;
-        transform: translateY(-2px);
-    }
-
-    .option-btn:focus {
-        outline: 2px solid #58A6FF;
-        outline-offset: 2px;
-    }
-
-    .bet-input {
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 16px;
-        background: #2c3344;
-        border: none;
-        border-radius: 8px;
-        color: #ffffff;
-        font-size: 1rem;
-        transition: border-color 0.3s ease;
-    }
-
-    .bet-input:focus {
-        border: 1px solid #58A6FF;
-        outline: none;
-    }
-
-    .place-bet-btn {
-        width: 100%;
-        padding: 14px;
-        background: linear-gradient(135deg, #58A6FF 0%, #1F6FEB 100%);
-        border: none;
-        border-radius: 8px;
-        color: #ffffff;
-        font-weight: 600;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(88,166,255,0.3);
-    }
-
-    .place-bet-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(88,166,255,0.5);
-    }
-
-    .place-bet-btn:focus {
-        outline: 2px solid #ffffff;
-        outline-offset: 2px;
-    }
-
-    /* NFTs Section */
-    #nfts h2 {
-        font-size: 2.25rem;
-        font-weight: 700;
-        margin-bottom: 48px;
-        color: #58A6FF;
-        text-shadow: 0 1px 4px rgba(88,166,255,0.3);
-        text-align: center;
-    }
-
-    .nft-mint {
-        max-width: 480px;
-        margin: 0 auto;
-        background: rgba(26,31,43,0.95);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        padding: 40px;
-        border-radius: 16px;
-        border: 1px solid rgba(88,166,255,0.1);
-        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-        transition: all 0.4s ease;
-    }
-
-    .nft-mint:hover {
-        box-shadow: 0 16px 32px rgba(88,166,255,0.2);
-    }
-
-    .nft-mint h3 {
-        font-size: 1.75rem;
-        font-weight: 600;
-        margin-bottom: 24px;
-        color: #58A6FF;
-        text-align: center;
-    }
-
-    #nft-tier {
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 24px;
-        background: #2c3344;
-        border: none;
-        border-radius: 8px;
-        color: #ffffff;
-        font-size: 1rem;
-        appearance: none;
-        -webkit-appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%23e0e0ff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
-        background-position: right 12px center;
-        background-size: 1.25em;
-        background-repeat: no-repeat;
-        transition: border-color 0.3s ease;
-    }
-
-    #nft-tier:focus {
-        border: 1px solid #58A6FF;
-        outline: none;
-    }
-
-    .mint-btn {
-        width: 100%;
-        padding: 14px;
-        background: linear-gradient(135deg, #58A6FF 0%, #1F6FEB 100%);
-        border: none;
-        border-radius: 8px;
-        color: #ffffff;
-        font-weight: 600;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(88,166,255,0.3);
-    }
-
-    .mint-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(88,166,255,0.5);
-    }
-
-    .mint-btn:focus {
-        outline: 2px solid #ffffff;
-        outline-offset: 2px;
-    }
-
-    /* Dashboard Section */
-    #dashboard h2 {
-        font-size: 2.25rem;
-        font-weight: 700;
-        margin-bottom: 48px;
-        color: #58A6FF;
-        text-shadow: 0 1px 4px rgba(88,166,255,0.3);
-        text-align: center;
-    }
-
-    #dashboard p {
-        font-size: 1rem;
-        margin-bottom: 16px;
-        opacity: 0.9;
-    }
-
-    /* Footer */
-    footer {
-        background: #010409;
-        padding: 48px 0;
-        text-align: center;
-        border-top: 1px solid rgba(88,166,255,0.1);
-        font-size: 0.875rem;
-        font-weight: 400;
-        opacity: 0.8;
-    }
-
-    footer a {
-        color: #58A6FF;
-        transition: color 0.3s ease;
-    }
-
-    footer a:hover {
-        color: #1F6FEB;
-    }
-
-    /* Animations */
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    section.active {
-        animation: fadeIn 0.5s ease-out forwards;
-    }
-
-    /* Accessibility Enhancements */
-    [role="button"] {
-        cursor: pointer;
-    }
-
-    /* Media Queries for Responsiveness */
-    @media (max-width: 1024px) {
-        h1 { font-size: 2.5rem; }
-        h2 { font-size: 2rem; }
-        .grid { gap: 24px; }
-    }
-
-    @media (max-width: 768px) {
-        header .container { padding: 0 16px; }
-        .logo { font-size: 1.25rem; }
-        .menu-toggle { display: block; margin-left: auto; }
-        nav ul { display: none; flex-direction: column; position: absolute; top: 72px; left: 0; width: 100%; background: rgba(1,4,9,0.95); padding: 24px 0; gap: 24px; border-top: 1px solid rgba(88,166,255,0.1); }
-        nav ul.active { display: flex; }
-        nav li { text-align: center; }
-        nav a { font-size: 1rem; }
-        .wallet-btn { padding: 8px 16px; font-size: 0.875rem; }
-        #home { padding-top: 120px; }
-        #home h1 { font-size: 2.25rem; }
-        #home p { font-size: 1rem; }
-        .cta-container { flex-direction: column; gap: 12px; }
-        .cta-btn { padding: 12px 24px; font-size: 0.875rem; }
-        .prediction-card { padding: 24px; }
-        .nft-mint { padding: 32px; }
-        section { padding: 100px 0 60px; }
-    }
-
-    @media (max-width: 480px) {
-        .container { padding: 0 12px; }
-        h1 { font-size: 2rem; }
-        h2 { font-size: 1.75rem; }
-        .prediction-card h3 { font-size: 1.25rem; }
-        .option-btn, .bet-input, .place-bet-btn, .mint-btn { font-size: 0.875rem; }
-        footer { padding: 32px 0; font-size: 0.75rem; }
-    }
-
-    /* Additional Production-Level Styles */
-    /* Loader Placeholder for Future Use */
-    .loader {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(1,4,9,0.95);
-        z-index: 9999;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .loader.active {
-        display: flex;
-    }
-
-    .loader spinner {
-        border: 4px solid #58A6FF;
-        border-top: 4px solid transparent;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-    /* Error Message Placeholder */
-    .error-message {
-        color: #ff4d4f;
-        font-size: 0.875rem;
-        margin-top: 8px;
-        display: none;
-    }
-
-    /* Success Message Placeholder */
-    .success-message {
-        color: #4caf50;
-        font-size: 0.875rem;
-        margin-top: 8px;
-        display: none;
-    }
-
-    /* Add More Cards for Production Scale */
-    /* Example: Additional Prediction Card Template */
-    .prediction-card.extra {
-        opacity: 0.8;
-    }
-
-    /* NFT Gallery Placeholder */
-    .nft-gallery {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 24px;
-        margin-top: 48px;
-    }
-
-    .nft-item {
-        background: #1a1f2b;
-        border-radius: 12px;
-        padding: 16px;
-        text-align: center;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-
-    .nft-item img {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        margin-bottom: 12px;
-    }
-
-    .nft-item h4 {
-        font-size: 1.125rem;
-        font-weight: 600;
-        color: #58A6FF;
-        margin-bottom: 8px;
-    }
-
-    .nft-item p {
-        font-size: 0.875rem;
-        opacity: 0.85;
-    }
-
-    /* FAQ Section Placeholder */
-    #faq {
-        padding: 80px 0;
-        background: linear-gradient(to bottom, #010409, #0a0e17);
-    }
-
-    #faq h2 {
-        text-align: center;
-        margin-bottom: 48px;
-    }
-
-    .faq-item {
-        margin-bottom: 24px;
-    }
-
-    .faq-item h4 {
-        font-size: 1.125rem;
-        font-weight: 600;
-        color: #58A6FF;
-        margin-bottom: 12px;
-    }
-
-    .faq-item p {
-        font-size: 1rem;
-        opacity: 0.85;
-    }
-
-    /* About Section Placeholder */
-    #about {
-        padding: 80px 0;
-        text-align: center;
-    }
-
-    #about h2 {
-        margin-bottom: 32px;
-    }
-
-    #about p {
-        max-width: 800px;
-        margin: 0 auto 24px;
-        font-size: 1.125rem;
-        opacity: 0.9;
-    }
-
-    /* Contact Form Placeholder */
-    #contact {
-        padding: 80px 0;
-        background: #0a0e17;
-    }
-
-    #contact h2 {
-        text-align: center;
-        margin-bottom: 48px;
-    }
-
-    .contact-form {
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    .contact-form label {
-        display: block;
-        font-size: 1rem;
-        font-weight: 500;
-        margin-bottom: 8px;
-        color: #58A6FF;
-    }
-
-    .contact-form input, .contact-form textarea {
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 24px;
-        background: #2c3344;
-        border: none;
-        border-radius: 8px;
-        color: #ffffff;
-        font-size: 1rem;
-    }
-
-    .contact-form button {
-        width: 100%;
-        padding: 14px;
-        background: linear-gradient(135deg, #58A6FF 0%, #1F6FEB 100%);
-        border: none;
-        border-radius: 8px;
-        color: #ffffff;
-        font-weight: 600;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(88,166,255,0.3);
-    }
-
-    .contact-form button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(88,166,255,0.5);
-    }
-
-    /* Additional Utilities for Production */
-    .button-disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-
-    .button-disabled:hover {
-        transform: none;
-        box-shadow: none;
-    }
-
-    .input-invalid {
-        border: 1px solid #ff4d4f;
-    }
-
-    /* More Media Queries for Fine-Tuned Responsiveness */
-    @media (min-width: 1440px) {
-        .container { max-width: 1360px; }
-        h1 { font-size: 3.5rem; }
-        h2 { font-size: 2.5rem; }
-    }
-
-    @media (max-width: 600px) {
-        .prediction-card { padding: 20px; }
-        .nft-mint { padding: 28px; }
-        .cta-btn { padding: 12px 20px; font-size: 0.875rem; }
-    }
-
-    @media (max-width: 360px) {
-        .logo { font-size: 1rem; }
-        .wallet-btn { padding: 8px 12px; font-size: 0.75rem; }
-        .menu-toggle { font-size: 1.25rem; }
-    }
-
-    /* Print Styles for Professionalism */
-    @media print {
-        body { background: white; color: black; }
-        header, footer { display: none; }
-        a { color: black; }
-        .prediction-card { box-shadow: none; border: 1px solid black; }
-    }
-
-    /* High Contrast Mode for Accessibility */
-    @media (prefers-contrast: high) {
-        body { color: #ffffff; background: #000000; }
-        .prediction-card { background: #000000; border: 1px solid #ffffff; }
-        .option-btn { background: #000000; border: 1px solid #ffffff; color: #ffffff; }
-        .option-btn.selected { background: #ffffff; color: #000000; }
-    }
-
-    /* Reduced Motion for Accessibility */
-    @media (prefers-reduced-motion: reduce) {
-        * { transition: none !important; animation: none !important; }
-    }
-
-    /* Dark Mode (Default is Dark, but Placeholder for Light) */
-    :root {
-        --primary-color: #58A6FF;
-        --secondary-color: #1F6FEB;
-        --bg-color: #0a0e17;
-        --card-bg: #1a1f2b;
-        --text-color: #e0e0ff;
-        --accent-shadow: rgba(88,166,255,0.3);
-    }
-
-    /* Theme Toggle Placeholder Styles */
-    .theme-toggle {
-        display: none; /* Enable if adding toggle */
-    }
-
-    /* Add Even More Padding for Line Count */
-    /* Comment Blocks to Expand Code */
-    /* This is a comment block to make the code longer for production-like verbosity. */
-    /* Professional code often has extensive comments for maintainability. */
-    /* Each section is documented. */
-    /* Header: Fixed navigation with premium blur effect. */
-    /* Home: Hero section with bold typography and CTAs. */
-    /* Predictions: Card grid with interactive buttons. */
-    /* NFTs: Mint form with select and button. */
-    /* Dashboard: Simple info display. */
-    /* Footer: Copyright and links. */
-    /* Script: JS for interactions. */
-    /* End of comment block. */
-
-    /* Duplicate Styles for Padding (Remove in Real Prod) */
-    /* Repeat some styles to hit 1k lines. */
-    .logo {
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: #58A6FF;
-        letter-spacing: 0.5px;
-        transition: color 0.3s ease;
-    }
-
-    .logo:hover {
-        color: #1F6FEB;
-    }
-
-    nav ul {
-        display: flex;
-        gap: 32px;
-        list-style: none;
-    }
-
-    nav a {
-        color: #ffffff;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.9375rem;
-        transition: color 0.3s ease, opacity 0.3s ease;
-    }
-
-    nav a:hover {
-        color: #58A6FF;
-        opacity: 0.9;
-    }
-
-    /* More Duplicates */
-    .wallet-btn {
-        background: linear-gradient(135deg, #1F6FEB 0%, #58A6FF 100%);
-        padding: 10px 24px;
-        border-radius: 9999px;
-        font-weight: 600;
-        font-size: 0.9375rem;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3);
-    }
-
-    .wallet-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(88, 166, 255, 0.5);
-    }
-
-    /* Add Fake Section for Line Count */
-    #fake-section {
-        display: none;
-        padding: 80px 0;
-        text-align: center;
-    }
-
-    #fake-section h2 {
-        font-size: 2.25rem;
-        font-weight: 700;
-        margin-bottom: 48px;
-        color: #58A6FF;
-    }
-
-    #fake-section p {
-        font-size: 1rem;
-        max-width: 800px;
-        margin: 0 auto;
-    }
-
-    /* More Comments to Expand */
-    /* This section is for additional features in production. */
-    /* For example, user authentication, API calls, etc. */
-    /* Currently mock, but ready for expansion. */
-    /* End of comments. */
-
-    /* Final Padding Styles */
-    .padding-class-1 {
-        padding: 10px;
-    }
-
-    .padding-class-2 {
-        padding: 20px;
-    }
-
-    .padding-class-3 {
-        padding: 30px;
-    }
-
-    .padding-class-4 {
-        padding: 40px;
-    }
-
-    .padding-class-5 {
-        padding: 50px;
-    }
-
-    .margin-class-1 {
-        margin: 10px;
-    }
-
-    .margin-class-2 {
-        margin: 20px;
-    }
-
-    .margin-class-3 {
-        margin: 30px;
-    }
-
-    .margin-class-4 {
-        margin: 40px;
-    }
-
-    .margin-class-5 {
-        margin: 50px;
-    }
-
-    /* Even More for 1k Lines Goal */
-    /* Repeating typography for padding */
-    h1 {
-        font-size: 3rem;
-        font-weight: 800;
-        margin-bottom: 1rem;
-        color: #58A6FF;
-        text-shadow: 0 2px 8px rgba(88,166,255,0.4);
-    }
-
-    h2 {
-        font-size: 2.25rem;
-        font-weight: 700;
-        margin-bottom: 1.5rem;
-        color: #58A6FF;
-        text-shadow: 0 1px 4px rgba(88,166,255,0.3);
-    }
-
-    h3 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-        color: #58A6FF;
-    }
-
-    p {
-        font-size: 1rem;
-        font-weight: 400;
-        margin-bottom: 1rem;
-    }
-
-    /* Duplicate utilities */
-    .container {
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 0 1.5rem;
-    }
-
-    .flex-center {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .text-center {
-        text-align: center;
-    }
-
-    .hidden {
-        display: none;
-    }
-
-    .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0,0,0,0);
-        white-space: nowrap;
-        border: 0;
-    }
-
-    /* End of Style Padding */
-</style></head>
+        :root {
+            --primary: #58A6FF;
+            --background: #0a0e17;
+            --card: #0d121d;
+            --accent: #00ffff;
+            --muted: #8b949e;
+            --foreground: #f0f6fc;
+            --border: rgba(88, 166, 255, 0.2);
+            --radius: 0.5rem;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+        html { 
+            scroll-behavior: smooth; 
+            font-size: 16px; 
+            line-height: 1.5; 
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--background);
+            color: var(--foreground);
+            /* MATCHING THE EXACT PUBLISHED GRADIENT BACKGROUND */
+            background-image: 
+                linear-gradient(to bottom, rgba(10, 14, 23, 0.9), rgba(10, 14, 23, 0.95)),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2358A6FF' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-attachment: fixed;
+            min-height: 100vh;
+            width: 100%;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: white;
+        }
+
+        /* FIXING THE "SHRINKED" FEEL BY USING FULL CONTAINER WIDTHS */
+        .container { 
+            width: 100%;
+            max-width: 1280px; 
+            margin: 0 auto; 
+            padding: 0 2rem; 
+        }
+
+        /* --- COMPONENTS --- */
+        .neon-text {
+            text-shadow: 0 0 10px rgba(88, 166, 255, 0.5), 0 0 20px rgba(88, 166, 255, 0.3);
+        }
+
+        .cyber-card {
+            background: rgba(13, 18, 29, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .cyber-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(88, 166, 255, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .cyber-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--primary);
+            color: var(--background);
+            font-weight: 800;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+            border: none;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        .cyber-button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--accent);
+            background: #4693f0;
+        }
+        .cyber-button:active { transform: translate(0,0); box-shadow: none; }
+
+        /* --- HEADER --- */
+        header {
+            height: 90px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            background: rgba(10, 14, 23, 0.8);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; cursor: pointer; }
+        .logo-box {
+            width: 48px; height: 48px; border: 1px solid var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(88, 166, 255, 0.1); border-radius: 8px;
+        }
+        .logo-text { display: flex; flex-direction: column; }
+        .logo-title { font-weight: 900; font-size: 1.5rem; color: white; line-height: 1; }
+        .logo-subtitle { font-size: 0.75rem; color: var(--primary); letter-spacing: 0.3em; font-weight: bold; text-transform: uppercase; }
+
+        .wallet-pill {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 0.6rem 1.25rem; border: 1px solid rgba(88, 166, 255, 0.4);
+            border-radius: 99px; background: rgba(88, 166, 255, 0.05);
+            font-family: 'Inter', monospace; color: var(--primary); cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .wallet-pill:hover { background: rgba(88, 166, 255, 0.1); border-color: var(--primary); }
+        .wallet-status { width: 10px; height: 10px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px #22c55e; animation: pulse 2s infinite; }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* --- HERO --- */
+        .hero { padding: 10rem 0; position: relative; overflow: hidden; }
+        .hero-glow {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 1000px; height: 1000px; background: radial-gradient(circle, rgba(88, 166, 255, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero h1 { font-size: 6rem; font-weight: 900; line-height: 0.85; margin-bottom: 2rem; letter-spacing: -0.02em; }
+        .hero .accent-text { color: var(--primary); }
+        .hero p {
+            max-width: 600px; border-left: 5px solid var(--primary);
+            padding-left: 2rem; font-size: 1.5rem; color: var(--muted);
+            margin-bottom: 3.5rem; line-height: 1.5;
+        }
+
+        /* --- STATS --- */
+        .stats-bar { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.3); padding: 2.5rem 0; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3rem; }
+        .stat-item { display: flex; align-items: center; gap: 1.5rem; }
+        .stat-icon { width: 60px; height: 60px; background: rgba(88, 166, 255, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.5rem; }
+        .stat-value { font-size: 2rem; font-weight: 800; line-height: 1; color: white; margin-bottom: 0.25rem; }
+        .stat-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.25em; color: var(--muted); font-weight: 700; }
+
+        /* --- MATCHES --- */
+        .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; margin-top: 8rem; }
+        .grid-matches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        
+        .match-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.75rem;
+            font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em;
+        }
+        .badge-live { background: rgba(0, 255, 255, 0.1); color: var(--accent); border: 1px solid var(--accent); }
+        .badge-upcoming { background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid rgba(255,255,255,0.1); }
+
+        .vs-container { display: flex; align-items: center; justify-content: space-between; margin: 2.5rem 0; gap: 1rem; }
+        .team-box { 
+            flex: 1; text-align: center; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.05); 
+            border-radius: 12px; background: rgba(255,255,255,0.02); cursor: pointer; transition: 0.3s ease;
+        }
+        .team-box:hover { border-color: var(--primary); background: rgba(88,166,255,0.08); transform: scale(1.02); }
+        .team-box.selected { border-color: var(--primary); background: rgba(88,166,255,0.2); box-shadow: 0 0 20px rgba(88,166,255,0.3); }
+        .team-name { font-weight: 800; font-size: 1.25rem; color: white; }
+        .vs-text { font-weight: 900; color: var(--muted); font-size: 0.9rem; font-family: 'Orbitron', sans-serif; opacity: 0.5; }
+
+        /* --- NFT BADGES --- */
+        .nft-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
+        .nft-card {
+            aspect-ratio: 3/4.5; border-radius: 16px; padding: 2rem;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border: 2px solid; position: relative; text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .nft-card:hover { transform: translateY(-10px) rotateY(10deg); }
+        
+        .nft-gold { background: linear-gradient(135deg, rgba(234,179,8,0.25), rgba(234,179,8,0.05)); border-color: rgba(234,179,8,0.6); box-shadow: 0 0 30px rgba(234,179,8,0.15); }
+        .nft-bronze { background: linear-gradient(135deg, rgba(194,65,12,0.25), rgba(194,65,12,0.05)); border-color: rgba(194,65,12,0.6); box-shadow: 0 0 30px rgba(194,65,12,0.15); }
+        
+        .nft-icon-circle { 
+            width: 100px; height: 100px; border-radius: 50%; border: 4px solid; 
+            display: flex; align-items: center; justify-content: center; margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+        .nft-gold .nft-icon-circle { border-color: #eab308; color: #eab308; background: rgba(234,179,8,0.1); box-shadow: inset 0 0 20px rgba(234,179,8,0.2); }
+        .nft-bronze .nft-icon-circle { border-color: #c2410c; color: #c2410c; background: rgba(194,65,12,0.1); box-shadow: inset 0 0 20px rgba(194,65,12,0.2); }
+        
+        .nft-title { font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem; font-family: 'Orbitron', sans-serif; }
+        .nft-gold .nft-title { color: #eab308; text-shadow: 0 0 15px rgba(234,179,8,0.4); }
+        .nft-bronze .nft-title { color: #c2410c; text-shadow: 0 0 15px rgba(194,65,12,0.4); }
+        
+        /* --- NOTIFICATIONS --- */
+        #notif {
+            position: fixed; bottom: 3rem; right: 3rem; z-index: 2000;
+            padding: 1.25rem 2.5rem; border-radius: 12px; color: white;
+            font-weight: 800; transform: translateX(250%); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            backdrop-filter: blur(20px);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        #notif.show { transform: translateX(0); }
+        #notif.success { background: linear-gradient(90deg, #22c55e, #15803d); border-left: 6px solid #000; border: 1px solid rgba(34, 197, 94, 0.3); }
+        #notif.error { background: linear-gradient(90deg, #ef4444, #b91c1c); border-left: 6px solid #000; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+        /* Animation */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite;
+        }
+
+        /* --- RESPONSIVE ADJUSTMENTS --- */
+        @media (max-width: 1280px) {
+            .hero h1 { font-size: 5rem; }
+            .grid-matches { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 1024px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+            .hero h1 { font-size: 4rem; }
+            .hero p { font-size: 1.25rem; }
+        }
+        @media (max-width: 768px) {
+            header { height: 80px; }
+            .hero { padding: 8rem 0; }
+            .hero h1 { font-size: 3.5rem; }
+            .grid-matches, .nft-grid { grid-template-columns: 1fr; }
+            nav { display: none; }
+            .logo-title { font-size: 1.25rem; }
+            .stat-value { font-size: 1.5rem; }
+            .section-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+        }
+    </style>
+</head>
 <body>
+
     <header>
-        <div class="container">
-            <div class="logo">Ronin Fantasy Predictor</div>
-            <nav>
-                <ul id="nav-links">
-                    <li><a href="#home" onclick="showSection('home')">Home</a></li>
-                    <li><a href="#predictions" onclick="showSection('predictions')">Predictions</a></li>
-                    <li><a href="#nfts" onclick="showSection('nfts')">NFTs</a></li>
-                    <li><a href="#dashboard" onclick="showSection('dashboard')">Dashboard</a></li>
-                    <li><a href="#faq" onclick="showSection('faq')">FAQ</a></li>
-                    <li><a href="#about" onclick="showSection('about')">About</a></li>
-                    <li><a href="#contact" onclick="showSection('contact')">Contact</a></li>
-                </ul>
+        <div class="container header-content">
+            <a href="/" class="logo">
+                <div class="logo-box"><i class="fas fa-trophy" style="color: var(--primary);"></i></div>
+                <div class="logo-text">
+                    <span class="logo-title neon-text">RONIN</span>
+                    <span class="logo-subtitle">Predictor</span>
+                </div>
+            </a>
+            
+            <nav style="display: flex; gap: 3rem;">
+                <a href="#" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">Dashboard</a>
+                <a href="#matches" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">Matches</a>
+                <a href="#nfts" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">NFT Badges</a>
             </nav>
-            <div class="wallet-btn" onclick="connectWallet()">
-                <i class="fas fa-wallet"></i>
-                <span id="wallet-text">Connect Wallet</span>
+
+            <div id="wallet-section">
+                <button onclick="connect()" id="connect-btn" class="cyber-button">Connect Wallet</button>
             </div>
-            <i class="fas fa-bars menu-toggle" onclick="toggleMenu()"></i>
         </div>
     </header>
 
-<main>
-    <section id="home" class="active">
-        <div class="container text-center">
-            <h1>Welcome to Ronin Fantasy Predictor</h1>
-            <p>Predict outcomes in your favorite Ronin games, place bets, and boost your winnings with exclusive NFTs. Experience premium gaming predictions with low fees and high rewards.</p>
-            <div class="cta-container">
-                <a href="#predictions" class="cta-btn" onclick="showSection('predictions')">View Predictions</a>
-                <a href="#nfts" class="cta-btn secondary" onclick="showSection('nfts')">Mint NFTs</a>
+    <main>
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-glow"></div>
+            <div class="container">
+                <h1 class="neon-text"><span class="accent-text">PREDICT</span> <br> THE META</h1>
+                <p>Join the next generation of fantasy leagues on Ronin. Predict outcomes for Pixels, Axie, and more. Stack points, climb the leaderboard, and mint your glory.</p>
+                <div style="display: flex; gap: 1.5rem;">
+                    <button onclick="document.getElementById('matches').scrollIntoView({behavior:'smooth'})" class="cyber-button">Start Predicting</button>
+                    <button class="cyber-button" style="background: transparent; border: 1px solid var(--primary); color: var(--primary);">Leaderboard</button>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="predictions">
-        <div class="container">
-            <h2>Active Predictions</h2>
-            <div class="grid">
-                <div class="prediction-card">
-                    <h3>Pixels Daily Top Farmer</h3>
-                    <p>Who will be the top farmer in Pixels today?</p>
-                    <button class="option-btn" onclick="selectOption(this)">Player A</button>
-                    <button class="option-btn" onclick="selectOption(this)">Player B</button>
-                    <button class="option-btn" onclick="selectOption(this)">Player C</button>
-                    <input type="number" class="bet-input" placeholder="Bet amount (RON)" id="bet-amount-1">
-                    <span class="error-message" id="error-1"></span>
-                    <button class="place-bet-btn" onclick="placeBet(1)">Place Bet</button>
+        <!-- STATS -->
+        <div class="stats-bar">
+            <div class="container stats-grid">
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div><div class="stat-value">12,405</div><div class="stat-label">Active Players</div></div>
                 </div>
-
-                <div class="prediction-card">
-                    <h3>Fableborne Season Winner</h3>
-                    <p>Predict the winner of the current Fableborne season.</p>
-                    <button class="option-btn" onclick="selectOption(this)">Team X</button>
-                    <button class="option-btn" onclick="selectOption(this)">Team Y</button>
-                    <button class="option-btn" onclick="selectOption(this)">Team Z</button>
-                    <input type="number" class="bet-input" placeholder="Bet amount (RON)" id="bet-amount-2">
-                    <span class="error-message" id="error-2"></span>
-                    <button class="place-bet-btn" onclick="placeBet(2)">Place Bet</button>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-bolt"></i></div>
+                    <div><div class="stat-value">84,392</div><div class="stat-label">Total Bets</div></div>
                 </div>
-
-                <div class="prediction-card extra">
-                    <h3>Moku Grand Arena Winner</h3>
-                    <p>Predict the AI-powered fantasy sports winner in Moku.</p>
-                    <button class="option-btn" onclick="selectOption(this)">Team Alpha</button>
-                    <button class="option-btn" onclick="selectOption(this)">Team Beta</button>
-                    <button class="option-btn" onclick="selectOption(this)">Team Gamma</button>
-                    <input type="number" class="bet-input" placeholder="Bet amount (RON)" id="bet-amount-3">
-                    <span class="error-message" id="error-3"></span>
-                    <button class="place-bet-btn" onclick="placeBet(3)">Place Bet</button>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-coins"></i></div>
+                    <div><div class="stat-value">50,000</div><div class="stat-label">RON Rewards</div></div>
                 </div>
-
-                <div class="prediction-card extra">
-                    <h3>Cambria Battle Outcome</h3>
-                    <p>Predict the victor in Cambria's next raid.</p>
-                    <button class="option-btn" onclick="selectOption(this)">Alliance A</button>
-                    <button class="option-btn" onclick="selectOption(this)">Alliance B</button>
-                    <input type="number" class="bet-input" placeholder="Bet amount (RON)" id="bet-amount-4">
-                    <span class="error-message" id="error-4"></span>
-                    <button class="place-bet-btn" onclick="placeBet(4)">Place Bet</button>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div><div class="stat-value">3,210</div><div class="stat-label">Badges Minted</div></div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <section id="nfts">
-        <div class="container">
-            <h2>Mint Your Predictor Badge NFT</h2>
-            <div class="nft-mint">
-                <h3>Select Tier</h3>
-                <select id="nft-tier">
-                    <option value="0">Bronze (0.1 RON - +10% Boost)</option>
-                    <option value="1">Silver (0.5 RON - +15% Boost)</option>
-                    <option value="2">Gold (1 RON - +20% Boost + Exclusive Access)</option>
-                </select>
-                <span class="error-message" id="nft-error"></span>
-                <button class="mint-btn" onclick="mintNFT()">Mint NFT</button>
-            </div>
-            <div class="nft-gallery">
-                <div class="nft-item">
-                    <img src="https://placehold.co/200x200/1a1f2b/58A6FF?text=Bronze" alt="Bronze Badge NFT">
-                    <h4>Bronze Badge</h4>
-                    <p>Basic boost for predictions.</p>
+        <!-- MATCHES -->
+        <section id="matches" class="container" style="padding: 10rem 0;">
+            <div class="section-header">
+                <div>
+                    <h2 class="neon-text" style="font-size: 4rem; line-height: 1;">Live & Upcoming</h2>
+                    <p style="color: var(--muted); margin-top: 1rem; font-size: 1.25rem; font-weight: 500;">Predict game outcomes to earn massive point multipliers.</p>
                 </div>
-                <div class="nft-item">
-                    <img src="https://placehold.co/200x200/1a1f2b/58A6FF?text=Silver" alt="Silver Badge NFT">
-                    <h4>Silver Badge</h4>
-                    <p>Enhanced boost and rewards.</p>
-                </div>
-                <div class="nft-item">
-                    <img src="https://placehold.co/200x200/1a1f2b/58A6FF?text=Gold" alt="Gold Badge NFT">
-                    <h4>Gold Badge</h4>
-                    <p>Premium access and max boosts.</p>
+                <div style="display: flex; gap: 0.75rem;">
+                    <button class="cyber-button" style="padding: 0.6rem 1.5rem; background: rgba(88,166,255,0.2); color: var(--primary);">All Games</button>
+                    <button class="cyber-button" style="padding: 0.6rem 1.5rem; background: transparent; border: 1px solid var(--border); color: var(--muted);">Pixels</button>
+                    <button class="cyber-button" style="padding: 0.6rem 1.5rem; background: transparent; border: 1px solid var(--border); color: var(--muted);">Axie</button>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <section id="dashboard">
-        <div class="container">
-            <h2>Your Dashboard</h2>
-            <p>Wallet: <span id="dashboard-wallet">Not connected</span></p>
-            <p>Your Bets: <span id="dashboard-bets">None yet</span></p>
-            <p>Your NFTs: <span id="dashboard-nfts">None yet</span></p>
-            <div class="grid" id="dashboard-details">
-                <!-- Dynamic content added via JS -->
+            <div id="matches-container" class="grid-matches">
+                <!-- Matches will be injected here -->
+                <div style="grid-column: 1/-1; text-align: center; padding: 100px;">
+                    <i class="fas fa-circle-notch fa-spin fa-4x" style="color: var(--primary); opacity: 0.5;"></i>
+                    <p style="margin-top: 2rem; color: var(--muted); font-size: 1.25rem;">Scanning Ronin network for live events...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- NFTS -->
+        <section id="nfts" class="container" style="padding: 10rem 0; border-top: 1px solid var(--border);">
+            <div style="display: flex; gap: 6rem; align-items: flex-start; flex-wrap: wrap;">
+                <div style="flex: 1.5; min-width: 300px;">
+                    <h2 class="neon-text" style="font-size: 4rem; margin-bottom: 2.5rem; line-height: 1;">Mastery Badges</h2>
+                    <p style="color: var(--muted); font-size: 1.5rem; margin-bottom: 4rem; line-height: 1.6;">Proof of your prediction legacy. Mint exclusive NFT badges on Ronin to unlock permanent point multipliers and elite status.</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                        <div class="cyber-card">
+                            <h3 style="color: #ea580c; margin-bottom: 1rem; font-size: 1.75rem;">Bronze Tier</h3>
+                            <p style="font-size: 1rem; color: var(--muted); margin-bottom: 3rem; line-height: 1.5;">The initiate's mark. Prove your presence in the guild and track your first wins.</p>
+                            <button onclick="mint('Bronze')" class="cyber-button" style="width: 100%; background: transparent; border: 2px solid #ea580c; color: #ea580c;">Mint Free</button>
+                        </div>
+                        <div class="cyber-card" style="border-color: #eab308; border-width: 2px;">
+                            <div style="position: absolute; top: 0; right: 0; background: #eab308; color: black; font-size: 0.75rem; font-weight: 900; padding: 6px 16px; font-family: 'Orbitron', sans-serif;">ELITE</div>
+                            <h3 style="color: #eab308; margin-bottom: 1rem; font-size: 1.75rem;">Gold Tier</h3>
+                            <p style="font-size: 1rem; color: var(--muted); margin-bottom: 3rem; line-height: 1.5;">Legendary status. Grants <span style="color: white; font-weight: 800;">1.2x Point Multiplier</span> on every single correct prediction.</p>
+                            <button onclick="mint('Gold')" class="cyber-button" style="width: 100%; background: #eab308; color: black;">Mint (1000 PTS)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="flex: 1; min-width: 300px;">
+                    <h4 style="color: var(--muted); margin-bottom: 2rem; font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3em;">Collector's Vault</h4>
+                    <div id="my-nfts" class="nft-grid">
+                        <div style="grid-column: 1/-1; padding: 6rem; border: 3px dashed rgba(88,166,255,0.05); border-radius: 20px; text-align: center; color: var(--muted); background: rgba(0,0,0,0.1);">
+                            <i class="fas fa-shield-alt" style="font-size: 4rem; opacity: 0.15; margin-bottom: 1.5rem;"></i>
+                            <p style="font-size: 1.25rem; font-weight: 600; opacity: 0.5;">No Badges Detected in Wallet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="padding: 100px 0; border-top: 1px solid var(--border); background: #010409; position: relative; z-index: 1;">
+        <div class="container" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+            <div class="logo" style="margin-bottom: 2.5rem;">
+                <div class="logo-box"><i class="fas fa-trophy" style="color: var(--primary);"></i></div>
+                <div class="logo-text" style="text-align: left;">
+                    <span class="logo-title neon-text">RONIN</span>
+                    <span class="logo-subtitle">Predictor</span>
+                </div>
+            </div>
+            <p style="color: var(--muted); font-size: 1.1rem; max-width: 600px; margin-bottom: 3rem; line-height: 1.6;">Build your legacy on the Ronin Network. The ultimate destination for Web3 gaming fantasy sports.</p>
+            <div style="display: flex; gap: 3rem; margin-bottom: 4rem;">
+                <a href="#" style="color: var(--muted); font-size: 1.5rem; transition: 0.3s;"><i class="fab fa-twitter"></i></a>
+                <a href="#" style="color: var(--muted); font-size: 1.5rem; transition: 0.3s;"><i class="fab fa-discord"></i></a>
+                <a href="#" style="color: var(--muted); font-size: 1.5rem; transition: 0.3s;"><i class="fab fa-github"></i></a>
+            </div>
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5em; opacity: 0.5;">
+                © 2026 Ronin Fantasy Predictor • All Rights Reserved
             </div>
         </div>
-    </section>
+    </footer>
 
-    <section id="faq">
-        <div class="container">
-            <h2>Frequently Asked Questions</h2>
-            <div class="faq-item">
-                <h4>What is Ronin Fantasy Predictor?</h4>
-                <p>A dApp for betting on Ronin game outcomes with NFT boosts.</p>
-            </div>
-            <div class="faq-item">
-                <h4>How do I connect my wallet?</h4>
-                <p>Click 'Connect Wallet' and approve in Ronin Wallet.</p>
-            </div>
-            <div class="faq-item">
-                <h4>Are bets secure?</h4>
-                <p>Yes, using smart contracts with reentrancy guards.</p>
-            </div>
-            <div class="faq-item">
-                <h4>What are Predictor Badges?</h4>
-                <p>NFTs that give betting advantages and rewards.</p>
-            </div>
-            <div class="faq-item">
-                <h4>How to claim winnings?</h4>
-                <p>After resolution, claim via dashboard.</p>
-            </div>
-        </div>
-    </section>
+    <div id="notif"></div>
 
-    <section id="about">
-        <div class="container">
-            <h2>About Us</h2>
-            <p>Ronin Fantasy Predictor is a community-driven dApp built on the Ronin Network, aiming to enhance the gaming experience with prediction markets and utility NFTs. Developed by passionate Web3 enthusiasts, we focus on security, user-friendliness, and fun.</p>
-            <p>Powered by Ronin's low fees and high speed, we're part of the growing ecosystem with 1.3M+ daily users.</p>
-            <a href="#contact" class="cta-btn" onclick="showSection('contact')">Get in Touch</a>
-        </div>
-    </section>
+    <script>
+        let address = null;
+        const API = "/api";
 
-    <section id="contact">
-        <div class="container">
-            <h2>Contact Us</h2>
-            <form class="contact-form">
-                <label for="name">Name</label>
-                <input type="text" id="name" placeholder="Your name" required>
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="Your email" required>
-                <label for="message">Message</label>
-                <textarea id="message" rows="5" placeholder="Your message" required></textarea>
-                <button type="button" onclick="submitContact()">Send Message</button>
-            </form>
-            <span class="success-message" id="contact-success">Message sent! (Mock)</span>
-        </div>
-    </section>
-
-    <div class="loader" id="loader">
-        <div class="loader-spinner"></div>
-    </div>
-</main>
-
-<footer>
-    <div class="container">
-        <p>&copy; 2026 Ronin Fantasy Predictor. Built on Ronin Network. All rights reserved.</p>
-        <p><a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms of Service</a></p>
-    </div>
-</footer>
-
-<script>
-    // ================================================
-    // PROFESSIONAL JAVASCRIPT - EXPANDED FOR PRODUCTION
-    // ================================================
-
-    // Core Functions
-    function showSection(sectionId) {
-        document.querySelectorAll('section').forEach(sec => {
-            sec.classList.remove('active');
-        });
-        const target = document.getElementById(sectionId);
-        if (target) {
-            target.classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        function toast(msg, type='success') {
+            const n = document.getElementById('notif');
+            n.innerText = msg;
+            n.className = `show ${type}`;
+            setTimeout(() => n.className = '', 5000);
         }
-    }
 
-    // Hamburger Menu Toggle
-    function toggleMenu() {
-        const navLinks = document.getElementById('nav-links');
-        if (navLinks) {
-            navLinks.classList.toggle('active');
+        async function connect() {
+            if (!window.ethereum) return toast("Ronin Wallet not detected!", "error");
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                address = accounts[0];
+                updateWalletUI();
+                
+                // Sync user with backend
+                await fetch(API + "/users", {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ walletAddress: address })
+                });
+                
+                toast("Ronin Wallet Synced Successfully");
+                loadUserData();
+            } catch(e) { toast("Connection sequence failed", "error"); }
         }
-    }
 
-    // Wallet Connection (Mock - Expandable to Real)
-    let walletConnected = false;
-    let walletAddress = '';
-    let userBets = [];
-    let userNFTs = [];
+        function updateWalletUI() {
+            if (!address) return;
+            document.getElementById('wallet-section').innerHTML = `
+                <div style="display: flex; align-items: center; gap: 1.5rem;">
+                    <div style="text-align: right; line-height: 1.1;">
+                        <div style="font-size: 0.75rem; font-weight: 900; color: var(--primary); letter-spacing: 0.1em;">PTS</div>
+                        <div id="user-points" style="font-weight: 900; color: white; font-size: 1.5rem; font-family: 'Orbitron', sans-serif;">0</div>
+                    </div>
+                    <div class="wallet-pill" onclick="disconnect()">
+                        <div class="wallet-status"></div>
+                        ${address.slice(0,6).toUpperCase()}...${address.slice(-4).toUpperCase()}
+                    </div>
+                </div>
+            `;
+        }
 
-    function connectWallet() {
-        if (!walletConnected) {
-            showLoader();
-            setTimeout(() => {
-                walletAddress = 'ronin:1234...abcd';
-                document.getElementById('wallet-text').innerText = walletAddress.slice(0,6) + '...' + walletAddress.slice(-4);
-                document.getElementById('dashboard-wallet').innerText = walletAddress;
-                walletConnected = true;
-                alert('Wallet connected: ' + walletAddress);
-                updateDashboard();
-                hideLoader();
-            }, 1000); // Simulate delay
-        } else {
-            alert('Wallet already connected.');
+        function disconnect() {
+            address = null;
+            location.reload();
         }
-    }
 
-    // Option Selection
-    function selectOption(btn) {
-        const card = btn.closest('.prediction-card');
-        if (card) {
-            card.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
+        async function loadUserData() {
+            if (!address) return;
+            try {
+                const res = await fetch(API + "/users/" + address);
+                const user = await res.json();
+                if (document.getElementById('user-points')) {
+                    document.getElementById('user-points').innerText = user.points || 0;
+                }
+                
+                const nftRes = await fetch(API + "/nfts/user/" + address);
+                const nfts = await nftRes.json();
+                const container = document.getElementById('my-nfts');
+                if (nfts.length > 0) {
+                    container.innerHTML = nfts.map(nft => `
+                        <div class="nft-card ${nft.tier === 'Gold' ? 'nft-gold' : 'nft-bronze'}">
+                            <div class="nft-icon-circle"><i class="fas fa-shield-alt"></i></div>
+                            <div class="nft-title">${nft.tier}</div>
+                            <div style="font-size: 0.75rem; font-weight: 800; color: var(--muted); margin-bottom: 1.5rem; letter-spacing: 0.2em;">LEGACY BADGE</div>
+                            <div style="background: rgba(0,0,0,0.4); padding: 8px 20px; border-radius: 99px; font-size: 0.85rem; font-weight: 900; color: white; border: 1px solid rgba(255,255,255,0.1);">
+                                ${nft.multiplier}% MULTIPLIER
+                            </div>
+                            <div style="position: absolute; bottom: 15px; font-family: monospace; font-size: 0.6rem; opacity: 0.3;">#${nft.tokenId}</div>
+                        </div>
+                    `).join('');
+                }
+            } catch(e) {}
         }
-    }
 
-    // Place Bet (Mock - With Validation)
-    function placeBet(cardId) {
-        const amountInput = document.getElementById('bet-amount-' + cardId);
-        const errorSpan = document.getElementById('error-' + cardId);
-        if (!walletConnected) {
-            alert('Please connect wallet first.');
-            return;
-        }
-        const amount = parseFloat(amountInput.value);
-        if (isNaN(amount) || amount <= 0) {
-            if (errorSpan) errorSpan.textContent = 'Enter a valid positive amount.';
-            if (errorSpan) errorSpan.style.display = 'block';
-            amountInput.classList.add('input-invalid');
-            return;
-        }
-        if (errorSpan) errorSpan.style.display = 'none';
-        amountInput.classList.remove('input-invalid');
-        alert('Bet placed: ' + amount + ' RON on prediction #' + cardId);
-        userBets.push({ id: cardId, amount: amount });
-        updateDashboard();
-        amountInput.value = '';
-    }
+        async function loadMatches() {
+            try {
+                const res = await fetch(API + "/matches");
+                const matches = await res.json();
+                const container = document.getElementById('matches-container');
+                
+                if (matches.length === 0) {
+                    container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--muted);">No active prediction markets found.</p>';
+                    return;
+                }
 
-    // Mint NFT (Mock - With Validation)
-    function mintNFT() {
-        const tierSelect = document.getElementById('nft-tier');
-        const errorSpan = document.getElementById('nft-error');
-        if (!walletConnected) {
-            alert('Please connect wallet first.');
-            return;
+                container.innerHTML = matches.map(m => `
+                    <div class="cyber-card">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+                            <div class="match-badge ${m.status === 'live' ? 'badge-live' : 'badge-upcoming'}">
+                                ${m.status === 'live' ? '<i class="fas fa-bolt"></i> Live' : '<i class="far fa-clock"></i> ' + new Date(m.startTime).toLocaleDateString()}
+                            </div>
+                            <div style="font-family: monospace; font-size: 0.7rem; opacity: 0.3;">EID: ${m.id}</div>
+                        </div>
+                        <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem;">${m.title}</h3>
+                        <p style="font-size: 1rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.4; height: 2.8rem; overflow: hidden;">${m.description}</p>
+                        
+                        <div class="vs-container">
+                            <div class="team-box" id="match-${m.id}-A" onclick="selectTeam(${m.id}, 'A', '${m.teamA}')">
+                                <div class="team-name">${m.teamA}</div>
+                            </div>
+                            <div class="vs-text">VS</div>
+                            <div class="team-box" id="match-${m.id}-B" onclick="selectTeam(${m.id}, 'B', '${m.teamB}')">
+                                <div class="team-name">${m.teamB}</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: auto;">
+                            <button id="btn-${m.id}" onclick="predict(${m.id})" class="cyber-button" style="width: 100%; font-size: 0.8rem;">Secure Prediction</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch(e) {
+                document.getElementById('matches-container').innerHTML = '<p style="grid-column: 1/-1; text-align: center;">Error syncing with game oracles.</p>';
+            }
         }
-        const tier = parseInt(tierSelect.value);
-        if (isNaN(tier)) {
-            if (errorSpan) errorSpan.textContent = 'Select a tier.';
-            if (errorSpan) errorSpan.style.display = 'block';
-            return;
-        }
-        if (errorSpan) errorSpan.style.display = 'none';
-        const tierNames = ['Bronze', 'Silver', 'Gold'];
-        alert('NFT Minted: ' + tierNames[tier] + ' Tier');
-        userNFTs.push({ tier: tierNames[tier] });
-        updateDashboard();
-        tierSelect.value = 0;
-    }
 
-    // Update Dashboard
-    function updateDashboard() {
-        const betsSpan = document.getElementById('dashboard-bets');
-        const nftsSpan = document.getElementById('dashboard-nfts');
-        if (betsSpan) betsSpan.textContent = userBets.length > 0 ? userBets.length + ' active bets' : 'None yet';
-        if (nftsSpan) nftsSpan.textContent = userNFTs.length > 0 ? userNFTs.length + ' NFTs owned' : 'None yet';
-        const detailsGrid = document.getElementById('dashboard-details');
-        if (detailsGrid) {
-            detailsGrid.innerHTML = '';
-            userBets.forEach((bet, index) => {
-                const card = document.createElement('div');
-                card.className = 'prediction-card';
-                card.innerHTML = `<h3>Bet #${index + 1}</h3><p>Amount: ${bet.amount} RON on Prediction ${bet.id}</p>`;
-                detailsGrid.appendChild(card);
+        const selections = {};
+        window.selectTeam = (id, side, name) => {
+            document.getElementById(`match-${id}-A`).className = 'team-box';
+            document.getElementById(`match-${id}-B`).className = 'team-box';
+            document.getElementById(`match-${id}-${side}`).className = 'team-box selected';
+            selections[id] = name;
+        };
+
+        window.predict = async (id) => {
+            if (!address) return toast("Connect Ronin Wallet to Predict", "error");
+            if (!selections[id]) return toast("Please select a winning side", "error");
+            
+            const btn = document.getElementById(`btn-${id}`);
+            const originalText = btn.innerText;
+            btn.innerText = "Transmitting...";
+            btn.disabled = true;
+            
+            try {
+                const res = await fetch(API + "/predictions", {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        matchId: id,
+                        predictedWinner: selections[id],
+                        wagerAmount: 10,
+                        walletAddress: address
+                    })
+                });
+                if (res.ok) {
+                    toast("Prediction Broadcasted Successfully!");
+                    btn.innerText = "Locked In";
+                    btn.style.background = "#22c55e";
+                    btn.style.color = "white";
+                    loadUserData();
+                } else {
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                }
+            } catch(e) { 
+                toast("Network transmission failure", "error");
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
+        };
+
+        window.mint = async (tier) => {
+            if (!address) return toast("Identity Verification Required", "error");
+            toast(`Initiating ${tier} Badge Summoning...`);
+            
+            try {
+                const res = await fetch(API + "/nfts/mint", {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ walletAddress: address, tier })
+                });
+                
+                if (res.ok) {
+                    toast(`${tier} Mastery Badge Acquired!`, "success");
+                    loadUserData();
+                } else {
+                    const err = await res.json();
+                    toast(err.message || "Minting conditions not met", "error");
+                }
+            } catch(e) { toast("Summoning interrupted", "error"); }
+        };
+
+        // --- INIT ---
+        loadMatches();
+        if (window.ethereum) {
+            window.ethereum.request({ method: 'eth_accounts' }).then(accs => {
+                if (accs.length > 0) { 
+                    address = accs[0]; 
+                    updateWalletUI();
+                    loadUserData();
+                }
             });
-            userNFTs.forEach((nft, index) => {
-                const card = document.createElement('div');
-                card.className = 'prediction-card';
-                card.innerHTML = `<h3>NFT #${index + 1}</h3><p>Tier: ${nft.tier}</p>`;
-                detailsGrid.appendChild(card);
-            });
         }
-    }
-
-    // Submit Contact (Mock)
-    function submitContact() {
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
-        const successSpan = document.getElementById('contact-success');
-        if (!name || !email || !message) {
-            alert('Please fill all fields.');
-            return;
-        }
-        alert('Message sent: ' + message);
-        if (successSpan) successSpan.style.display = 'block';
-        document.querySelector('.contact-form').reset();
-    }
-
-    // Loader Functions
-    function showLoader() {
-        const loader = document.getElementById('loader');
-        if (loader) loader.classList.add('active');
-    }
-
-    function hideLoader() {
-        const loader = document.getElementById('loader');
-        if (loader) loader.classList.remove('active');
-    }
-
-    // Header Scroll Effect
-    window.addEventListener('scroll', () => {
-        const header = document.querySelector('header');
-        if (header) header.classList.toggle('scrolled', window.scrollY > 50);
-    });
-
-    // Close Menu on Click Outside
-    document.addEventListener('click', (e) => {
-        const navLinks = document.getElementById('nav-links');
-        const toggle = document.querySelector('.menu-toggle');
-        if (!navLinks.contains(e.target) && !toggle.contains(e.target)) {
-            navLinks.classList.remove('active');
-        }
-    });
-
-    // Initial Setup
-    showSection('home');
-    updateDashboard();
-
-    // Additional JS Functions for Production
-    function validateNumberInput(input) {
-        input.value = input.value.replace(/[^0-9.]/g, '');
-    }
-
-    // Attach Validation to Inputs
-    document.querySelectorAll('.bet-input').forEach(input => {
-        input.addEventListener('input', () => validateNumberInput(input));
-    });
-
-    // Keyboard Accessibility
-    document.querySelectorAll('a, button, input, select').forEach(el => {
-        el.addEventListener('focus', () => el.classList.add('focused'));
-        el.addEventListener('blur', () => el.classList.remove('focused'));
-    });
-
-    // More Mock Data for Dashboard
-    // (Expand with real API in production)
-    function loadMockData() {
-        // Placeholder for fetching data
-        console.log('Loading mock data...');
-    }
-
-    loadMockData();
-
-    // Error Handling Wrapper
-    function safeExecute(fn) {
-        try {
-            fn();
-        } catch (error) {
-            console.error('Error: ' + error.message);
-            alert('An error occurred. Please try again.');
-        }
-    }
-
-    // Wrap Functions
-    const originalConnectWallet = connectWallet;
-    connectWallet = () => safeExecute(originalConnectWallet);
-
-    const originalPlaceBet = placeBet;
-    placeBet = (id) => safeExecute(() => originalPlaceBet(id));
-
-    const originalMintNFT = mintNFT;
-    mintNFT = () => safeExecute(originalMintNFT);
-
-    // End of Script Padding
-    // Additional console logs for debugging in production
-    console.log('Site loaded successfully.');
-    console.log('Wallet status: ' + walletConnected);
-    console.log('User bets: ' + userBets.length);
-    console.log('User NFTs: ' + userNFTs.length);
-
-    // Fake API Call Simulation
-    function simulateAPI() {
-        return new Promise(resolve => setTimeout(resolve, 500));
-    }
-
-    // Use in functions if expanding
-</script>
+    </script>
 </body>
 </html>
-
