@@ -336,11 +336,11 @@
         </div>
     </footer>
     <div id="notif"></div>
-    <script>
+   <script>
     let address = null;
     let userPoints = 500;
-    let predictions = {}; // team name
-    let betAmounts = {};  // formatted amount
+    let predictions = {}; // team name after bet
+    let betAmounts = {};  // formatted amount after bet
 
     const demoMatches = [
         {
@@ -436,7 +436,7 @@
             signer = provider.getSigner();
             address = await signer.getAddress();
 
-            // FORCE to chainId 2021 (Ronin - works for both mainnet and testnet configs)
+            // FORCE SWITCH TO SAIGON TESTNET (chainId 2021 as per current Ronin config)
             const desiredChainId = 2021;
             let network = await provider.getNetwork();
             if (network.chainId !== desiredChainId) {
@@ -445,34 +445,34 @@
                         method: 'wallet_switchEthereumChain',
                         params: [{ chainId: '0x7e5' }], // 2021 in hex = 0x7e5
                     });
-                    toast("Switched to Ronin Network (chainId 2021)", "success");
+                    toast("Switched to Ronin Saigon Testnet (2021)", "success");
                 } catch (switchError) {
                     if (switchError.code === 4902) {
                         await ethereumProvider.request({
                             method: 'wallet_addEthereumChain',
                             params: [{
                                 chainId: '0x7e5',
-                                chainName: 'Ronin Network',
-                                rpcUrls: ['https://api.roninchain.com/rpc'],
+                                chainName: 'Ronin Saigon Testnet',
+                                rpcUrls: ['https://saigon-testnet.roninchain.com/rpc'],
                                 nativeCurrency: { name: 'RON', symbol: 'RON', decimals: 18 },
-                                blockExplorerUrls: ['https://app.roninchain.com/']
+                                blockExplorerUrls: ['https://saigon-explorer.roninchain.com/']
                             }],
                         });
                         await ethereumProvider.request({
                             method: 'wallet_switchEthereumChain',
                             params: [{ chainId: '0x7e5' }],
                         });
-                        toast("Added & switched to Ronin Network (2021)", "success");
+                        toast("Added & switched to Ronin Saigon Testnet (2021)", "success");
                     } else {
                         throw switchError;
                     }
                 }
             }
 
-            // Safety check
+            // Final safety check
             network = await provider.getNetwork();
             if (network.chainId !== desiredChainId) {
-                throw new Error("Network switch failed. Please manually select Ronin Network (chainId 2021) in wallet.");
+                throw new Error("Failed to switch to Ronin Saigon Testnet (2021). Please select it manually in your wallet.");
             }
 
             contract = new ethers.Contract(contractAddress, abi, signer);
@@ -609,8 +609,10 @@
     }
 
     const selections = {};
+
     window.selectTeam = (id, team) => {
-        if (document.querySelector(`#bet-amount-${id}`)) { // only allow select if not betted yet
+        // Allow selection only if no bet has been placed yet
+        if (!predictions[id] && !betAmounts[id]) {
             document.querySelectorAll(`[onclick^="selectTeam(${id}"]`).forEach(el => el.classList.remove('selected'));
             event.target.closest('.team-box').classList.add('selected');
             selections[id] = team;
@@ -634,7 +636,6 @@
             const tx = await contract.placeBet(id, option, { value: betAmountWei });
             await tx.wait();
 
-            // Force fetch latest bet data
             const ub = await contract.userBets(id, address);
             if (ub.amount.gt(0)) {
                 const betTeam = ub.option.toNumber() === 0 ? m.teamA : m.teamB;
@@ -650,7 +651,7 @@
 
                 toast(`Betted ${betAmtFormatted} RON on ${betTeam}!`, "success");
             } else {
-                toast("Bet placed, but amount not confirmed yet. Refresh page.", "warning");
+                toast("Bet placed but amount not detected yet. Refresh page.", "warning");
             }
         } catch (e) {
             toast(e.message || "Transaction failed", "error");
@@ -693,5 +694,6 @@
 </script>
 </body>
 </html>
+
 
 
