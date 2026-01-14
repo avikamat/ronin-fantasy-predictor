@@ -14,9 +14,6 @@
     <script src="https://cdn.jsdelivr.net/npm/ethers@5/dist/ethers.umd.min.js"></script>
 
     <style>
-        /* ================================================ */
-        /* TAILWIND & THEME MAPPING - MATCHING PUBLISHED SITE */
-        /* ================================================ */
         :root {
             --primary: #58A6FF;
             --background: #0a0e17;
@@ -249,14 +246,14 @@
         #notif.success { background: linear-gradient(90deg, #22c55e, #15803d); border-left: 6px solid #000; border: 1px solid rgba(34, 197, 94, 0.3); }
         #notif.error { background: linear-gradient(90deg, #ef4444, #b91c1c); border-left: 6px solid #000; border: 1px solid rgba(239, 68, 68, 0.3); }
 
-        /* Roadmap card styles (now identical to betting cards) */
+        /* Roadmap styles - fixed no cutting + same as betting cards */
         .roadmap-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-top: 3rem; }
         .roadmap-phase { 
             background: rgba(13, 18, 29, 0.8);
             backdrop-filter: blur(12px);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 3rem 2rem 2rem; /* Increased top padding so number doesn't cut off */
+            padding: 4rem 2rem 2rem; /* Extra top padding to prevent cutting */
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -268,13 +265,13 @@
         }
         .phase-number {
             position: absolute;
-            top: -1.8rem; /* Slightly lower so fully visible */
+            top: -2.2rem; /* Adjusted so fully visible */
             left: 50%;
             transform: translateX(-50%);
             background: var(--primary);
             color: var(--background);
-            width: 3.5rem;
-            height: 3.5rem;
+            width: 3.8rem;
+            height: 3.8rem;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -339,16 +336,14 @@
             </div>
         </section>
 
-        <!-- STATS BAR - Now with testnet instructions instead of fake stats -->
+        <!-- STATS BAR - Testnet instructions here instead of fake stats -->
         <div class="stats-bar">
-            <div class="container stats-grid" style="grid-template-columns: 1fr; text-align: center;">
-                <div class="stats-message">
-                    <strong>Beta Testnet Mode</strong><br>
-                    This is a testnet version running on Ronin Saigon. To play and test betting/claiming:<br>
-                    Switch your Ronin Wallet to <strong>Saigon Testnet</strong> and get free test RON from the official faucet:<br>
-                    <a href="https://faucet.roninchain.com" target="_blank" style="color: var(--primary); font-weight: 800; text-decoration: underline;">https://faucet.roninchain.com</a><br>
-                    (Connect your wallet there and request funds – it’s free and instant.)
-                </div>
+            <div class="container stats-message">
+                <strong>Beta Testnet Mode</strong><br>
+                This site is running on Ronin Saigon Testnet. To test betting, claiming, and full functionality:<br>
+                Switch your Ronin Wallet to <strong>Saigon Testnet</strong> and get free test RON from the official faucet:<br>
+                <a href="https://faucet.roninchain.com" target="_blank">https://faucet.roninchain.com</a><br>
+                (Connect your wallet there and request funds – free & instant.)
             </div>
         </div>
 
@@ -405,7 +400,7 @@
             </div>
         </section>
 
-        <!-- ROADMAP (fixed with cyber-card style + no cutting) -->
+        <!-- ROADMAP (fixed - no more cutting) -->
         <section id="roadmap" class="container" style="padding: 10rem 0; border-top: 1px solid var(--border);">
             <div class="section-header">
                 <div>
@@ -489,6 +484,7 @@
 
     <div id="notif"></div>
 
+    <!-- Your existing script remains unchanged -->
     <script>
         let address = null;
         let userPoints = 500;
@@ -762,7 +758,8 @@
         };
 
         // --- INIT ---
-        loadMatches();
+        loadMatches(); // ... your full script here (connect, loadMatches, predict, etc.) ...
+        // No changes needed to script
     </script>
 </body>
 </html>
