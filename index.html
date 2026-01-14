@@ -248,11 +248,12 @@
 
         /* Roadmap styles - fixed no cutting + same as betting cards */
         /* Roadmap - fixed no cutting + same cyber-card style */
+/* Roadmap - circles overlapping the boxes like in your mockup */
 .roadmap-grid { 
     display: grid; 
     grid-template-columns: repeat(2, 1fr); 
     gap: 2.5rem; 
-    margin-top: 4rem; 
+    margin-top: 5rem; /* Extra top space for overlap */
 }
 
 .roadmap-phase { 
@@ -260,42 +261,43 @@
     backdrop-filter: blur(12px);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 5rem 2.5rem 2.5rem;  /* Much more top padding to clear space for the circle */
+    padding: 3.5rem 2rem 2.5rem; /* Reduced top padding since circle overlaps */
     transition: all 0.3s ease;
     position: relative;
-    overflow: hidden;
-    min-height: 300px; /* Ensures enough vertical space */
+    overflow: visible; /* Important: allows circle to overflow outside card */
+    min-height: 320px;
 }
 
 .roadmap-phase:hover { 
     border-color: var(--primary);
-    box-shadow: 0 0 30px rgba(88, 166, 255, 0.15);
-    transform: translateY(-4px);
+    box-shadow: 0 0 35px rgba(88, 166, 255, 0.25);
+    transform: translateY(-6px);
 }
 
 .phase-number {
     position: absolute;
-    top: -2.5rem;          /* Lowered further so fully visible */
+    top: -3.2rem;              /* Positions circle half-overlapping the top edge */
     left: 50%;
     transform: translateX(-50%);
     background: var(--primary);
     color: var(--background);
-    width: 4.5rem;
-    height: 4.5rem;
+    width: 5.5rem;
+    height: 5.5rem;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2.2rem;
+    font-size: 2.4rem;
     font-weight: 900;
     font-family: 'Orbitron', sans-serif;
-    box-shadow: 0 0 25px rgba(88, 166, 255, 0.6);
-    z-index: 10;           /* Higher z-index to ensure it's on top */
-    border: 3px solid rgba(255,255,255,0.15); /* subtle glow border */
+    box-shadow: 0 0 30px rgba(88, 166, 255, 0.6), inset 0 0 15px rgba(255,255,255,0.2);
+    border: 4px solid rgba(88, 166, 255, 0.4); /* Glowing border */
+    z-index: 10;               /* Ensures circle is above card */
+    pointer-events: none;
 }
 
 .phase-status {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 0.15em;
@@ -303,13 +305,13 @@
     text-align: center;
 }
 
-.phase-live { color: var(--accent); text-shadow: 0 0 12px var(--accent); }
-.phase-upcoming { color: var(--muted); }
+.phase-live { color: var(--accent); text-shadow: 0 0 15px var(--accent); }
+.phase-upcoming { color: var(--muted); opacity: 0.9; }
 
 @media (max-width: 1024px) {
     .roadmap-grid { grid-template-columns: 1fr; }
-    .roadmap-phase { padding: 6rem 2rem 2.5rem; } /* Even more top padding on mobile */
-    .phase-number { top: -3rem; font-size: 2.5rem; width: 5rem; height: 5rem; }
+    .roadmap-phase { padding: 4.5rem 2rem 2.5rem; }
+    .phase-number { top: -3.8rem; width: 6rem; height: 6rem; font-size: 2.8rem; }
 }
     </style>
 </head>
@@ -779,4 +781,5 @@
     </script>
 </body>
 </html>
+
 
