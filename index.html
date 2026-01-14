@@ -247,54 +247,70 @@
         #notif.error { background: linear-gradient(90deg, #ef4444, #b91c1c); border-left: 6px solid #000; border: 1px solid rgba(239, 68, 68, 0.3); }
 
         /* Roadmap styles - fixed no cutting + same as betting cards */
-        .roadmap-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-top: 3rem; }
-        .roadmap-phase { 
-            background: rgba(13, 18, 29, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 4rem 2rem 2rem; /* Extra top padding to prevent cutting */
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .roadmap-phase:hover { 
-            border-color: var(--primary);
-            box-shadow: 0 0 30px rgba(88, 166, 255, 0.15);
-            transform: translateY(-4px);
-        }
-        .phase-number {
-            position: absolute;
-            top: -2.2rem; /* Adjusted so fully visible */
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--primary);
-            color: var(--background);
-            width: 3.8rem;
-            height: 3.8rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            font-weight: 900;
-            font-family: 'Orbitron', sans-serif;
-            box-shadow: 0 0 20px rgba(88, 166, 255, 0.5);
-            z-index: 2;
-        }
-        .phase-status {
-            font-size: 0.9rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 1rem;
-        }
-        .phase-live { color: var(--accent); text-shadow: 0 0 10px var(--accent); }
-        .phase-upcoming { color: var(--muted); }
+        /* Roadmap - fixed no cutting + same cyber-card style */
+.roadmap-grid { 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 2.5rem; 
+    margin-top: 4rem; 
+}
 
-        @media (max-width: 1024px) {
-            .roadmap-grid { grid-template-columns: 1fr; }
-        }
+.roadmap-phase { 
+    background: rgba(13, 18, 29, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 5rem 2.5rem 2.5rem;  /* Much more top padding to clear space for the circle */
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    min-height: 300px; /* Ensures enough vertical space */
+}
+
+.roadmap-phase:hover { 
+    border-color: var(--primary);
+    box-shadow: 0 0 30px rgba(88, 166, 255, 0.15);
+    transform: translateY(-4px);
+}
+
+.phase-number {
+    position: absolute;
+    top: -2.5rem;          /* Lowered further so fully visible */
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary);
+    color: var(--background);
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    font-weight: 900;
+    font-family: 'Orbitron', sans-serif;
+    box-shadow: 0 0 25px rgba(88, 166, 255, 0.6);
+    z-index: 10;           /* Higher z-index to ensure it's on top */
+    border: 3px solid rgba(255,255,255,0.15); /* subtle glow border */
+}
+
+.phase-status {
+    font-size: 1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 1.2rem;
+    text-align: center;
+}
+
+.phase-live { color: var(--accent); text-shadow: 0 0 12px var(--accent); }
+.phase-upcoming { color: var(--muted); }
+
+@media (max-width: 1024px) {
+    .roadmap-grid { grid-template-columns: 1fr; }
+    .roadmap-phase { padding: 6rem 2rem 2.5rem; } /* Even more top padding on mobile */
+    .phase-number { top: -3rem; font-size: 2.5rem; width: 5rem; height: 5rem; }
+}
     </style>
 </head>
 <body>
@@ -763,3 +779,4 @@
     </script>
 </body>
 </html>
+
