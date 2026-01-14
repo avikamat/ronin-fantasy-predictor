@@ -403,81 +403,22 @@
         </div>
     </footer>
     <div id="notif"></div>
-    <script>
+   <script>
     let address = null;
-    let userPoints = 500; // Demo starting points (updated from balance)
-    let predictions = {}; // Store user's predicted team locally
-    let betAmounts = {};  // Store bet amount per match for display
+    let userPoints = 500;
+    let predictions = {};
+    let betAmounts = {};
 
-    // Demo matches data (hardcoded)
     const demoMatches = [
-        {
-            id: 1,
-            title: "Pixels Daily Quest Showdown",
-            description: "Who will complete the daily quest faster today? Team A (Speed Runners) vs Team B (Strategy Masters)",
-            teamA: "Speed Runners",
-            teamB: "Strategy Masters",
-            status: "live",
-            startTime: new Date()
-        },
-        {
-            id: 2,
-            title: "Axie Infinity Arena Battle",
-            description: "Epic clash between top Axie teams. Predict the winner of this ranked tournament match.",
-            teamA: "Axie Legends",
-            teamB: "Ronin Rebels",
-            status: "upcoming",
-            startTime: new Date(Date.now() + 3600000)
-        },
-        {
-            id: 3,
-            title: "Ronin Racing Championship",
-            description: "High-speed race across the Ronin track. Who will take the checkered flag?",
-            teamA: "Thunder Riders",
-            teamB: "Shadow Racers",
-            status: "upcoming",
-            startTime: new Date(Date.now() + 7200000)
-        },
-        {
-            id: 4,
-            title: "Fantasy Duel Night",
-            description: "Nighttime duels with special power-ups. Predict the ultimate survivor.",
-            teamA: "Moon Knights",
-            teamB: "Star Guardians",
-            status: "live",
-            startTime: new Date()
-        }
+        { id: 1, title: "Pixels Daily Quest Showdown", description: "Who will complete the daily quest faster today? Team A (Speed Runners) vs Team B (Strategy Masters)", teamA: "Speed Runners", teamB: "Strategy Masters", status: "live", startTime: new Date() },
+        { id: 2, title: "Axie Infinity Arena Battle", description: "Epic clash between top Axie teams. Predict the winner of this ranked tournament match.", teamA: "Axie Legends", teamB: "Ronin Rebels", status: "upcoming", startTime: new Date(Date.now() + 3600000) },
+        { id: 3, title: "Ronin Racing Championship", description: "High-speed race across the Ronin track. Who will take the checkered flag?", teamA: "Thunder Riders", teamB: "Shadow Racers", status: "upcoming", startTime: new Date(Date.now() + 7200000) },
+        { id: 4, title: "Fantasy Duel Night", description: "Nighttime duels with special power-ups. Predict the ultimate survivor.", teamA: "Moon Knights", teamB: "Star Guardians", status: "live", startTime: new Date() }
     ];
 
-    let provider;
-    let signer;
-    let contract;
-    let is_admin = false;
+    let provider, signer, contract, is_admin = false;
     const contractAddress = "0xf8Bf45a1EFFbb3928fB3224BD3D0c655c93699F4";
-    const abi = [
-        "event PredictionCreated(uint256 indexed id, string description, uint256 endTime, uint8 numOptions)",
-        "event BetPlaced(uint256 indexed predictionId, address indexed user, uint8 option, uint256 amount)",
-        "event PredictionResolved(uint256 indexed id, uint8 outcome)",
-        "event WinningsClaimed(uint256 indexed predictionId, address indexed user, uint256 amount)",
-        "event FeesWithdrawn(address indexed owner, uint256 amount)",
-        "event EmergencyStopped(bool stopped)",
-        "function createPrediction(string memory _description, uint256 _endTime, uint8 _numOptions)",
-        "function resolvePrediction(uint256 predictionId, uint8 winningOption)",
-        "function withdrawFees()",
-        "function emergencyStop(bool _stopped)",
-        "function emergencyWithdraw()",
-        "function placeBet(uint256 predictionId, uint8 option) payable",
-        "function claimWinnings(uint256 predictionId)",
-        "function getNumOptions(uint256 predictionId) view returns (uint256)",
-        "function getAllPredictionIds() view returns (uint256[] memory)",
-        "function getPrediction(uint256 predictionId) view returns (string memory, uint256, uint256, uint8, bool, uint256, uint256[] memory)",
-        "function owner() view returns (address)",
-        "function accumulatedFees() view returns (uint256)",
-        "function emergencyStopped() view returns (bool)",
-        "function userBets(uint256, address) view returns (uint256 amount, uint8 option)",
-        "function nextPredictionId() view returns (uint256)",
-        "function predictions(uint256) view returns (string memory description, uint256 endTime, uint256 resolveTime, uint8 outcome, bool resolved, uint256[] optionPools, uint256 totalPool)"
-    ];
+    const abi = [ /* keep your full ABI array here */ ];
 
     function toast(msg, type='success') {
         const n = document.getElementById('notif');
@@ -488,27 +429,20 @@
 
     async function connect() {
         try {
-            let ethereumProvider;
-            if (window.ronin && window.ronin.provider) {
-                ethereumProvider = window.ronin.provider;
-                await ethereumProvider.request({method: 'eth_requestAccounts'});
-                toast("Ronin Wallet Connected");
-            } else if (window.ethereum) {
-                ethereumProvider = window.ethereum;
-                await ethereumProvider.request({method: 'eth_requestAccounts'});
-            } else {
-                return toast("No wallet detected", "error");
-            }
+            let ethereumProvider = window.ronin?.provider || window.ethereum;
+            if (!ethereumProvider) return toast("No wallet detected", "error");
+
+            await ethereumProvider.request({ method: 'eth_requestAccounts' });
+            toast("Ronin Wallet Connected");
+
             provider = new ethers.providers.Web3Provider(ethereumProvider);
             signer = provider.getSigner();
             address = await signer.getAddress();
+
             const network = await provider.getNetwork();
             if (network.chainId !== 2021) {
                 try {
-                    await ethereumProvider.request({
-                        method: 'wallet_switchEthereumChain',
-                        params: [{ chainId: '0x7e5' }],
-                    });
+                    await ethereumProvider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x7e5' }] });
                 } catch (switchError) {
                     if (switchError.code === 4902) {
                         await ethereumProvider.request({
@@ -519,35 +453,24 @@
                                 rpcUrls: ['https://saigon-testnet.roninchain.com/rpc'],
                                 nativeCurrency: { name: 'RON', symbol: 'RON', decimals: 18 },
                                 blockExplorerUrls: ['https://saigon-explorer.roninchain.com/']
-                            }],
+                            }]
                         });
-                    } else {
-                        throw switchError;
-                    }
+                    } else throw switchError;
                 }
             }
+
             contract = new ethers.Contract(contractAddress, abi, signer);
+
             const balance = await provider.getBalance(address);
             userPoints = parseFloat(ethers.utils.formatEther(balance));
             updateWalletUI();
             updatePointsDisplay();
+
             is_admin = (await contract.owner()).toLowerCase() === address.toLowerCase();
-            if (is_admin) {
-                const numOptions = 2;
-                for (let m of demoMatches) {
-                    try {
-                        const endTime = Math.floor(Date.now() / 1000) + 86400 * 30;
-                        const desc = `${m.title} - ${m.description} - TeamA:${m.teamA} - TeamB:${m.teamB}`;
-                        const tx = await contract.createPrediction(desc, endTime, numOptions);
-                        await tx.wait();
-                    } catch (e) {
-                        console.log(`Recreation attempt for match ${m.id} skipped or failed:`, e.message);
-                    }
-                }
-            }
-            await loadMatches(); // Load matches after connect
+
+            await loadMatches();
         } catch (e) {
-            toast(e.message, "error");
+            toast(e.message || "Connection failed", "error");
         }
     }
 
@@ -580,24 +503,25 @@
     async function loadMatches() {
         const container = document.getElementById('matches-container');
         let html = '';
+
         for (let m of demoMatches) {
-            let pred = { resolved: false, outcome: 0 };
+            let resolved = false;
+            let outcome = 0;
             let userBetOption = null;
             let userBetAmount = "0.00";
             let hasBet = false;
-            let resolved = false;
-            let outcome = 0;
 
             if (contract && address) {
                 try {
-                    pred = await contract.getPrediction(m.id);
-                    if (pred.endTime.toNumber() > 0) {
+                    const pred = await contract.getPrediction(m.id);
+                    // Safe check to avoid undefined errors
+                    if (pred && pred.endTime && pred.endTime.toNumber) {
                         resolved = pred.resolved;
-                        outcome = pred.outcome;
+                        outcome = pred.outcome.toNumber ? pred.outcome.toNumber() : 0;
                         const ub = await contract.userBets(m.id, address);
-                        if (ub.amount.gt(0)) {
+                        if (ub && ub.amount && ub.amount.gt(0)) {
                             hasBet = true;
-                            userBetOption = ub.option.toNumber();
+                            userBetOption = ub.option.toNumber ? ub.option.toNumber() : 0;
                             userBetAmount = ethers.utils.formatEther(ub.amount);
                             predictions[m.id] = userBetOption === 0 ? m.teamA : m.teamB;
                             betAmounts[m.id] = userBetAmount;
@@ -614,9 +538,7 @@
             html += `
                 <div class="cyber-card">
                     <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
-                        <div class="match-badge ${badgeClass}">
-                            ${statusText}
-                        </div>
+                        <div class="match-badge ${badgeClass}">${statusText}</div>
                         <div style="font-family: monospace; font-size: 0.7rem; opacity: 0.3;">ID: ${m.id}</div>
                     </div>
                     <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem;">${m.title}</h3>
@@ -635,22 +557,22 @@
                     <div style="margin-top: auto;">
                         ${resolved ?
                             (predictions[m.id] ?
-                                ((userBetOption === outcome) ?
-                                    '<button onclick="claim(' + m.id + ')" class="cyber-button" style="width:100%; font-size:0.8rem; background: #22c55e;">Claim Winnings</button>'
-                                    : '<div style="text-align:center; color:#ef4444; font-weight:800;">Lost: ' + predictions[m.id] + '</div>')
-                                : '<div style="text-align:center; color: var(--muted); font-weight:800;">Resolved</div>'
+                                (userBetOption === outcome ?
+                                    '<button onclick="claim(' + m.id + ')" class="cyber-button" style="width:100%; font-size:0.8rem; background:#22c55e;">Claim Winnings</button>' :
+                                    '<div style="text-align:center; color:#ef4444; font-weight:800;">Lost: ' + predictions[m.id] + '</div>') :
+                                '<div style="text-align:center; color:var(--muted); font-weight:800;">Resolved</div>') :
+                            (hasBet ?
+                                '<div style="text-align:center; color:#22c55e; font-weight:800;">Betted on ' + predictions[m.id] + ' – ' + betAmounts[m.id] + ' RON</div>' :
+                                `<input type="number" id="bet-amount-${m.id}" value="0.01" min="0.01" step="0.01" style="width:100%; margin-bottom:1rem; background:var(--card); border:1px solid var(--border); color:var(--foreground); padding:0.5rem; border-radius:4px;">
+                                 <button onclick="predict(${m.id})" class="cyber-button" style="width:100%; font-size:0.8rem;">Secure Prediction</button>`
                             )
-                            : (hasBet ?
-                                '<div style="text-align:center; color:#22c55e; font-weight:800;">Betted on ' + predictions[m.id] + ' – ' + betAmounts[m.id] + ' RON</div>'
-                                : `<input type="number" id="bet-amount-${m.id}" value="0.01" min="0.01" step="0.01" style="width:100%; margin-bottom:1rem; background:var(--card); border:1px solid var(--border); color:var(--foreground); padding:0.5rem; border-radius:4px;">
-                                  <button onclick="predict(${m.id})" class="cyber-button" style="width:100%; font-size:0.8rem;">Secure Prediction</button>`
-                              )
                         }
                     </div>
+
                     ${is_admin ? `
-                        <div style="margin-top: 1rem; display: flex; gap: 1rem;">
-                            <button onclick="resolve(${m.id}, 0)" class="cyber-button" style="flex:1; background: #eab308;">Resolve to ${m.teamA}</button>
-                            <button onclick="resolve(${m.id}, 1)" class="cyber-button" style="flex:1; background: #c2410c;">Resolve to ${m.teamB}</button>
+                        <div style="margin-top:1rem; display:flex; gap:1rem;">
+                            <button onclick="resolve(${m.id},0)" class="cyber-button" style="flex:1; background:#eab308;">Resolve to ${m.teamA}</button>
+                            <button onclick="resolve(${m.id},1)" class="cyber-button" style="flex:1; background:#c2410c;">Resolve to ${m.teamB}</button>
                         </div>
                     ` : ''}
                 </div>
@@ -669,6 +591,7 @@
     window.predict = async (id) => {
         if (!address) return toast("Connect Wallet First", "error");
         if (!selections[id]) return toast("Select a team first!", "error");
+
         const amountInput = document.getElementById(`bet-amount-${id}`);
         const amount = parseFloat(amountInput.value);
         if (amount <= 0 || isNaN(amount)) return toast("Invalid bet amount", "error");
@@ -678,20 +601,17 @@
         const betAmount = ethers.utils.parseEther(amount.toString());
 
         try {
-            const tx = await contract.placeBet(id, option, {value: betAmount});
+            const tx = await contract.placeBet(id, option, { value: betAmount });
             await tx.wait();
 
-            // Update local state immediately
             predictions[id] = selections[id];
             betAmounts[id] = amount.toFixed(3);
 
-            // Refresh balance
             const balance = await provider.getBalance(address);
             userPoints = parseFloat(ethers.utils.formatEther(balance));
             updatePointsDisplay();
 
-            // Refresh UI to show betted message
-            await loadMatches();
+            await loadMatches(); // Refresh to show betted message
 
             toast(`Prediction Locked on ${selections[id]}! (-${amount} RON)`, "success");
         } catch (e) {
@@ -730,9 +650,10 @@
         toast(`${tier} Badge - Coming Soon!`, "success");
     };
 
-    // --- INIT ---
+    // INIT
     loadMatches();
 </script>
 </body>
 </html>
+
 
