@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Ronin Fantasy Predictor - Predict game outcomes, place bets, and mint NFTs on the Ronin Network.">
     <title>Ronin Fantasy Predictor</title>
-  
+ 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/ethers@5/dist/ethers.umd.min.js"></script>
-  
+ 
     <style>
         /* ================================================ */
         /* TAILWIND & THEME MAPPING - MATCHING PUBLISHED SITE */
@@ -106,6 +106,7 @@
         .cyber-button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+            background: #333;
         }
         header {
             height: 90px;
@@ -165,7 +166,7 @@
         .stat-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.25em; color: var(--muted); font-weight: 700; }
         .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; margin-top: 8rem; }
         .grid-matches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-      
+     
         .match-badge {
             display: inline-flex; align-items: center; gap: 0.5rem;
             padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.75rem;
@@ -190,10 +191,10 @@
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .nft-card:hover { transform: translateY(-10px) rotateY(10deg); }
-      
+     
         .nft-gold { background: linear-gradient(135deg, rgba(234,179,8,0.25), rgba(234,179,8,0.05)); border-color: rgba(234,179,8,0.6); box-shadow: 0 0 30px rgba(234,179,8,0.15); }
         .nft-bronze { background: linear-gradient(135deg, rgba(194,65,12,0.25), rgba(194,65,12,0.05)); border-color: rgba(194,65,12,0.6); box-shadow: 0 0 30px rgba(194,65,12,0.15); }
-      
+     
         .nft-icon-circle {
             width: 100px; height: 100px; border-radius: 50%; border: 4px solid;
             display: flex; align-items: center; justify-content: center; margin-bottom: 2rem;
@@ -201,11 +202,11 @@
         }
         .nft-gold .nft-icon-circle { border-color: #eab308; color: #eab308; background: rgba(234,179,8,0.1); box-shadow: inset 0 0 20px rgba(234,179,8,0.2); }
         .nft-bronze .nft-icon-circle { border-color: #c2410c; color: #c2410c; background: rgba(194,65,12,0.1); box-shadow: inset 0 0 20px rgba(194,65,12,0.2); }
-      
+     
         .nft-title { font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem; font-family: 'Orbitron', sans-serif; }
         .nft-gold .nft-title { color: #eab308; text-shadow: 0 0 15px rgba(234,179,8,0.4); }
         .nft-bronze .nft-title { color: #c2410c; text-shadow: 0 0 15px rgba(194,65,12,0.4); }
-      
+     
         #notif {
             position: fixed; bottom: 3rem; right: 3rem; z-index: 2000;
             padding: 1.25rem 2.5rem; border-radius: 12px; color: white;
@@ -307,7 +308,7 @@
                     <span class="logo-subtitle">Predictor</span>
                 </div>
             </a>
-          
+         
             <nav style="display: flex; gap: 3rem;">
                 <a href="#" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">Dashboard</a>
                 <a href="#matches" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">Matches</a>
@@ -376,18 +377,18 @@
                 <div style="flex: 1.5; min-width: 300px;">
                     <h2 class="neon-text" style="font-size: 4rem; margin-bottom: 2.5rem; line-height: 1;">Mastery Badges</h2>
                     <p style="color: var(--muted); font-size: 1.5rem; margin-bottom: 4rem; line-height: 1.6;">Proof of your prediction legacy. Mint exclusive NFT badges on Ronin to unlock permanent perks and elite status.</p>
-                  
+                 
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
                         <div class="cyber-card">
                             <h3 style="color: #ea580c; margin-bottom: 1rem; font-size: 1.75rem;">Bronze Tier</h3>
                             <p style="font-size: 1rem; color: var(--muted); margin-bottom: 3rem; line-height: 1.5;">The initiate's mark. Prove your presence and track your first wins.</p>
-                            <button onclick="mint('Bronze')" class="cyber-button" style="width: 100%; background: transparent; border: 2px solid #ea580c; color: #ea580c;">Mint Free</button>
+                            <button onclick="mint('Bronze')" class="cyber-button" style="width: 100%; background: transparent; border: 2px solid #ea580c; color: #ea580c; opacity: 0.7;">Coming Soon</button>
                         </div>
                         <div class="cyber-card" style="border-color: #eab308; border-width: 2px;">
                             <div style="position: absolute; top: 0; right: 0; background: #eab308; color: black; font-size: 0.75rem; font-weight: 900; padding: 6px 16px; font-family: 'Orbitron', sans-serif;">ELITE</div>
                             <h3 style="color: #eab308; margin-bottom: 1rem; font-size: 1.75rem;">Gold Tier</h3>
                             <p style="font-size: 1rem; color: var(--muted); margin-bottom: 3rem; line-height: 1.5;">Legendary status. Grants elite perks on every correct prediction.</p>
-                            <button onclick="mint('Gold')" class="cyber-button" style="width: 100%; background: #eab308; color: black;">Mint (1000 RON)</button>
+                            <button onclick="mint('Gold')" class="cyber-button" style="width: 100%; background: #eab308; color: black;">Mint (5 RON)</button>
                         </div>
                     </div>
                 </div>
@@ -607,14 +608,14 @@
                     const numOptions = 2;
                     for (let m of demoMatches) {
                         try {
-                            const pred = await contract.getPrediction(m.id);
-                            if (pred.endTime.toNumber() === 0) {
-                                const endTime = Math.floor(Date.now() / 1000) + 86400; // 24 hours buffer
-                                const desc = `${m.title} - ${m.description} - TeamA:${m.teamA} - TeamB:${m.teamB}`;
-                                const tx = await contract.createPrediction(desc, endTime, numOptions);
-                                await tx.wait();
-                            }
-                        } catch {}
+                            // Force recreate every time admin connects (temporary debug mode)
+                            const endTime = Math.floor(Date.now() / 1000) + 86400 * 2; // 48 hours buffer
+                            const desc = `${m.title} - ${m.description} - TeamA:${m.teamA} - TeamB:${m.teamB}`;
+                            const tx = await contract.createPrediction(desc, endTime, numOptions);
+                            await tx.wait();
+                        } catch (e) {
+                            console.log(`Recreation attempt for match ${m.id} skipped or failed:`, e.message);
+                        }
                     }
                 }
                 await loadMatches();
@@ -683,7 +684,7 @@
                         </div>
                         <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem;">${m.title}</h3>
                         <p style="font-size: 1rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.4; height: 2.8rem; overflow: hidden;">${m.description}</p>
-                      
+                     
                         <div class="vs-container">
                             <div class="team-box ${predictions[m.id] === m.teamA ? 'selected' : ''}" onclick="selectTeam(${m.id}, '${m.teamA}')">
                                 <div class="team-name">${m.teamA}</div>
@@ -693,7 +694,7 @@
                                 <div class="team-name">${m.teamB}</div>
                             </div>
                         </div>
-                      
+                     
                         <div style="margin-top: auto;">
                             ${resolved ?
                                 (predictions[m.id] ?
@@ -704,7 +705,7 @@
                                 )
                                 : (predictions[m.id] ?
                                     '<div style="text-align:center; color:#22c55e; font-weight:800;">Locked: ' + predictions[m.id] + '</div>' :
-                                    (bettingOpen ? 
+                                    (bettingOpen ?
                                         `<input type="number" id="bet-amount-${m.id}" value="0.01" min="0.01" step="0.01" style="width:100%; margin-bottom:1rem; background:var(--card); border:1px solid var(--border); color:var(--foreground); padding:0.5rem; border-radius:4px;">
                                         <button onclick="predict(${m.id})" class="cyber-button" style="width:100%; font-size:0.8rem;">Secure Prediction</button>`
                                         : '<div style="text-align:center; color:#ef4444; font-weight:800;">Betting Closed</div>')
@@ -776,7 +777,11 @@
         };
         window.mint = async (tier) => {
             if (!address) return toast("Connect Wallet First", "error");
-            const cost = tier === 'Gold' ? 0.1 : 0;
+            if (tier === 'Bronze') {
+                toast("Bronze Badge - Coming Soon!", "success");
+                return;
+            }
+            const cost = tier === 'Gold' ? 5 : 0;
             if (userPoints < cost) return toast("Not enough RON!", "error");
             try {
                 if (cost > 0) {
