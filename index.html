@@ -407,6 +407,7 @@
         let address = null;
         let userPoints = 500; // Demo starting points
         let predictions = {}; // Store user's predictions locally
+        let betAmounts = {};  // Store bet amount per match for display
         // Demo matches data (hardcoded)
         const demoMatches = [
             {
@@ -531,8 +532,7 @@
                     const numOptions = 2;
                     for (let m of demoMatches) {
                         try {
-                            // Force recreate every time admin connects (beta testing)
-                            const endTime = Math.floor(Date.now() / 1000) + 86400 * 30; // 30 days - practically always open
+                            const endTime = Math.floor(Date.now() / 1000) + 86400 * 30;
                             const desc = `${m.title} - ${m.description} - TeamA:${m.teamA} - TeamB:${m.teamB}`;
                             const tx = await contract.createPrediction(desc, endTime, numOptions);
                             await tx.wait();
@@ -575,9 +575,11 @@
             for (let m of demoMatches) {
                 let pred = { resolved: false, outcome: 0 };
                 let userBetOption = null;
+                let userBetAmount = null;
                 let resolved = false;
                 let outcome = 0;
                 predictions[m.id] = null;
+                betAmounts[m.id] = null;
                 if (contract && address) {
                     try {
                         pred = await contract.getPrediction(m.id);
@@ -587,13 +589,16 @@
                             const ub = await contract.userBets(m.id, address);
                             if (ub.amount.gt(0)) {
                                 userBetOption = ub.option;
+                                userBetAmount = ethers.utils.formatEther(ub.amount);
                                 predictions[m.id] = ub.option === 0 ? m.teamA : m.teamB;
+                                betAmounts[m.id] = userBetAmount;
                             }
                         }
                     } catch (e) {}
                 }
                 const statusText = m.status === 'live' ? '<i class="fas fa-bolt"></i> Live' : '<i class="far fa-clock"></i> ' + new Date(m.startTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
                 const badgeClass = m.status === 'live' ? 'badge-live' : 'badge-upcoming';
+                const hasBet = betAmounts[m.id] !== null;
                 html += `
                     <div class="cyber-card">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
@@ -623,9 +628,9 @@
                                         : '<div style="text-align:center; color:#ef4444; font-weight:800;">Lost: ' + predictions[m.id] + '</div>')
                                     : '<div style="text-align:center; color: var(--muted); font-weight:800;">Resolved</div>'
                                 )
-                                : (predictions[m.id] ?
-                                    '<div style="text-align:center; color:#22c55e; font-weight:800;">Locked: ' + predictions[m.id] + '</div>' :
-                                    `<input type="number" id="bet-amount-${m.id}" value="0.01" min="0.01" step="0.01" style="width:100%; margin-bottom:1rem; background:var(--card); border:1px solid var(--border); color:var(--foreground); padding:0.5rem; border-radius:4px;">
+                                : (hasBet ?
+                                    '<div style="text-align:center; color:#22c55e; font-weight:800;">Betted on ' + predictions[m.id] + ' – ' + betAmounts[m.id] + ' RON</div>'
+                                    : `<input type="number" id="bet-amount-${m.id}" value="0.01" min="0.01" step="0.01" style="width:100%; margin-bottom:1rem; background:var(--card); border:1px solid var(--border); color:var(--foreground); padding:0.5rem; border-radius:4px;">
                                     <button onclick="predict(${m.id})" class="cyber-button" style="width:100%; font-size:0.8rem;">Secure Prediction</button>`
                                 )
                             }
@@ -660,6 +665,7 @@
                 const tx = await contract.placeBet(id, option, {value: betAmount});
                 await tx.wait();
                 predictions[id] = selections[id];
+                betAmounts[id] = amount.toFixed(3);
                 const balance = await provider.getBalance(address);
                 userPoints = parseFloat(ethers.utils.formatEther(balance));
                 updatePointsDisplay();
