@@ -170,12 +170,25 @@
             margin-bottom: 3.5rem; line-height: 1.5;
         }
 
-        .stats-bar { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.3); padding: 2.5rem 0; }
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3rem; }
-        .stat-item { display: flex; align-items: center; gap: 1.5rem; }
-        .stat-icon { width: 60px; height: 60px; background: rgba(88, 166, 255, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.5rem; }
-        .stat-value { font-size: 2rem; font-weight: 800; line-height: 1; color: white; margin-bottom: 0.25rem; }
-        .stat-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.25em; color: var(--muted); font-weight: 700; }
+        .stats-bar { 
+            border-top: 1px solid var(--border); 
+            border-bottom: 1px solid var(--border); 
+            background: rgba(0,0,0,0.3); 
+            padding: 3rem 0; 
+            text-align: center;
+        }
+        .stats-message {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+        .stats-message a {
+            color: var(--primary);
+            font-weight: 800;
+            text-decoration: underline;
+        }
 
         .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; margin-top: 8rem; }
         .grid-matches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
@@ -236,14 +249,14 @@
         #notif.success { background: linear-gradient(90deg, #22c55e, #15803d); border-left: 6px solid #000; border: 1px solid rgba(34, 197, 94, 0.3); }
         #notif.error { background: linear-gradient(90deg, #ef4444, #b91c1c); border-left: 6px solid #000; border: 1px solid rgba(239, 68, 68, 0.3); }
 
-        /* Roadmap card styles (same as betting cards) */
+        /* Roadmap card styles (now identical to betting cards) */
         .roadmap-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-top: 3rem; }
         .roadmap-phase { 
             background: rgba(13, 18, 29, 0.8);
             backdrop-filter: blur(12px);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 2rem;
+            padding: 3rem 2rem 2rem; /* Increased top padding so number doesn't cut off */
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -255,21 +268,22 @@
         }
         .phase-number {
             position: absolute;
-            top: -1.5rem;
+            top: -1.8rem; /* Slightly lower so fully visible */
             left: 50%;
             transform: translateX(-50%);
             background: var(--primary);
             color: var(--background);
-            width: 3rem;
-            height: 3rem;
+            width: 3.5rem;
+            height: 3.5rem;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 900;
             font-family: 'Orbitron', sans-serif;
             box-shadow: 0 0 20px rgba(88, 166, 255, 0.5);
+            z-index: 2;
         }
         .phase-status {
             font-size: 0.9rem;
@@ -317,10 +331,7 @@
             <div class="hero-glow"></div>
             <div class="container">
                 <h1 class="neon-text"><span class="accent-text">PREDICT</span> <br> THE META</h1>
-                <p style="margin-bottom: 2rem;">Ronin Fantasy Predictor – <strong>Beta Testnet</strong></p>
-                <p>To test this site, switch your Ronin Wallet to <strong>Saigon Testnet</strong> and get free test RON from the official faucet:<br>
-                <a href="https://faucet.roninchain.com" target="_blank" style="color: var(--primary); font-weight: 800;">https://faucet.roninchain.com</a><br>
-                (Connect your wallet there and request funds – it’s free and instant.)</p>
+                <p>Join the next generation of fantasy leagues on Ronin. Predict outcomes for Pixels, Axie, and more. Win big and mint your glory.</p>
                 <div style="display: flex; gap: 1.5rem;">
                     <button onclick="document.getElementById('matches').scrollIntoView({behavior:'smooth'})" class="cyber-button">Start Predicting</button>
                     <button class="cyber-button" style="background: transparent; border: 1px solid var(--primary); color: var(--primary);">Leaderboard</button>
@@ -328,8 +339,18 @@
             </div>
         </section>
 
-        <!-- STATS (removed fake numbers, kept bar for spacing) -->
-        <div class="stats-bar" style="height: 80px;"></div>
+        <!-- STATS BAR - Now with testnet instructions instead of fake stats -->
+        <div class="stats-bar">
+            <div class="container stats-grid" style="grid-template-columns: 1fr; text-align: center;">
+                <div class="stats-message">
+                    <strong>Beta Testnet Mode</strong><br>
+                    This is a testnet version running on Ronin Saigon. To play and test betting/claiming:<br>
+                    Switch your Ronin Wallet to <strong>Saigon Testnet</strong> and get free test RON from the official faucet:<br>
+                    <a href="https://faucet.roninchain.com" target="_blank" style="color: var(--primary); font-weight: 800; text-decoration: underline;">https://faucet.roninchain.com</a><br>
+                    (Connect your wallet there and request funds – it’s free and instant.)
+                </div>
+            </div>
+        </div>
 
         <!-- MATCHES -->
         <section id="matches" class="container" style="padding: 10rem 0;">
@@ -384,7 +405,7 @@
             </div>
         </section>
 
-        <!-- ROADMAP (now same cyber-card style as betting cards) -->
+        <!-- ROADMAP (fixed with cyber-card style + no cutting) -->
         <section id="roadmap" class="container" style="padding: 10rem 0; border-top: 1px solid var(--border);">
             <div class="section-header">
                 <div>
@@ -689,7 +710,7 @@
         window.predict = async (id) => {
             if (!address) return toast("Connect Wallet First", "error");
             if (!selections[id]) return toast("Select a team first!", "error");
-            const amountInput = document.getElementById(`bet-amount-${id}`);
+            const amountInput = document.getElementById(`bet-amount-${m.id}`);
             const amount = parseFloat(amountInput.value);
             if (amount <= 0 || isNaN(amount)) return toast("Invalid bet amount", "error");
             const m = demoMatches.find(match => match.id === id);
