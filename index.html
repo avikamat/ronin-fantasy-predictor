@@ -264,6 +264,55 @@
             .stat-value { font-size: 1.5rem; }
             .section-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
         }
+
+        /* Roadmap specific styles (same theme) */
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .roadmap-phase {
+            background: rgba(13, 18, 29, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .roadmap-phase:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(88, 166, 255, 0.15);
+            transform: translateY(-8px);
+        }
+        .phase-number {
+            position: absolute;
+            top: -1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: var(--background);
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 900;
+            font-family: 'Orbitron', sans-serif;
+            box-shadow: 0 0 20px rgba(88, 166, 255, 0.5);
+        }
+        .phase-status {
+            font-size: 0.9rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+        .phase-live { color: var(--accent); }
+        .phase-upcoming { color: var(--muted); }
     </style>
 </head>
 <body>
@@ -282,6 +331,7 @@
                 <a href="#" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">Dashboard</a>
                 <a href="#matches" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">Matches</a>
                 <a href="#nfts" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">NFT Badges</a>
+                <a href="#roadmap" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">Roadmap</a>
             </nav>
 
             <div id="wallet-section">
@@ -296,7 +346,7 @@
             <div class="hero-glow"></div>
             <div class="container">
                 <h1 class="neon-text"><span class="accent-text">PREDICT</span> <br> THE META</h1>
-                <p>Join the next generation of fantasy leagues on Ronin. Predict outcomes for Pixels, Axie, and more. Stack points, climb the leaderboard, and mint your glory.</p>
+                <p>Join the next generation of fantasy leagues on Ronin. Predict outcomes for Pixels, Axie, and more. Win big and mint your glory.</p>
                 <div style="display: flex; gap: 1.5rem;">
                     <button onclick="document.getElementById('matches').scrollIntoView({behavior:'smooth'})" class="cyber-button">Start Predicting</button>
                     <button class="cyber-button" style="background: transparent; border: 1px solid var(--primary); color: var(--primary);">Leaderboard</button>
@@ -331,7 +381,7 @@
             <div class="section-header">
                 <div>
                     <h2 class="neon-text" style="font-size: 4rem; line-height: 1;">Live & Upcoming</h2>
-                    <p style="color: var(--muted); margin-top: 1rem; font-size: 1.25rem; font-weight: 500;">Predict game outcomes to earn massive point multipliers.</p>
+                    <p style="color: var(--muted); margin-top: 1rem; font-size: 1.25rem; font-weight: 500;">Predict game outcomes to win massive RON rewards.</p>
                 </div>
                 <div style="display: flex; gap: 0.75rem;">
                     <button class="cyber-button" style="padding: 0.6rem 1.5rem; background: rgba(88,166,255,0.2); color: var(--primary);">All Games</button>
@@ -341,7 +391,7 @@
             </div>
 
             <div id="matches-container" class="grid-matches">
-                <!-- Demo matches will be injected here -->
+                <!-- Demo matches injected here -->
             </div>
         </section>
 
@@ -350,19 +400,19 @@
             <div style="display: flex; gap: 6rem; align-items: flex-start; flex-wrap: wrap;">
                 <div style="flex: 1.5; min-width: 300px;">
                     <h2 class="neon-text" style="font-size: 4rem; margin-bottom: 2.5rem; line-height: 1;">Mastery Badges</h2>
-                    <p style="color: var(--muted); font-size: 1.5rem; margin-bottom: 4rem; line-height: 1.6;">Proof of your prediction legacy. Mint exclusive NFT badges on Ronin to unlock permanent point multipliers and elite status.</p>
+                    <p style="color: var(--muted); font-size: 1.5rem; margin-bottom: 4rem; line-height: 1.6;">Proof of your prediction legacy. Mint exclusive NFT badges on Ronin to unlock permanent perks and elite status.</p>
                     
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
                         <div class="cyber-card">
                             <h3 style="color: #ea580c; margin-bottom: 1rem; font-size: 1.75rem;">Bronze Tier</h3>
-                            <p style="font-size: 1rem; color: var(--muted); margin-bottom: 3rem; line-height: 1.5;">The initiate's mark. Prove your presence in the guild and track your first wins.</p>
+                            <p style="font-size: 1rem; color: var(--muted); margin-bottom: 3rem; line-height: 1.5;">The initiate's mark. Prove your presence and track your first wins.</p>
                             <button onclick="mint('Bronze')" class="cyber-button" style="width: 100%; background: transparent; border: 2px solid #ea580c; color: #ea580c;">Mint Free</button>
                         </div>
                         <div class="cyber-card" style="border-color: #eab308; border-width: 2px;">
                             <div style="position: absolute; top: 0; right: 0; background: #eab308; color: black; font-size: 0.75rem; font-weight: 900; padding: 6px 16px; font-family: 'Orbitron', sans-serif;">ELITE</div>
                             <h3 style="color: #eab308; margin-bottom: 1rem; font-size: 1.75rem;">Gold Tier</h3>
-                            <p style="font-size: 1rem; color: var(--muted); margin-bottom: 3rem; line-height: 1.5;">Legendary status. Grants <span style="color: white; font-weight: 800;">1.2x Point Multiplier</span> on every single correct prediction.</p>
-                            <button onclick="mint('Gold')" class="cyber-button" style="width: 100%; background: #eab308; color: black;">Mint (1000 PTS)</button>
+                            <p style="font-size: 1rem; color: var(--muted); margin-bottom: 3rem; line-height: 1.5;">Legendary status. Grants elite perks on every correct prediction.</p>
+                            <button onclick="mint('Gold')" class="cyber-button" style="width: 100%; background: #eab308; color: black;">Mint (1000 RON)</button>
                         </div>
                     </div>
                 </div>
@@ -375,6 +425,66 @@
                             <p style="font-size: 1.25rem; font-weight: 600; opacity: 0.5;">No Badges Detected in Wallet</p>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROADMAP -->
+        <section id="roadmap" class="container" style="padding: 10rem 0; border-top: 1px solid var(--border);">
+            <div class="section-header">
+                <div>
+                    <h2 class="neon-text" style="font-size: 4rem; line-height: 1;">Roadmap</h2>
+                    <p style="color: var(--muted); margin-top: 1rem; font-size: 1.25rem; font-weight: 500;">Our journey to dominate the Ronin prediction meta.</p>
+                </div>
+            </div>
+
+            <div class="roadmap-grid">
+                <div class="roadmap-phase">
+                    <div class="phase-number">Q1</div>
+                    <div class="phase-status phase-live neon-text">Phase 1 – Genesis</div>
+                    <h3 style="margin-bottom: 1rem;">Launch & Demo</h3>
+                    <p style="color: var(--muted); line-height: 1.6;">
+                        • Stunning frontend live<br>
+                        • Mock predictions & wallet connect<br>
+                        • Community building on Discord & X<br>
+                        • First badge designs & hype
+                    </p>
+                </div>
+
+                <div class="roadmap-phase">
+                    <div class="phase-number">Q2</div>
+                    <div class="phase-status phase-upcoming">Phase 2 – On-Chain</div>
+                    <h3 style="margin-bottom: 1rem;">Mainnet Deployment</h3>
+                    <p style="color: var(--muted); line-height: 1.6;">
+                        • Secure smart contract deployment<br>
+                        • Real RON betting live<br>
+                        • Mintable NFT badges<br>
+                        • Community governance start
+                    </p>
+                </div>
+
+                <div class="roadmap-phase">
+                    <div class="phase-number">Q3</div>
+                    <div class="phase-status phase-upcoming">Phase 3 – Expansion</div>
+                    <h3 style="margin-bottom: 1rem;">More Games & Features</h3>
+                    <p style="color: var(--muted); line-height: 1.6;">
+                        • Add Pixels, Axie, Ronin Racing events<br>
+                        • Tournaments & special bets<br>
+                        • Advanced badge tiers<br>
+                        • Partnerships & integrations
+                    </p>
+                </div>
+
+                <div class="roadmap-phase">
+                    <div class="phase-number">Q4+</div>
+                    <div class="phase-status phase-upcoming">Phase 4 – Domination</div>
+                    <h3 style="margin-bottom: 1rem;">The Future</h3>
+                    <p style="color: var(--muted); line-height: 1.6;">
+                        • Cross-chain support<br>
+                        • Mobile app<br>
+                        • Full DAO governance<br>
+                        • Become Ronin’s #1 prediction hub
+                    </p>
                 </div>
             </div>
         </section>
@@ -524,7 +634,6 @@
 
         const selections = {};
         window.selectTeam = (id, team) => {
-            // Update UI selection
             document.querySelectorAll(`[onclick^="selectTeam(${id}"]`).forEach(el => el.classList.remove('selected'));
             event.target.closest('.team-box').classList.add('selected');
             selections[id] = team;
@@ -534,18 +643,16 @@
             if (!address) return toast("Connect Wallet First (Demo Mode)", "error");
             if (!selections[id]) return toast("Select a team first!", "error");
             
-            // Mock prediction success
             predictions[id] = selections[id];
-            userPoints -= 10; // Demo wager deduction
+            userPoints -= 10;
             updatePointsDisplay();
-            loadMatches(); // Refresh UI
+            loadMatches();
             toast(`Prediction Locked on ${selections[id]}! (-10 PTS)`, "success");
         };
 
         window.mint = (tier) => {
             if (!address) return toast("Connect Wallet First (Demo Mode)", "error");
             
-            // Mock mint
             const cost = tier === 'Gold' ? 1000 : 0;
             if (userPoints < cost) return toast("Not enough points!", "error");
             
