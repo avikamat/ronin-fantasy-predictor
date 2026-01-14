@@ -219,82 +219,6 @@
         #notif.show { transform: translateX(0); }
         #notif.success { background: linear-gradient(90deg, #22c55e, #15803d); border-left: 6px solid #000; border: 1px solid rgba(34, 197, 94, 0.3); }
         #notif.error { background: linear-gradient(90deg, #ef4444, #b91c1c); border-left: 6px solid #000; border: 1px solid rgba(239, 68, 68, 0.3); }
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-        .shimmer {
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-            background-size: 200% 100%;
-            animation: shimmer 3s infinite;
-        }
-        @media (max-width: 1280px) {
-            .hero h1 { font-size: 5rem; }
-            .grid-matches { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 1024px) {
-            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-            .hero h1 { font-size: 4rem; }
-            .hero p { font-size: 1.25rem; }
-        }
-        @media (max-width: 768px) {
-            header { height: 80px; }
-            .hero { padding: 8rem 0; }
-            .hero h1 { font-size: 3.5rem; }
-            .grid-matches, .nft-grid { grid-template-columns: 1fr; }
-            nav { display: none; }
-            .logo-title { font-size: 1.25rem; }
-            .stat-value { font-size: 1.5rem; }
-            .section-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
-        }
-        /* Roadmap specific styles (same theme) */
-        .roadmap-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        .roadmap-phase {
-            background: rgba(13, 18, 29, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 2rem;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        .roadmap-phase:hover {
-            border-color: var(--primary);
-            box-shadow: 0 0 30px rgba(88, 166, 255, 0.15);
-            transform: translateY(-8px);
-        }
-        .phase-number {
-            position: absolute;
-            top: -1.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--primary);
-            color: var(--background);
-            width: 3rem;
-            height: 3rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 900;
-            font-family: 'Orbitron', sans-serif;
-            box-shadow: 0 0 20px rgba(88, 166, 255, 0.5);
-        }
-        .phase-status {
-            font-size: 0.9rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 1rem;
-        }
-        .phase-live { color: var(--accent); }
-        .phase-upcoming { color: var(--muted); }
     </style>
 </head>
 <body>
@@ -358,7 +282,7 @@
             <div class="section-header">
                 <div>
                     <h2 class="neon-text" style="font-size: 4rem; line-height: 1;">Live & Upcoming</h2>
-                    <p style="color: var(--muted); margin-top: 1rem; font-size: 1.25rem; font-weight: 500;">Predict game outcomes to win massive RON rewards.</p>
+                    <p style="color: var(--muted); margin-top: 1rem; font-size: 1.25rem; font-weight: 500;">Predict game outcomes to win massive RON rewards. (Beta: Betting always open until resolved)</p>
                 </div>
                 <div style="display: flex; gap: 0.75rem;">
                     <button class="cyber-button" style="padding: 0.6rem 1.5rem; background: rgba(88,166,255,0.2); color: var(--primary);">All Games</button>
@@ -387,7 +311,7 @@
                             <div style="position: absolute; top: 0; right: 0; background: #eab308; color: black; font-size: 0.75rem; font-weight: 900; padding: 6px 16px; font-family: 'Orbitron', sans-serif;">ELITE</div>
                             <h3 style="color: #eab308; margin-bottom: 1rem; font-size: 1.75rem;">Gold Tier</h3>
                             <p style="font-size: 1rem; color: var(--muted); margin-bottom: 3rem; line-height: 1.5;">Legendary status. Grants elite perks on every correct prediction.</p>
-                            <button onclick="mint('Gold')" class="cyber-button" style="width: 100%; background: #eab308; color: black;">Mint (5 RON)</button>
+                            <button onclick="mint('Gold')" class="cyber-button" style="width: 100%; background: transparent; border: 2px solid #eab308; color: #eab308; opacity: 0.7; cursor: not-allowed;">Coming Soon</button>
                         </div>
                     </div>
                 </div>
@@ -501,7 +425,7 @@
                 teamA: "Axie Legends",
                 teamB: "Ronin Rebels",
                 status: "upcoming",
-                startTime: new Date(Date.now() + 3600000) // 1 hour later
+                startTime: new Date(Date.now() + 3600000)
             },
             {
                 id: 3,
@@ -510,7 +434,7 @@
                 teamA: "Thunder Riders",
                 teamB: "Shadow Racers",
                 status: "upcoming",
-                startTime: new Date(Date.now() + 7200000) // 2 hours later
+                startTime: new Date(Date.now() + 7200000)
             },
             {
                 id: 4,
@@ -607,8 +531,8 @@
                     const numOptions = 2;
                     for (let m of demoMatches) {
                         try {
-                            // Force recreate every time admin connects (temporary debug mode)
-                            const endTime = Math.floor(Date.now() / 1000) + 86400 * 2; // 48 hours buffer
+                            // Force recreate every time admin connects (beta testing)
+                            const endTime = Math.floor(Date.now() / 1000) + 86400 * 30; // 30 days - practically always open
                             const desc = `${m.title} - ${m.description} - TeamA:${m.teamA} - TeamB:${m.teamB}`;
                             const tx = await contract.createPrediction(desc, endTime, numOptions);
                             await tx.wait();
@@ -649,11 +573,10 @@
             const container = document.getElementById('matches-container');
             let html = '';
             for (let m of demoMatches) {
-                let pred = { endTime: ethers.BigNumber.from(0), resolved: false, outcome: 0 };
+                let pred = { resolved: false, outcome: 0 };
                 let userBetOption = null;
                 let resolved = false;
                 let outcome = 0;
-                let bettingOpen = false;
                 predictions[m.id] = null;
                 if (contract && address) {
                     try {
@@ -661,8 +584,6 @@
                         if (pred.endTime.toNumber() > 0) {
                             resolved = pred.resolved;
                             outcome = pred.outcome;
-                            const now = Math.floor(Date.now() / 1000);
-                            bettingOpen = now < pred.endTime.toNumber() && !resolved;
                             const ub = await contract.userBets(m.id, address);
                             if (ub.amount.gt(0)) {
                                 userBetOption = ub.option;
@@ -704,14 +625,12 @@
                                 )
                                 : (predictions[m.id] ?
                                     '<div style="text-align:center; color:#22c55e; font-weight:800;">Locked: ' + predictions[m.id] + '</div>' :
-                                    (bettingOpen ?
-                                        `<input type="number" id="bet-amount-${m.id}" value="0.01" min="0.01" step="0.01" style="width:100%; margin-bottom:1rem; background:var(--card); border:1px solid var(--border); color:var(--foreground); padding:0.5rem; border-radius:4px;">
-                                        <button onclick="predict(${m.id})" class="cyber-button" style="width:100%; font-size:0.8rem;">Secure Prediction</button>`
-                                        : '<div style="text-align:center; color:#ef4444; font-weight:800;">Betting Closed</div>')
+                                    `<input type="number" id="bet-amount-${m.id}" value="0.01" min="0.01" step="0.01" style="width:100%; margin-bottom:1rem; background:var(--card); border:1px solid var(--border); color:var(--foreground); padding:0.5rem; border-radius:4px;">
+                                    <button onclick="predict(${m.id})" class="cyber-button" style="width:100%; font-size:0.8rem;">Secure Prediction</button>`
                                 )
                             }
                         </div>
-                        ${is_admin && !resolved && !bettingOpen ? `
+                        ${is_admin ? `
                             <div style="margin-top: 1rem; display: flex; gap: 1rem;">
                                 <button onclick="resolve(${m.id}, 0)" class="cyber-button" style="flex:1; background: #eab308;">Resolve to ${m.teamA}</button>
                                 <button onclick="resolve(${m.id}, 1)" class="cyber-button" style="flex:1; background: #c2410c;">Resolve to ${m.teamB}</button>
@@ -769,34 +688,14 @@
                 const tx = await contract.resolvePrediction(id, outcome);
                 await tx.wait();
                 await loadMatches();
-                toast("Match Resolved!", "success");
+                toast("Match Resolved by Admin!", "success");
             } catch (e) {
                 toast(e.message || "Resolve failed", "error");
             }
         };
         window.mint = async (tier) => {
             if (!address) return toast("Connect Wallet First", "error");
-            if (tier === 'Bronze') {
-                toast("Bronze Badge - Coming Soon!", "success");
-                return;
-            }
-            const cost = tier === 'Gold' ? 5 : 0;
-            if (userPoints < cost) return toast("Not enough RON!", "error");
-            try {
-                if (cost > 0) {
-                    const tx = await signer.sendTransaction({
-                        to: await contract.owner(),
-                        value: ethers.utils.parseEther(cost.toString())
-                    });
-                    await tx.wait();
-                }
-                const balance = await provider.getBalance(address);
-                userPoints = parseFloat(ethers.utils.formatEther(balance));
-                updatePointsDisplay();
-                toast(`${tier} Badge Minted!`, "success");
-            } catch (e) {
-                toast(e.message || "Mint failed", "error");
-            }
+            toast(`${tier} Badge - Coming Soon!`, "success");
         };
         // --- INIT ---
         loadMatches();
