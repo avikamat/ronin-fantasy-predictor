@@ -526,7 +526,7 @@
         let signer;
         let contract;
         let is_admin = false;
-        const contractAddress = "0xF4Ed0CF67a520929a698321eecEfEEc6AE701345";
+        const contractAddress = "0xf8Bf45a1EFFbb3928fB3224BD3D0c655c93699F4";
         const abi = [
             "event PredictionCreated(uint256 indexed id, string description, uint256 endTime, uint8 numOptions)",
             "event BetPlaced(uint256 indexed predictionId, address indexed user, uint8 option, uint256 amount)",
@@ -697,7 +697,8 @@
                                 ) 
                                 : (predictions[m.id] ?
                                     '<div style="text-align:center; color:#22c55e; font-weight:800;">Locked: ' + predictions[m.id] + '</div>' :
-                                    '<button onclick="predict(' + m.id + ')" class="cyber-button" style="width:100%; font-size:0.8rem;">Secure Prediction</button>'
+                                    `<input type="number" id="bet-amount-${m.id}" value="0.01" min="0.01" step="0.01" style="width:100%; margin-bottom:1rem; background:var(--card); border:1px solid var(--border); color:var(--foreground); padding:0.5rem; border-radius:4px;">
+                                    <button onclick="predict(${m.id})" class="cyber-button" style="width:100%; font-size:0.8rem;">Secure Prediction</button>`
                                 )
                             }
                         </div>
@@ -721,9 +722,12 @@
         window.predict = async (id) => {
             if (!address) return toast("Connect Wallet First", "error");
             if (!selections[id]) return toast("Select a team first!", "error");
+            const amountInput = document.getElementById(`bet-amount-${id}`);
+            const amount = parseFloat(amountInput.value);
+            if (amount <= 0 || isNaN(amount)) return toast("Invalid bet amount", "error");
             const m = demoMatches.find(match => match.id === id);
             const option = selections[id] === m.teamA ? 0 : 1;
-            const betAmount = ethers.utils.parseEther("0.01");
+            const betAmount = ethers.utils.parseEther(amount.toString());
             try {
                 const tx = await contract.placeBet(id, option, {value: betAmount});
                 await tx.wait();
@@ -732,7 +736,7 @@
                 userPoints = parseFloat(ethers.utils.formatEther(balance));
                 updatePointsDisplay();
                 await loadMatches();
-                toast(`Prediction Locked on ${selections[id]}! (-0.01 RON)`, "success");
+                toast(`Prediction Locked on ${selections[id]}! (-${amount} RON)`, "success");
             } catch (e) {
                 toast(e.message || "Transaction failed", "error");
             }
