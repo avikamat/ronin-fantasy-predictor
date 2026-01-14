@@ -5,14 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Ronin Fantasy Predictor - Predict game outcomes, place bets, and mint NFTs on the Ronin Network.">
     <title>Ronin Fantasy Predictor</title>
+ 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/ethers@5/dist/ethers.umd.min.js"></script>
+ 
     <style>
-        /* Your existing styles remain unchanged - no modifications here */
+        /* ================================================ */
+        /* TAILWIND & THEME MAPPING - MATCHING PUBLISHED SITE */
+        /* ================================================ */
         :root {
             --primary: #58A6FF;
             --background: #0a0e17;
@@ -24,12 +28,19 @@
             --radius: 0.5rem;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-        html { scroll-behavior: smooth; font-size: 16px; line-height: 1.5; width: 100%; height: 100%; }
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+            line-height: 1.5;
+            width: 100%;
+            height: 100%;
+        }
         body {
             font-family: 'Rajdhani', sans-serif;
             background-color: var(--background);
             color: var(--foreground);
-            background-image: linear-gradient(to bottom, rgba(10, 14, 23, 0.9), rgba(10, 14, 23, 0.95)),
+            background-image:
+                linear-gradient(to bottom, rgba(10, 14, 23, 0.9), rgba(10, 14, 23, 0.95)),
                 url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2358A6FF' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             background-attachment: fixed;
             min-height: 100vh;
@@ -37,9 +48,21 @@
             overflow-x: hidden;
             position: relative;
         }
-        h1, h2, h3, h4 { font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 0.1em; color: white; }
-        .container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
-        .neon-text { text-shadow: 0 0 10px rgba(88, 166, 255, 0.5), 0 0 20px rgba(88, 166, 255, 0.3); }
+        h1, h2, h3, h4 {
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: white;
+        }
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .neon-text {
+            text-shadow: 0 0 10px rgba(88, 166, 255, 0.5), 0 0 20px rgba(88, 166, 255, 0.3);
+        }
         .cyber-card {
             background: rgba(13, 18, 29, 0.8);
             backdrop-filter: blur(12px);
@@ -74,9 +97,16 @@
             font-size: 0.9rem;
             text-align: center;
         }
-        .cyber-button:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--accent); background: #4693f0; }
+        .cyber-button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--accent);
+            background: #4693f0;
+        }
         .cyber-button:active { transform: translate(0,0); box-shadow: none; }
-        .cyber-button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .cyber-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
         header {
             height: 90px;
             display: flex;
@@ -91,7 +121,11 @@
         }
         .header-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; cursor: pointer; }
-        .logo-box { width: 48px; height: 48px; border: 1px solid var(--primary); display: flex; align-items: center; justify-content: center; background: rgba(88, 166, 255, 0.1); border-radius: 8px; }
+        .logo-box {
+            width: 48px; height: 48px; border: 1px solid var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(88, 166, 255, 0.1); border-radius: 8px;
+        }
         .logo-text { display: flex; flex-direction: column; }
         .logo-title { font-weight: 900; font-size: 1.5rem; color: white; line-height: 1; }
         .logo-subtitle { font-size: 0.75rem; color: var(--primary); letter-spacing: 0.3em; font-weight: bold; text-transform: uppercase; }
@@ -105,12 +139,24 @@
         }
         .wallet-pill:hover { background: rgba(88, 166, 255, 0.1); border-color: var(--primary); }
         .wallet-status { width: 10px; height: 10px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px #22c55e; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
         .hero { padding: 10rem 0; position: relative; overflow: hidden; }
-        .hero-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 1000px; height: 1000px; background: radial-gradient(circle, rgba(88, 166, 255, 0.1) 0%, transparent 70%); pointer-events: none; }
+        .hero-glow {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 1000px; height: 1000px; background: radial-gradient(circle, rgba(88, 166, 255, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
         .hero h1 { font-size: 6rem; font-weight: 900; line-height: 0.85; margin-bottom: 2rem; letter-spacing: -0.02em; }
         .hero .accent-text { color: var(--primary); }
-        .hero p { max-width: 600px; border-left: 5px solid var(--primary); padding-left: 2rem; font-size: 1.5rem; color: var(--muted); margin-bottom: 3.5rem; line-height: 1.5; }
+        .hero p {
+            max-width: 600px; border-left: 5px solid var(--primary);
+            padding-left: 2rem; font-size: 1.5rem; color: var(--muted);
+            margin-bottom: 3.5rem; line-height: 1.5;
+        }
         .stats-bar { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.3); padding: 2.5rem 0; }
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3rem; }
         .stat-item { display: flex; align-items: center; gap: 1.5rem; }
@@ -119,26 +165,47 @@
         .stat-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.25em; color: var(--muted); font-weight: 700; }
         .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; margin-top: 8rem; }
         .grid-matches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-        .match-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; }
+     
+        .match-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.75rem;
+            font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em;
+        }
         .badge-live { background: rgba(0, 255, 255, 0.1); color: var(--accent); border: 1px solid var(--accent); }
         .badge-upcoming { background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid rgba(255,255,255,0.1); }
         .vs-container { display: flex; align-items: center; justify-content: space-between; margin: 2.5rem 0; gap: 1rem; }
-        .team-box { flex: 1; text-align: center; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; background: rgba(255,255,255,0.02); cursor: pointer; transition: 0.3s ease; }
+        .team-box {
+            flex: 1; text-align: center; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px; background: rgba(255,255,255,0.02); cursor: pointer; transition: 0.3s ease;
+        }
         .team-box:hover { border-color: var(--primary); background: rgba(88,166,255,0.08); transform: scale(1.02); }
         .team-box.selected { border-color: var(--primary); background: rgba(88,166,255,0.2); box-shadow: 0 0 20px rgba(88,166,255,0.3); }
         .team-name { font-weight: 800; font-size: 1.25rem; color: white; }
         .vs-text { font-weight: 900; color: var(--muted); font-size: 0.9rem; font-family: 'Orbitron', sans-serif; opacity: 0.5; }
         .nft-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
-        .nft-card { aspect-ratio: 3/4.5; border-radius: 16px; padding: 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid; position: relative; text-align: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .nft-card {
+            aspect-ratio: 3/4.5; border-radius: 16px; padding: 2rem;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border: 2px solid; position: relative; text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
         .nft-card:hover { transform: translateY(-10px) rotateY(10deg); }
+     
         .nft-gold { background: linear-gradient(135deg, rgba(234,179,8,0.25), rgba(234,179,8,0.05)); border-color: rgba(234,179,8,0.6); box-shadow: 0 0 30px rgba(234,179,8,0.15); }
         .nft-bronze { background: linear-gradient(135deg, rgba(194,65,12,0.25), rgba(194,65,12,0.05)); border-color: rgba(194,65,12,0.6); box-shadow: 0 0 30px rgba(194,65,12,0.15); }
-        .nft-icon-circle { width: 100px; height: 100px; border-radius: 50%; border: 4px solid; display: flex; align-items: center; justify-content: center; margin-bottom: 2rem; font-size: 2.5rem; }
+     
+        .nft-icon-circle {
+            width: 100px; height: 100px; border-radius: 50%; border: 4px solid;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
         .nft-gold .nft-icon-circle { border-color: #eab308; color: #eab308; background: rgba(234,179,8,0.1); box-shadow: inset 0 0 20px rgba(234,179,8,0.2); }
         .nft-bronze .nft-icon-circle { border-color: #c2410c; color: #c2410c; background: rgba(194,65,12,0.1); box-shadow: inset 0 0 20px rgba(194,65,12,0.2); }
+     
         .nft-title { font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem; font-family: 'Orbitron', sans-serif; }
         .nft-gold .nft-title { color: #eab308; text-shadow: 0 0 15px rgba(234,179,8,0.4); }
         .nft-bronze .nft-title { color: #c2410c; text-shadow: 0 0 15px rgba(194,65,12,0.4); }
+     
         #notif {
             position: fixed; bottom: 3rem; right: 3rem; z-index: 2000;
             padding: 1.25rem 2.5rem; border-radius: 12px; color: white;
@@ -164,7 +231,7 @@
                     <span class="logo-subtitle">Predictor</span>
                 </div>
             </a>
-        
+         
             <nav style="display: flex; gap: 3rem;">
                 <a href="#" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">Dashboard</a>
                 <a href="#matches" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">Matches</a>
@@ -233,7 +300,7 @@
                 <div style="flex: 1.5; min-width: 300px;">
                     <h2 class="neon-text" style="font-size: 4rem; margin-bottom: 2.5rem; line-height: 1;">Mastery Badges</h2>
                     <p style="color: var(--muted); font-size: 1.5rem; margin-bottom: 4rem; line-height: 1.6;">Proof of your prediction legacy. Mint exclusive NFT badges on Ronin to unlock permanent perks and elite status.</p>
-                
+                 
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
                         <div class="cyber-card">
                             <h3 style="color: #ea580c; margin-bottom: 1rem; font-size: 1.75rem;">Bronze Tier</h3>
@@ -338,10 +405,9 @@
     <div id="notif"></div>
     <script>
         let address = null;
-        let userPoints = 500;
-        let predictions = {}; // team name after bet
-        let betAmounts = {};  // formatted amount after bet
-
+        let userPoints = 500; // Demo starting points
+        let predictions = {}; // Store user's predictions locally
+        // Demo matches data (hardcoded)
         const demoMatches = [
             {
                 id: 1,
@@ -380,7 +446,6 @@
                 startTime: new Date()
             }
         ];
-
         let provider;
         let signer;
         let contract;
@@ -410,14 +475,12 @@
             "function nextPredictionId() view returns (uint256)",
             "function predictions(uint256) view returns (string memory description, uint256 endTime, uint256 resolveTime, uint8 outcome, bool resolved, uint256[] optionPools, uint256 totalPool)"
         ];
-
         function toast(msg, type='success') {
             const n = document.getElementById('notif');
             n.innerText = msg;
             n.className = `show ${type}`;
             setTimeout(() => n.className = '', 5000);
         }
-
         async function connect() {
             try {
                 let ethereumProvider;
@@ -431,21 +494,16 @@
                 } else {
                     return toast("No wallet detected", "error");
                 }
-
                 provider = new ethers.providers.Web3Provider(ethereumProvider);
                 signer = provider.getSigner();
                 address = await signer.getAddress();
-
-                // FORCE SWITCH TO SAIGON TESTNET (chainId 2021)
-                const desiredChainId = 2021;
-                let network = await provider.getNetwork();
-                if (network.chainId !== desiredChainId) {
+                const network = await provider.getNetwork();
+                if (network.chainId !== 2021) {
                     try {
                         await ethereumProvider.request({
                             method: 'wallet_switchEthereumChain',
-                            params: [{ chainId: '0x7e5' }], // 2021 in hex = 0x7e5
+                            params: [{ chainId: '0x7e5' }],
                         });
-                        toast("Switched to Ronin Saigon Testnet (2021)", "success");
                     } catch (switchError) {
                         if (switchError.code === 4902) {
                             await ethereumProvider.request({
@@ -458,51 +516,36 @@
                                     blockExplorerUrls: ['https://saigon-explorer.roninchain.com/']
                                 }],
                             });
-                            await ethereumProvider.request({
-                                method: 'wallet_switchEthereumChain',
-                                params: [{ chainId: '0x7e5' }],
-                            });
-                            toast("Added & switched to Ronin Saigon Testnet (2021)", "success");
                         } else {
                             throw switchError;
                         }
                     }
                 }
-
-                // Final safety check
-                network = await provider.getNetwork();
-                if (network.chainId !== desiredChainId) {
-                    throw new Error("Failed to switch to Ronin Saigon Testnet (2021). Please select it manually in your wallet.");
-                }
-
                 contract = new ethers.Contract(contractAddress, abi, signer);
                 const balance = await provider.getBalance(address);
                 userPoints = parseFloat(ethers.utils.formatEther(balance));
                 updateWalletUI();
                 updatePointsDisplay();
-
                 is_admin = (await contract.owner()).toLowerCase() === address.toLowerCase();
-
                 if (is_admin) {
                     const numOptions = 2;
                     for (let m of demoMatches) {
                         try {
-                            const endTime = Math.floor(Date.now() / 1000) + 86400 * 30;
+                            // Force recreate every time admin connects (beta testing)
+                            const endTime = Math.floor(Date.now() / 1000) + 86400 * 30; // 30 days - practically always open
                             const desc = `${m.title} - ${m.description} - TeamA:${m.teamA} - TeamB:${m.teamB}`;
                             const tx = await contract.createPrediction(desc, endTime, numOptions);
                             await tx.wait();
                         } catch (e) {
-                            console.log(`Recreation skipped for ${m.id}:`, e.message);
+                            console.log(`Recreation attempt for match ${m.id} skipped or failed:`, e.message);
                         }
                     }
                 }
-
                 await loadMatches();
             } catch (e) {
-                toast(e.message || "Connection failed", "error");
+                toast(e.message, "error");
             }
         }
-
         function updateWalletUI() {
             if (!address) return;
             document.getElementById('wallet-section').innerHTML = `
@@ -518,50 +561,39 @@
                 </div>
             `;
         }
-
         function disconnect() {
             address = null;
             location.reload();
         }
-
         function updatePointsDisplay() {
             const el = document.getElementById('user-points');
             if (el) el.innerText = userPoints.toFixed(3);
         }
-
         async function loadMatches() {
             const container = document.getElementById('matches-container');
             let html = '';
             for (let m of demoMatches) {
+                let pred = { resolved: false, outcome: 0 };
+                let userBetOption = null;
                 let resolved = false;
                 let outcome = 0;
-                let betTeam = null;
-                let betAmountStr = null;
-
+                predictions[m.id] = null;
                 if (contract && address) {
                     try {
-                        const pred = await contract.getPrediction(m.id);
-                        resolved = pred.resolved;
-                        outcome = pred.outcome;
-
-                        const ub = await contract.userBets(m.id, address);
-                        if (ub.amount && ub.amount.gt(0)) {
-                            const option = ub.option.toNumber();
-                            betTeam = option === 0 ? m.teamA : m.teamB;
-                            betAmountStr = ethers.utils.formatEther(ub.amount);
+                        pred = await contract.getPrediction(m.id);
+                        if (pred.endTime.toNumber() > 0) {
+                            resolved = pred.resolved;
+                            outcome = pred.outcome;
+                            const ub = await contract.userBets(m.id, address);
+                            if (ub.amount.gt(0)) {
+                                userBetOption = ub.option;
+                                predictions[m.id] = ub.option === 0 ? m.teamA : m.teamB;
+                            }
                         }
-                    } catch (e) {
-                        console.log("Load error for match", m.id, e);
-                    }
+                    } catch (e) {}
                 }
-
                 const statusText = m.status === 'live' ? '<i class="fas fa-bolt"></i> Live' : '<i class="far fa-clock"></i> ' + new Date(m.startTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
                 const badgeClass = m.status === 'live' ? 'badge-live' : 'badge-upcoming';
-
-                // If betted, remove onclick to lock selection
-                const teamAOnclick = betTeam ? '' : `onclick="selectTeam(${m.id}, '${m.teamA}')`;
-                const teamBOnclick = betTeam ? '' : `onclick="selectTeam(${m.id}, '${m.teamB}')`;
-
                 html += `
                     <div class="cyber-card">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
@@ -572,34 +604,32 @@
                         </div>
                         <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem;">${m.title}</h3>
                         <p style="font-size: 1rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.4; height: 2.8rem; overflow: hidden;">${m.description}</p>
-
+                     
                         <div class="vs-container">
-                            <div class="team-box ${betTeam === m.teamA ? 'selected' : ''}" ${teamAOnclick}>
+                            <div class="team-box ${predictions[m.id] === m.teamA ? 'selected' : ''}" onclick="selectTeam(${m.id}, '${m.teamA}')">
                                 <div class="team-name">${m.teamA}</div>
                             </div>
                             <div class="vs-text">VS</div>
-                            <div class="team-box ${betTeam === m.teamB ? 'selected' : ''}" ${teamBOnclick}>
+                            <div class="team-box ${predictions[m.id] === m.teamB ? 'selected' : ''}" onclick="selectTeam(${m.id}, '${m.teamB}')">
                                 <div class="team-name">${m.teamB}</div>
                             </div>
                         </div>
-
-                        <div style="margin-top: auto; text-align: center; min-height: 80px; display: flex; align-items: center; justify-content: center;">
+                     
+                        <div style="margin-top: auto;">
                             ${resolved ?
-                                (betTeam ?
-                                    (ub.option.toNumber() === outcome ?
-                                        '<button onclick="claim(' + m.id + ')" class="cyber-button" style="width:100%; font-size:0.8rem; background: #22c55e;">Claim Winnings</button>' :
-                                        '<div style="color:#ef4444; font-weight:800;">Lost: ' + betTeam + '</div>') :
-                                    '<div style="color: var(--muted); font-weight:800;">Resolved</div>'
-                                ) : (betTeam ?
-                                    `<div style="color:#22c55e; font-weight:800; font-size:1.1rem;">
-                                        Betted: ${betAmountStr} RON on ${betTeam}
-                                    </div>` :
+                                (predictions[m.id] ?
+                                    ((userBetOption === outcome) ?
+                                        '<button onclick="claim(' + m.id + ')" class="cyber-button" style="width:100%; font-size:0.8rem; background: #22c55e;">Claim Winnings</button>'
+                                        : '<div style="text-align:center; color:#ef4444; font-weight:800;">Lost: ' + predictions[m.id] + '</div>')
+                                    : '<div style="text-align:center; color: var(--muted); font-weight:800;">Resolved</div>'
+                                )
+                                : (predictions[m.id] ?
+                                    '<div style="text-align:center; color:#22c55e; font-weight:800;">Locked: ' + predictions[m.id] + '</div>' :
                                     `<input type="number" id="bet-amount-${m.id}" value="0.01" min="0.01" step="0.01" style="width:100%; margin-bottom:1rem; background:var(--card); border:1px solid var(--border); color:var(--foreground); padding:0.5rem; border-radius:4px;">
                                     <button onclick="predict(${m.id})" class="cyber-button" style="width:100%; font-size:0.8rem;">Secure Prediction</button>`
                                 )
                             }
                         </div>
-
                         ${is_admin ? `
                             <div style="margin-top: 1rem; display: flex; gap: 1rem;">
                                 <button onclick="resolve(${m.id}, 0)" class="cyber-button" style="flex:1; background: #eab308;">Resolve to ${m.teamA}</button>
@@ -611,57 +641,34 @@
             }
             container.innerHTML = html;
         }
-
         const selections = {};
-
         window.selectTeam = (id, team) => {
-            // Only allow changing team if no bet has been placed yet
-            if (!predictions[id] && !betAmounts[id]) {
-                document.querySelectorAll(`[onclick^="selectTeam(${id}"]`).forEach(el => el.classList.remove('selected'));
-                event.target.closest('.team-box').classList.add('selected');
-                selections[id] = team;
-            }
+            document.querySelectorAll(`[onclick^="selectTeam(${id}"]`).forEach(el => el.classList.remove('selected'));
+            event.target.closest('.team-box').classList.add('selected');
+            selections[id] = team;
         };
-
         window.predict = async (id) => {
             if (!address) return toast("Connect Wallet First", "error");
             if (!selections[id]) return toast("Select a team first!", "error");
-
             const amountInput = document.getElementById(`bet-amount-${id}`);
             const amount = parseFloat(amountInput.value);
             if (amount <= 0 || isNaN(amount)) return toast("Invalid bet amount", "error");
-
             const m = demoMatches.find(match => match.id === id);
             const option = selections[id] === m.teamA ? 0 : 1;
-            const betAmountWei = ethers.utils.parseEther(amount.toString());
-
+            const betAmount = ethers.utils.parseEther(amount.toString());
             try {
-                toast("Sending transaction...", "success");
-                const tx = await contract.placeBet(id, option, { value: betAmountWei });
+                const tx = await contract.placeBet(id, option, {value: betAmount});
                 await tx.wait();
-
-                const ub = await contract.userBets(id, address);
-                if (ub.amount.gt(0)) {
-                    const betTeam = ub.option.toNumber() === 0 ? m.teamA : m.teamB;
-                    const betAmtFormatted = ethers.utils.formatEther(ub.amount);
-                    predictions[id] = betTeam;
-                    betAmounts[id] = betAmtFormatted;
-
-                    const balance = await provider.getBalance(address);
-                    userPoints = parseFloat(ethers.utils.formatEther(balance));
-                    updatePointsDisplay();
-
-                    await loadMatches();
-
-                    toast(`Betted ${betAmtFormatted} RON on ${betTeam}!`, "success");
-                } else {
-                    toast("Bet placed but amount not detected yet. Refresh page.", "warning");
-                }
+                predictions[id] = selections[id];
+                const balance = await provider.getBalance(address);
+                userPoints = parseFloat(ethers.utils.formatEther(balance));
+                updatePointsDisplay();
+                await loadMatches();
+                toast(`Prediction Locked on ${selections[id]}! (-${amount} RON)`, "success");
             } catch (e) {
                 toast(e.message || "Transaction failed", "error");
             }
         };
-
         window.claim = async (id) => {
             try {
                 const tx = await contract.claimWinnings(id);
@@ -675,7 +682,6 @@
                 toast(e.message || "Claim failed", "error");
             }
         };
-
         window.resolve = async (id, outcome) => {
             if (!is_admin) return;
             try {
@@ -687,13 +693,11 @@
                 toast(e.message || "Resolve failed", "error");
             }
         };
-
         window.mint = async (tier) => {
             if (!address) return toast("Connect Wallet First", "error");
             toast(`${tier} Badge - Coming Soon!`, "success");
         };
-
-        // INIT
+        // --- INIT ---
         loadMatches();
     </script>
 </body>
