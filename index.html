@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Ronin Fantasy Predictor - Predict game outcomes, place bets, and mint NFTs on the Ronin Network.">
-    <title>Ronin Fantasy Predictor – Beta Testnet</title>
-
+    <title>Ronin Fantasy Predictor</title>
+ 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/ethers@5/dist/ethers.umd.min.js"></script>
-
+ 
     <style>
+        /* ================================================ */
+        /* TAILWIND & THEME MAPPING - MATCHING PUBLISHED SITE */
+        /* ================================================ */
         :root {
             --primary: #58A6FF;
             --background: #0a0e17;
@@ -24,22 +27,19 @@
             --border: rgba(88, 166, 255, 0.2);
             --radius: 0.5rem;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-
-        html { 
-            scroll-behavior: smooth; 
-            font-size: 16px; 
-            line-height: 1.5; 
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+            line-height: 1.5;
             width: 100%;
             height: 100%;
         }
-
         body {
             font-family: 'Rajdhani', sans-serif;
             background-color: var(--background);
             color: var(--foreground);
-            background-image: 
+            background-image:
                 linear-gradient(to bottom, rgba(10, 14, 23, 0.9), rgba(10, 14, 23, 0.95)),
                 url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2358A6FF' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             background-attachment: fixed;
@@ -48,25 +48,21 @@
             overflow-x: hidden;
             position: relative;
         }
-
         h1, h2, h3, h4 {
             font-family: 'Orbitron', sans-serif;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             color: white;
         }
-
-        .container { 
+        .container {
             width: 100%;
-            max-width: 1280px; 
-            margin: 0 auto; 
-            padding: 0 2rem; 
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
-
         .neon-text {
             text-shadow: 0 0 10px rgba(88, 166, 255, 0.5), 0 0 20px rgba(88, 166, 255, 0.3);
         }
-
         .cyber-card {
             background: rgba(13, 18, 29, 0.8);
             backdrop-filter: blur(12px);
@@ -85,7 +81,6 @@
             box-shadow: 0 0 30px rgba(88, 166, 255, 0.15);
             transform: translateY(-4px);
         }
-
         .cyber-button {
             display: inline-block;
             padding: 1rem 2.5rem;
@@ -112,7 +107,6 @@
             opacity: 0.5;
             cursor: not-allowed;
         }
-
         header {
             height: 90px;
             display: flex;
@@ -135,7 +129,6 @@
         .logo-text { display: flex; flex-direction: column; }
         .logo-title { font-weight: 900; font-size: 1.5rem; color: white; line-height: 1; }
         .logo-subtitle { font-size: 0.75rem; color: var(--primary); letter-spacing: 0.3em; font-weight: bold; text-transform: uppercase; }
-
         .wallet-pill {
             display: flex; align-items: center; gap: 0.75rem;
             padding: 0.6rem 1.25rem; border: 1px solid rgba(88, 166, 255, 0.4);
@@ -146,13 +139,11 @@
         }
         .wallet-pill:hover { background: rgba(88, 166, 255, 0.1); border-color: var(--primary); }
         .wallet-status { width: 10px; height: 10px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px #22c55e; animation: pulse 2s infinite; }
-
         @keyframes pulse {
             0% { opacity: 1; }
             50% { opacity: 0.5; }
             100% { opacity: 1; }
         }
-
         .hero { padding: 10rem 0; position: relative; overflow: hidden; }
         .hero-glow {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
@@ -166,30 +157,15 @@
             padding-left: 2rem; font-size: 1.5rem; color: var(--muted);
             margin-bottom: 3.5rem; line-height: 1.5;
         }
-
-        .stats-bar { 
-            border-top: 1px solid var(--border); 
-            border-bottom: 1px solid var(--border); 
-            background: rgba(0,0,0,0.3); 
-            padding: 3rem 0; 
-            text-align: center;
-        }
-        .stats-message {
-            max-width: 800px;
-            margin: 0 auto;
-            font-size: 1.1rem;
-            color: var(--muted);
-            line-height: 1.6;
-        }
-        .stats-message a {
-            color: var(--primary);
-            font-weight: 800;
-            text-decoration: underline;
-        }
-
+        .stats-bar { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.3); padding: 2.5rem 0; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3rem; }
+        .stat-item { display: flex; align-items: center; gap: 1.5rem; }
+        .stat-icon { width: 60px; height: 60px; background: rgba(88, 166, 255, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.5rem; }
+        .stat-value { font-size: 2rem; font-weight: 800; line-height: 1; color: white; margin-bottom: 0.25rem; }
+        .stat-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.25em; color: var(--muted); font-weight: 700; }
         .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; margin-top: 8rem; }
         .grid-matches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-
+     
         .match-badge {
             display: inline-flex; align-items: center; gap: 0.5rem;
             padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.75rem;
@@ -197,17 +173,15 @@
         }
         .badge-live { background: rgba(0, 255, 255, 0.1); color: var(--accent); border: 1px solid var(--accent); }
         .badge-upcoming { background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid rgba(255,255,255,0.1); }
-
         .vs-container { display: flex; align-items: center; justify-content: space-between; margin: 2.5rem 0; gap: 1rem; }
-        .team-box { 
-            flex: 1; text-align: center; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.05); 
+        .team-box {
+            flex: 1; text-align: center; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.05);
             border-radius: 12px; background: rgba(255,255,255,0.02); cursor: pointer; transition: 0.3s ease;
         }
         .team-box:hover { border-color: var(--primary); background: rgba(88,166,255,0.08); transform: scale(1.02); }
         .team-box.selected { border-color: var(--primary); background: rgba(88,166,255,0.2); box-shadow: 0 0 20px rgba(88,166,255,0.3); }
         .team-name { font-weight: 800; font-size: 1.25rem; color: white; }
         .vs-text { font-weight: 900; color: var(--muted); font-size: 0.9rem; font-family: 'Orbitron', sans-serif; opacity: 0.5; }
-
         .nft-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
         .nft-card {
             aspect-ratio: 3/4.5; border-radius: 16px; padding: 2rem;
@@ -216,22 +190,22 @@
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .nft-card:hover { transform: translateY(-10px) rotateY(10deg); }
-
+     
         .nft-gold { background: linear-gradient(135deg, rgba(234,179,8,0.25), rgba(234,179,8,0.05)); border-color: rgba(234,179,8,0.6); box-shadow: 0 0 30px rgba(234,179,8,0.15); }
         .nft-bronze { background: linear-gradient(135deg, rgba(194,65,12,0.25), rgba(194,65,12,0.05)); border-color: rgba(194,65,12,0.6); box-shadow: 0 0 30px rgba(194,65,12,0.15); }
-
-        .nft-icon-circle { 
-            width: 100px; height: 100px; border-radius: 50%; border: 4px solid; 
+     
+        .nft-icon-circle {
+            width: 100px; height: 100px; border-radius: 50%; border: 4px solid;
             display: flex; align-items: center; justify-content: center; margin-bottom: 2rem;
             font-size: 2.5rem;
         }
         .nft-gold .nft-icon-circle { border-color: #eab308; color: #eab308; background: rgba(234,179,8,0.1); box-shadow: inset 0 0 20px rgba(234,179,8,0.2); }
         .nft-bronze .nft-icon-circle { border-color: #c2410c; color: #c2410c; background: rgba(194,65,12,0.1); box-shadow: inset 0 0 20px rgba(194,65,12,0.2); }
-
+     
         .nft-title { font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem; font-family: 'Orbitron', sans-serif; }
         .nft-gold .nft-title { color: #eab308; text-shadow: 0 0 15px rgba(234,179,8,0.4); }
         .nft-bronze .nft-title { color: #c2410c; text-shadow: 0 0 15px rgba(194,65,12,0.4); }
-
+     
         #notif {
             position: fixed; bottom: 3rem; right: 3rem; z-index: 2000;
             padding: 1.25rem 2.5rem; border-radius: 12px; color: white;
@@ -245,78 +219,9 @@
         #notif.show { transform: translateX(0); }
         #notif.success { background: linear-gradient(90deg, #22c55e, #15803d); border-left: 6px solid #000; border: 1px solid rgba(34, 197, 94, 0.3); }
         #notif.error { background: linear-gradient(90deg, #ef4444, #b91c1c); border-left: 6px solid #000; border: 1px solid rgba(239, 68, 68, 0.3); }
-
-        /* Roadmap styles - fixed no cutting + same as betting cards */
-        /* Roadmap - fixed no cutting + same cyber-card style */
-/* Roadmap - circles overlapping the boxes like in your mockup */
-.roadmap-grid { 
-    display: grid; 
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 2.5rem; 
-    margin-top: 5rem; /* Extra top space for overlap */
-}
-
-.roadmap-phase { 
-    background: rgba(13, 18, 29, 0.8);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 3.5rem 2rem 2.5rem; /* Reduced top padding since circle overlaps */
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: visible; /* Important: allows circle to overflow outside card */
-    min-height: 320px;
-}
-
-.roadmap-phase:hover { 
-    border-color: var(--primary);
-    box-shadow: 0 0 35px rgba(88, 166, 255, 0.25);
-    transform: translateY(-6px);
-}
-
-.phase-number {
-    position: absolute;
-    top: -3.2rem;              /* Positions circle half-overlapping the top edge */
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--primary);
-    color: var(--background);
-    width: 5.5rem;
-    height: 5.5rem;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.4rem;
-    font-weight: 900;
-    font-family: 'Orbitron', sans-serif;
-    box-shadow: 0 0 30px rgba(88, 166, 255, 0.6), inset 0 0 15px rgba(255,255,255,0.2);
-    border: 4px solid rgba(88, 166, 255, 0.4); /* Glowing border */
-    z-index: 10;               /* Ensures circle is above card */
-    pointer-events: none;
-}
-
-.phase-status {
-    font-size: 1.1rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    margin-bottom: 1.2rem;
-    text-align: center;
-}
-
-.phase-live { color: var(--accent); text-shadow: 0 0 15px var(--accent); }
-.phase-upcoming { color: var(--muted); opacity: 0.9; }
-
-@media (max-width: 1024px) {
-    .roadmap-grid { grid-template-columns: 1fr; }
-    .roadmap-phase { padding: 4.5rem 2rem 2.5rem; }
-    .phase-number { top: -3.8rem; width: 6rem; height: 6rem; font-size: 2.8rem; }
-}
     </style>
 </head>
 <body>
-
     <header>
         <div class="container header-content">
             <a href="/" class="logo">
@@ -326,20 +231,18 @@
                     <span class="logo-subtitle">Predictor</span>
                 </div>
             </a>
-            
+         
             <nav style="display: flex; gap: 3rem;">
                 <a href="#" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">Dashboard</a>
                 <a href="#matches" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">Matches</a>
                 <a href="#nfts" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">NFT Badges</a>
                 <a href="#roadmap" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">Roadmap</a>
             </nav>
-
             <div id="wallet-section">
                 <button onclick="connect()" id="connect-btn" class="cyber-button">Connect Wallet</button>
             </div>
         </div>
     </header>
-
     <main>
         <!-- HERO -->
         <section class="hero">
@@ -353,18 +256,27 @@
                 </div>
             </div>
         </section>
-
-        <!-- STATS BAR - Testnet instructions here instead of fake stats -->
+        <!-- STATS -->
         <div class="stats-bar">
-            <div class="container stats-message">
-                <strong>Beta Testnet Mode</strong><br>
-                This site is running on Ronin Saigon Testnet. To test betting, claiming, and full functionality:<br>
-                Switch your Ronin Wallet to <strong>Saigon Testnet</strong> and get free test RON from the official faucet:<br>
-                <a href="https://faucet.roninchain.com" target="_blank">https://faucet.roninchain.com</a><br>
-                (Connect your wallet there and request funds – free & instant.)
+            <div class="container stats-grid">
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div><div class="stat-value">12,405</div><div class="stat-label">Active Players</div></div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-bolt"></i></div>
+                    <div><div class="stat-value">84,392</div><div class="stat-label">Total Bets</div></div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-coins"></i></div>
+                    <div><div class="stat-value">50,000</div><div class="stat-label">RON Rewards</div></div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div><div class="stat-value">3,210</div><div class="stat-label">Badges Minted</div></div>
+                </div>
             </div>
         </div>
-
         <!-- MATCHES -->
         <section id="matches" class="container" style="padding: 10rem 0;">
             <div class="section-header">
@@ -378,19 +290,17 @@
                     <button class="cyber-button" style="padding: 0.6rem 1.5rem; background: transparent; border: 1px solid var(--border); color: var(--muted);">Axie</button>
                 </div>
             </div>
-
             <div id="matches-container" class="grid-matches">
-                <!-- Matches injected here -->
+                <!-- Demo matches injected here -->
             </div>
         </section>
-
         <!-- NFTS -->
         <section id="nfts" class="container" style="padding: 10rem 0; border-top: 1px solid var(--border);">
             <div style="display: flex; gap: 6rem; align-items: flex-start; flex-wrap: wrap;">
                 <div style="flex: 1.5; min-width: 300px;">
                     <h2 class="neon-text" style="font-size: 4rem; margin-bottom: 2.5rem; line-height: 1;">Mastery Badges</h2>
                     <p style="color: var(--muted); font-size: 1.5rem; margin-bottom: 4rem; line-height: 1.6;">Proof of your prediction legacy. Mint exclusive NFT badges on Ronin to unlock permanent perks and elite status.</p>
-                    
+                 
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
                         <div class="cyber-card">
                             <h3 style="color: #ea580c; margin-bottom: 1rem; font-size: 1.75rem;">Bronze Tier</h3>
@@ -405,7 +315,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div style="flex: 1; min-width: 300px;">
                     <h4 style="color: var(--muted); margin-bottom: 2rem; font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3em;">Collector's Vault</h4>
                     <div id="my-nfts" class="nft-grid">
@@ -417,8 +326,7 @@
                 </div>
             </div>
         </section>
-
-        <!-- ROADMAP (fixed - no more cutting) -->
+        <!-- ROADMAP -->
         <section id="roadmap" class="container" style="padding: 10rem 0; border-top: 1px solid var(--border);">
             <div class="section-header">
                 <div>
@@ -426,9 +334,8 @@
                     <p style="color: var(--muted); margin-top: 1rem; font-size: 1.25rem; font-weight: 500;">Our journey to dominate the Ronin prediction meta.</p>
                 </div>
             </div>
-
             <div class="roadmap-grid">
-                <div class="cyber-card roadmap-phase">
+                <div class="roadmap-phase">
                     <div class="phase-number">Q1</div>
                     <div class="phase-status phase-live neon-text">Phase 1 – Genesis</div>
                     <h3 style="margin-bottom: 1rem;">Launch & Demo</h3>
@@ -439,8 +346,7 @@
                         • First badge designs & hype
                     </p>
                 </div>
-
-                <div class="cyber-card roadmap-phase">
+                <div class="roadmap-phase">
                     <div class="phase-number">Q2</div>
                     <div class="phase-status phase-upcoming">Phase 2 – On-Chain</div>
                     <h3 style="margin-bottom: 1rem;">Mainnet Deployment</h3>
@@ -451,8 +357,7 @@
                         • Community governance start
                     </p>
                 </div>
-
-                <div class="cyber-card roadmap-phase">
+                <div class="roadmap-phase">
                     <div class="phase-number">Q3</div>
                     <div class="phase-status phase-upcoming">Phase 3 – Expansion</div>
                     <h3 style="margin-bottom: 1rem;">More Games & Features</h3>
@@ -463,8 +368,7 @@
                         • Partnerships & integrations
                     </p>
                 </div>
-
-                <div class="cyber-card roadmap-phase">
+                <div class="roadmap-phase">
                     <div class="phase-number">Q4+</div>
                     <div class="phase-status phase-upcoming">Phase 4 – Domination</div>
                     <h3 style="margin-bottom: 1rem;">The Future</h3>
@@ -478,7 +382,6 @@
             </div>
         </section>
     </main>
-
     <footer style="padding: 100px 0; border-top: 1px solid var(--border); background: #010409; position: relative; z-index: 1;">
         <div class="container" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
             <div class="logo" style="margin-bottom: 2.5rem;">
@@ -499,19 +402,49 @@
             </div>
         </div>
     </footer>
-
     <div id="notif"></div>
-
-    <!-- Your existing script remains unchanged -->
     <script>
         let address = null;
-        let userPoints = 500;
-        let predictions = {};
+        let userPoints = 500; // Demo starting points
+        let predictions = {}; // Store user's predictions locally
+        // Demo matches data (hardcoded)
         const demoMatches = [
-            { id: 1, title: "Pixels Daily Quest Showdown", description: "Who will complete the daily quest faster today? Team A (Speed Runners) vs Team B (Strategy Masters)", teamA: "Speed Runners", teamB: "Strategy Masters", status: "live", startTime: new Date() },
-            { id: 2, title: "Axie Infinity Arena Battle", description: "Epic clash between top Axie teams. Predict the winner of this ranked tournament match.", teamA: "Axie Legends", teamB: "Ronin Rebels", status: "upcoming", startTime: new Date(Date.now() + 3600000) },
-            { id: 3, title: "Ronin Racing Championship", description: "High-speed race across the Ronin track. Who will take the checkered flag?", teamA: "Thunder Riders", teamB: "Shadow Racers", status: "upcoming", startTime: new Date(Date.now() + 7200000) },
-            { id: 4, title: "Fantasy Duel Night", description: "Nighttime duels with special power-ups. Predict the ultimate survivor.", teamA: "Moon Knights", teamB: "Star Guardians", status: "live", startTime: new Date() }
+            {
+                id: 1,
+                title: "Pixels Daily Quest Showdown",
+                description: "Who will complete the daily quest faster today? Team A (Speed Runners) vs Team B (Strategy Masters)",
+                teamA: "Speed Runners",
+                teamB: "Strategy Masters",
+                status: "live",
+                startTime: new Date()
+            },
+            {
+                id: 2,
+                title: "Axie Infinity Arena Battle",
+                description: "Epic clash between top Axie teams. Predict the winner of this ranked tournament match.",
+                teamA: "Axie Legends",
+                teamB: "Ronin Rebels",
+                status: "upcoming",
+                startTime: new Date(Date.now() + 3600000)
+            },
+            {
+                id: 3,
+                title: "Ronin Racing Championship",
+                description: "High-speed race across the Ronin track. Who will take the checkered flag?",
+                teamA: "Thunder Riders",
+                teamB: "Shadow Racers",
+                status: "upcoming",
+                startTime: new Date(Date.now() + 7200000)
+            },
+            {
+                id: 4,
+                title: "Fantasy Duel Night",
+                description: "Nighttime duels with special power-ups. Predict the ultimate survivor.",
+                teamA: "Moon Knights",
+                teamB: "Star Guardians",
+                status: "live",
+                startTime: new Date()
+            }
         ];
         let provider;
         let signer;
@@ -542,14 +475,12 @@
             "function nextPredictionId() view returns (uint256)",
             "function predictions(uint256) view returns (string memory description, uint256 endTime, uint256 resolveTime, uint8 outcome, bool resolved, uint256[] optionPools, uint256 totalPool)"
         ];
-
         function toast(msg, type='success') {
             const n = document.getElementById('notif');
             n.innerText = msg;
             n.className = `show ${type}`;
             setTimeout(() => n.className = '', 5000);
         }
-
         async function connect() {
             try {
                 let ethereumProvider;
@@ -600,7 +531,8 @@
                     const numOptions = 2;
                     for (let m of demoMatches) {
                         try {
-                            const endTime = Math.floor(Date.now() / 1000) + 86400 * 30;
+                            // Force recreate every time admin connects (beta testing)
+                            const endTime = Math.floor(Date.now() / 1000) + 86400 * 30; // 30 days - practically always open
                             const desc = `${m.title} - ${m.description} - TeamA:${m.teamA} - TeamB:${m.teamB}`;
                             const tx = await contract.createPrediction(desc, endTime, numOptions);
                             await tx.wait();
@@ -614,7 +546,6 @@
                 toast(e.message, "error");
             }
         }
-
         function updateWalletUI() {
             if (!address) return;
             document.getElementById('wallet-section').innerHTML = `
@@ -630,17 +561,14 @@
                 </div>
             `;
         }
-
         function disconnect() {
             address = null;
             location.reload();
         }
-
         function updatePointsDisplay() {
             const el = document.getElementById('user-points');
             if (el) el.innerText = userPoints.toFixed(3);
         }
-
         async function loadMatches() {
             const container = document.getElementById('matches-container');
             let html = '';
@@ -713,18 +641,16 @@
             }
             container.innerHTML = html;
         }
-
         const selections = {};
         window.selectTeam = (id, team) => {
             document.querySelectorAll(`[onclick^="selectTeam(${id}"]`).forEach(el => el.classList.remove('selected'));
             event.target.closest('.team-box').classList.add('selected');
             selections[id] = team;
         };
-
         window.predict = async (id) => {
             if (!address) return toast("Connect Wallet First", "error");
             if (!selections[id]) return toast("Select a team first!", "error");
-            const amountInput = document.getElementById(`bet-amount-${m.id}`);
+            const amountInput = document.getElementById(`bet-amount-${id}`);
             const amount = parseFloat(amountInput.value);
             if (amount <= 0 || isNaN(amount)) return toast("Invalid bet amount", "error");
             const m = demoMatches.find(match => match.id === id);
@@ -743,7 +669,6 @@
                 toast(e.message || "Transaction failed", "error");
             }
         };
-
         window.claim = async (id) => {
             try {
                 const tx = await contract.claimWinnings(id);
@@ -757,7 +682,6 @@
                 toast(e.message || "Claim failed", "error");
             }
         };
-
         window.resolve = async (id, outcome) => {
             if (!is_admin) return;
             try {
@@ -769,17 +693,12 @@
                 toast(e.message || "Resolve failed", "error");
             }
         };
-
         window.mint = async (tier) => {
             if (!address) return toast("Connect Wallet First", "error");
             toast(`${tier} Badge - Coming Soon!`, "success");
         };
-
         // --- INIT ---
-        loadMatches(); // ... your full script here (connect, loadMatches, predict, etc.) ...
-        // No changes needed to script
+        loadMatches();
     </script>
 </body>
 </html>
-
-
