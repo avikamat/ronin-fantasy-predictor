@@ -5,18 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Ronin Fantasy Predictor - Predict game outcomes, place bets, and mint NFTs on the Ronin Network.">
     <title>Ronin Fantasy Predictor</title>
- 
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/ethers@5/dist/ethers.umd.min.js"></script>
- 
+
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
-        /* ================================================ */
-        /* TAILWIND & THEME MAPPING - MATCHING PUBLISHED SITE */
-        /* ================================================ */
+        /* Your existing styles (unchanged) */
         :root {
             --primary: #58A6FF;
             --background: #0a0e17;
@@ -28,41 +29,21 @@
             --radius: 0.5rem;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-        html {
-            scroll-behavior: smooth;
-            font-size: 16px;
-            line-height: 1.5;
-            width: 100%;
-            height: 100%;
-        }
+        html { scroll-behavior: smooth; font-size: 16px; line-height: 1.5; width: 100%; height: 100%; }
         body {
             font-family: 'Rajdhani', sans-serif;
             background-color: var(--background);
             color: var(--foreground);
-            background-image:
-                linear-gradient(to bottom, rgba(10, 14, 23, 0.9), rgba(10, 14, 23, 0.95)),
-                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2358A6FF' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-image: linear-gradient(to bottom, rgba(10, 14, 23, 0.9), rgba(10, 14, 23, 0.95)), url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2358A6FF' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             background-attachment: fixed;
             min-height: 100vh;
             width: 100%;
             overflow-x: hidden;
             position: relative;
         }
-        h1, h2, h3, h4 {
-            font-family: 'Orbitron', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: white;
-        }
-        .container {
-            width: 100%;
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        .neon-text {
-            text-shadow: 0 0 10px rgba(88, 166, 255, 0.5), 0 0 20px rgba(88, 166, 255, 0.3);
-        }
+        h1, h2, h3, h4 { font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 0.1em; color: white; }
+        .container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+        .neon-text { text-shadow: 0 0 10px rgba(88, 166, 255, 0.5), 0 0 20px rgba(88, 166, 255, 0.3); }
         .cyber-card {
             background: rgba(13, 18, 29, 0.8);
             backdrop-filter: blur(12px);
@@ -103,10 +84,7 @@
             background: #4693f0;
         }
         .cyber-button:active { transform: translate(0,0); box-shadow: none; }
-        .cyber-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+        .cyber-button:disabled { opacity: 0.5; cursor: not-allowed; }
         header {
             height: 90px;
             display: flex;
@@ -232,6 +210,40 @@
         #notif.show { transform: translateX(0); }
         #notif.success { background: linear-gradient(90deg, #22c55e, #15803d); border-left: 6px solid #000; border: 1px solid rgba(34, 197, 94, 0.3); }
         #notif.error { background: linear-gradient(90deg, #ef4444, #b91c1c); border-left: 6px solid #000; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+        /* Leaderboard styling */
+        #leaderboard {
+            padding: 10rem 0;
+            border-top: 1px solid var(--border);
+        }
+        .leaderboard-title {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .leaderboard-list {
+            list-style: none;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .leaderboard-item {
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+        .leaderboard-rank {
+            font-size: 1.8rem;
+            font-weight: 900;
+            min-width: 60px;
+            text-align: center;
+            color: var(--accent);
+        }
     </style>
 </head>
 <body>
@@ -249,6 +261,7 @@
                 <a href="#" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">Dashboard</a>
                 <a href="#matches" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">Matches</a>
                 <a href="#nfts" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">NFT Badges</a>
+                <a href="#leaderboard" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">Leaderboard</a>
                 <a href="#roadmap" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">Roadmap</a>
             </nav>
             <div id="wallet-section">
@@ -269,7 +282,8 @@
                 </div>
             </div>
         </section>
-        <!-- STATS BAR - Now with testnet instructions instead of fake stats -->
+
+        <!-- STATS BAR -->
         <div class="stats-bar">
             <div class="container stats-grid" style="grid-template-columns: 1fr; text-align: center;">
                 <div class="stats-message">
@@ -281,6 +295,7 @@
                 </div>
             </div>
         </div>
+
         <!-- MATCHES -->
         <section id="matches" class="container" style="padding: 10rem 0;">
             <div class="section-header">
@@ -298,6 +313,7 @@
                 <!-- Demo matches injected here -->
             </div>
         </section>
+
         <!-- NFTS -->
         <section id="nfts" class="container" style="padding: 10rem 0; border-top: 1px solid var(--border);">
             <div style="display: flex; gap: 6rem; align-items: flex-start; flex-wrap: wrap;">
@@ -330,6 +346,22 @@
                 </div>
             </div>
         </section>
+
+        <!-- LEADERBOARD -->
+        <section id="leaderboard" class="container" style="padding: 10rem 0; border-top: 1px solid var(--border);">
+            <div class="section-header">
+                <div>
+                    <h2 class="neon-text" style="font-size: 4rem; line-height: 1;">Leaderboard</h2>
+                    <p style="color: var(--muted); margin-top: 1rem; font-size: 1.25rem; font-weight: 500;">Top predictors in the beta testnet – your activity counts!</p>
+                </div>
+            </div>
+            <div class="cyber-card">
+                <ul id="leaderboard-list" class="leaderboard-list" style="list-style: none; padding: 0;">
+                    <li style="text-align: center; color: var(--muted);">Loading leaderboard...</li>
+                </ul>
+            </div>
+        </section>
+
         <!-- ROADMAP -->
         <section id="roadmap" class="container" style="padding: 10rem 0; border-top: 1px solid var(--border);">
             <div class="section-header">
@@ -386,6 +418,7 @@
             </div>
         </section>
     </main>
+
     <footer style="padding: 100px 0; border-top: 1px solid var(--border); background: #010409; position: relative; z-index: 1;">
         <div class="container" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
             <div class="logo" style="margin-bottom: 2.5rem;">
@@ -406,49 +439,23 @@
             </div>
         </div>
     </footer>
+
     <div id="notif"></div>
+
     <script>
+        // Supabase Initialization (using your keys)
+        const supabaseUrl = 'https://fwjyghnopjujsfiezyfo.supabase.co';
+        const supabaseKey = 'sb_publishable_qdIjVhFKwBeI58twl4asGA_5kP_bk6-';
+        const supabase = Supabase.createClient(supabaseUrl, supabaseKey);
+
         let address = null;
-        let userPoints = 500; // Demo starting points
-        let predictions = {}; // Store user's predictions locally
-        // Demo matches data (hardcoded)
+        let userPoints = 500;
+        let predictions = {};
         const demoMatches = [
-            {
-                id: 1,
-                title: "Pixels Daily Quest Showdown",
-                description: "Who will complete the daily quest faster today? Team A (Speed Runners) vs Team B (Strategy Masters)",
-                teamA: "Speed Runners",
-                teamB: "Strategy Masters",
-                status: "live",
-                startTime: new Date()
-            },
-            {
-                id: 2,
-                title: "Axie Infinity Arena Battle",
-                description: "Epic clash between top Axie teams. Predict the winner of this ranked tournament match.",
-                teamA: "Axie Legends",
-                teamB: "Ronin Rebels",
-                status: "upcoming",
-                startTime: new Date(Date.now() + 3600000)
-            },
-            {
-                id: 3,
-                title: "Ronin Racing Championship",
-                description: "High-speed race across the Ronin track. Who will take the checkered flag?",
-                teamA: "Thunder Riders",
-                teamB: "Shadow Racers",
-                status: "upcoming",
-                startTime: new Date(Date.now() + 7200000)
-            },
-            {
-                id: 4,
-                title: "Fantasy Duel Night",
-                description: "Nighttime duels with special power-ups. Predict the ultimate survivor.",
-                teamA: "Moon Knights",
-                teamB: "Star Guardians",
-                status: "live",
-                startTime: new Date()
-            }
+            { id: 1, title: "Pixels Daily Quest Showdown", description: "Who will complete the daily quest faster today? Team A (Speed Runners) vs Team B (Strategy Masters)", teamA: "Speed Runners", teamB: "Strategy Masters", status: "live", startTime: new Date() },
+            { id: 2, title: "Axie Infinity Arena Battle", description: "Epic clash between top Axie teams. Predict the winner of this ranked tournament match.", teamA: "Axie Legends", teamB: "Ronin Rebels", status: "upcoming", startTime: new Date(Date.now() + 3600000) },
+            { id: 3, title: "Ronin Racing Championship", description: "High-speed race across the Ronin track. Who will take the checkered flag?", teamA: "Thunder Riders", teamB: "Shadow Racers", status: "upcoming", startTime: new Date(Date.now() + 7200000) },
+            { id: 4, title: "Fantasy Duel Night", description: "Nighttime duels with special power-ups. Predict the ultimate survivor.", teamA: "Moon Knights", teamB: "Star Guardians", status: "live", startTime: new Date() }
         ];
         let provider;
         let signer;
@@ -479,12 +486,14 @@
             "function nextPredictionId() view returns (uint256)",
             "function predictions(uint256) view returns (string memory description, uint256 endTime, uint256 resolveTime, uint8 outcome, bool resolved, uint256[] optionPools, uint256 totalPool)"
         ];
+
         function toast(msg, type='success') {
             const n = document.getElementById('notif');
             n.innerText = msg;
             n.className = `show ${type}`;
             setTimeout(() => n.className = '', 5000);
         }
+
         async function connect() {
             try {
                 let ethereumProvider;
@@ -535,8 +544,7 @@
                     const numOptions = 2;
                     for (let m of demoMatches) {
                         try {
-                            // Force recreate every time admin connects (beta testing)
-                            const endTime = Math.floor(Date.now() / 1000) + 86400 * 30; // 30 days - practically always open
+                            const endTime = Math.floor(Date.now() / 1000) + 86400 * 30;
                             const desc = `${m.title} - ${m.description} - TeamA:${m.teamA} - TeamB:${m.teamB}`;
                             const tx = await contract.createPrediction(desc, endTime, numOptions);
                             await tx.wait();
@@ -550,6 +558,7 @@
                 toast(e.message, "error");
             }
         }
+
         function updateWalletUI() {
             if (!address) return;
             document.getElementById('wallet-section').innerHTML = `
@@ -565,14 +574,17 @@
                 </div>
             `;
         }
+
         function disconnect() {
             address = null;
             location.reload();
         }
+
         function updatePointsDisplay() {
             const el = document.getElementById('user-points');
             if (el) el.innerText = userPoints.toFixed(3);
         }
+
         async function loadMatches() {
             const container = document.getElementById('matches-container');
             let html = '';
@@ -645,12 +657,14 @@
             }
             container.innerHTML = html;
         }
+
         const selections = {};
         window.selectTeam = (id, team) => {
             document.querySelectorAll(`[onclick^="selectTeam(${id}"]`).forEach(el => el.classList.remove('selected'));
             event.target.closest('.team-box').classList.add('selected');
             selections[id] = team;
         };
+
         window.predict = async (id) => {
             if (!address) return toast("Connect Wallet First", "error");
             if (!selections[id]) return toast("Select a team first!", "error");
@@ -673,6 +687,7 @@
                 toast(e.message || "Transaction failed", "error");
             }
         };
+
         window.claim = async (id) => {
             try {
                 const tx = await contract.claimWinnings(id);
@@ -686,6 +701,7 @@
                 toast(e.message || "Claim failed", "error");
             }
         };
+
         window.resolve = async (id, outcome) => {
             if (!is_admin) return;
             try {
@@ -697,13 +713,58 @@
                 toast(e.message || "Resolve failed", "error");
             }
         };
+
         window.mint = async (tier) => {
             if (!address) return toast("Connect Wallet First", "error");
             toast(`${tier} Badge - Coming Soon!`, "success");
         };
+
+        // --- Real Leaderboard Loading from Supabase ---
+        async function loadLeaderboard() {
+            const container = document.getElementById('leaderboard-list');
+            try {
+                const { data, error } = await supabase
+                    .from('leaderboard_totals')
+                    .select(`
+                        total_points,
+                        total_predictions,
+                        user_id,
+                        leaderboard_users!inner (wallet_address)
+                    `)
+                    .order('total_points', { ascending: false })
+                    .limit(10);
+
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<li style="text-align: center; color: var(--muted);">No rankings yet – be the first!</li>';
+                    return;
+                }
+
+                let html = '';
+                data.forEach((row, index) => {
+                    const rank = index + 1;
+                    const wallet = row.leaderboard_users?.wallet_address || 'Anonymous';
+                    const shortWallet = wallet.slice(0, 6) + '...' + wallet.slice(-4);
+                    html += `
+                        <li class="leaderboard-item">
+                            <span class="leaderboard-rank">#${rank}</span>
+                            <span>${shortWallet}</span>
+                            <span>${row.total_points} points</span>
+                            <span>${row.total_predictions} predictions</span>
+                        </li>
+                    `;
+                });
+                container.innerHTML = html;
+            } catch (err) {
+                console.error('Leaderboard error:', err);
+                container.innerHTML = '<li style="text-align: center; color: #ef4444;">Error loading leaderboard</li>';
+            }
+        }
+
         // --- INIT ---
         loadMatches();
+        loadLeaderboard(); // Load real leaderboard on page load
     </script>
 </body>
 </html>
-
