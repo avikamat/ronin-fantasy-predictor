@@ -834,7 +834,7 @@
                             // Only create if doesn't exist yet
                             const pred = await contract.getPrediction(m.id);
                             if (pred.endTime.eq(0)) {
-                                const endTime = Math.floor(Date.now() / 1000) + 86400 * 365; // 1 year - safe for testing
+                                const endTime = Math.floor(Date.now() / 1000) + 86400 * 365 * 10; // 10 years - impossible to expire during testing
                                 const desc = `${m.title} - ${m.description} - TeamA:${m.teamA} - TeamB:${m.teamB}`;
                                 const tx = await contract.createPrediction(desc, endTime, numOptions);
                                 await tx.wait();
