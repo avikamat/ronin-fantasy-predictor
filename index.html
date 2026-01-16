@@ -947,12 +947,17 @@
         window.predict = async (id) => {
             if (!address) return toast("Connect Wallet First", "error");
             if (!selections[id]) return toast("Select a team first!", "error");
-            const amountInput = document.getElementById(`bet-amount-${m.id}`);
+
+            const amountInput = document.getElementById(`bet-amount-${id}`);
             const amount = parseFloat(amountInput.value);
             if (amount <= 0 || isNaN(amount)) return toast("Invalid bet amount", "error");
+
             const m = demoMatches.find(match => match.id === id);
+            if (!m) return toast("Match not found", "error");
+
             const option = selections[id] === m.teamA ? 0 : 1;
             const betAmount = ethers.utils.parseEther(amount.toString());
+
             try {
                 const tx = await contract.placeBet(id, option, {value: betAmount});
                 await tx.wait();
