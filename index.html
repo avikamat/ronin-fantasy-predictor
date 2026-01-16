@@ -703,7 +703,7 @@
 
     <div id="notif"></div>
 
-    <script>
+   <script>
         let address = null;
         let userPoints = 500; // Demo starting points
         let predictions = {}; // Store user's predictions locally
@@ -831,14 +831,13 @@
                     const numOptions = 2;
                     for (let m of demoMatches) {
                         try {
-                            // Force recreate every time admin connects - this is what fixes the expired endTime problem
-                            const endTime = Math.floor(Date.now() / 1000) + 86400 * 365 * 10; // 10 years - impossible to expire during testing
+                            // Force recreate every time admin connects (beta testing)
+                            const endTime = Math.floor(Date.now() / 1000) + 86400 * 30; // 30 days - practically always open
                             const desc = `${m.title} - ${m.description} - TeamA:${m.teamA} - TeamB:${m.teamB}`;
                             const tx = await contract.createPrediction(desc, endTime, numOptions);
                             await tx.wait();
                         } catch (e) {
-                            // Will revert if ID already exists - that's normal and safe
-                            console.log(`Recreation attempt for match ${m.id} skipped (already exists or other reason):`, e.message);
+                            console.log(`Recreation attempt for match ${m.id} skipped or failed:`, e.message);
                         }
                     }
                 }
@@ -850,9 +849,15 @@
         function updateWalletUI() {
             if (!address) return;
             document.getElementById('wallet-section').innerHTML = `
-                <div class="wallet-pill" onclick="disconnect()">
-                    <div class="wallet-status"></div>
-                    ${address.slice(0,6).toUpperCase()}...${address.slice(-4).toUpperCase()}
+                <div style="display: flex; align-items: center; gap: 1.5rem;">
+                    <div style="text-align: right; line-height: 1.1;">
+                        <div style="font-size: 0.75rem; font-weight: 900; color: var(--primary); letter-spacing: 0.1em;">RON</div>
+                        <div id="user-points" style="font-weight: 900; color: white; font-size: 1.5rem; font-family: 'Orbitron', sans-serif;">${userPoints.toFixed(3)}</div>
+                    </div>
+                    <div class="wallet-pill" onclick="disconnect()">
+                        <div class="wallet-status"></div>
+                        ${address.slice(0,6).toUpperCase()}...${address.slice(-4).toUpperCase()}
+                    </div>
                 </div>
             `;
         }
@@ -945,17 +950,12 @@
         window.predict = async (id) => {
             if (!address) return toast("Connect Wallet First", "error");
             if (!selections[id]) return toast("Select a team first!", "error");
-
             const amountInput = document.getElementById(`bet-amount-${id}`);
             const amount = parseFloat(amountInput.value);
             if (amount <= 0 || isNaN(amount)) return toast("Invalid bet amount", "error");
-
             const m = demoMatches.find(match => match.id === id);
-            if (!m) return toast("Match not found", "error");
-
             const option = selections[id] === m.teamA ? 0 : 1;
             const betAmount = ethers.utils.parseEther(amount.toString());
-
             try {
                 const tx = await contract.placeBet(id, option, {value: betAmount});
                 await tx.wait();
@@ -966,7 +966,7 @@
                 await loadMatches();
                 toast(`Prediction Locked on ${selections[id]}! (-${amount} RON)`, "success");
             } catch (e) {
-                toast(e.reason || e.message || "Transaction failed", "error");
+                toast(e.message || "Transaction failed", "error");
             }
         };
         window.claim = async (id) => {
@@ -1000,5 +1000,7 @@
         // --- INIT ---
         loadMatches();
     </script>
+
 </body>
 </html>
+
