@@ -831,13 +831,16 @@
                     const numOptions = 2;
                     for (let m of demoMatches) {
                         try {
-                            // Force recreate every time admin connects (beta testing)
-                            const endTime = Math.floor(Date.now() / 1000) + 86400 * 30; // 30 days - practically always open
-                            const desc = `${m.title} - ${m.description} - TeamA:${m.teamA} - TeamB:${m.teamB}`;
-                            const tx = await contract.createPrediction(desc, endTime, numOptions);
-                            await tx.wait();
+                            // Only create if doesn't exist yet
+                            const pred = await contract.getPrediction(m.id);
+                            if (pred.endTime.eq(0)) {
+                                const endTime = Math.floor(Date.now() / 1000) + 86400 * 365; // 1 year - safe for testing
+                                const desc = `${m.title} - ${m.description} - TeamA:${m.teamA} - TeamB:${m.teamB}`;
+                                const tx = await contract.createPrediction(desc, endTime, numOptions);
+                                await tx.wait();
+                            }
                         } catch (e) {
-                            console.log(`Recreation attempt for match ${m.id} skipped or failed:`, e.message);
+                            // Silent fail - prediction probably already exists
                         }
                     }
                 }
@@ -944,7 +947,7 @@
         window.predict = async (id) => {
             if (!address) return toast("Connect Wallet First", "error");
             if (!selections[id]) return toast("Select a team first!", "error");
-            const amountInput = document.getElementById(`bet-amount-${id}`);
+            const amountInput = document.getElementById(`bet-amount-${m.id}`);
             const amount = parseFloat(amountInput.value);
             if (amount <= 0 || isNaN(amount)) return toast("Invalid bet amount", "error");
             const m = demoMatches.find(match => match.id === id);
@@ -960,7 +963,7 @@
                 await loadMatches();
                 toast(`Prediction Locked on ${selections[id]}! (-${amount} RON)`, "success");
             } catch (e) {
-                toast(e.message || "Transaction failed", "error");
+                toast(e.reason || e.message || "Transaction failed", "error");
             }
         };
         window.claim = async (id) => {
