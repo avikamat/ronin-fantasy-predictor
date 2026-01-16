@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ronin Fantasy Predictor - Predict game outcomes, place bets, and mint NFTs on the Ronin Network.">
+    <meta name="description" content="Ronin Fantasy Predictor - AI-Powered Predictions, Social Leagues, Evolving NFTs, Cross-Game Hub & RFP Token Economy on Ronin">
     <title>Ronin Fantasy Predictor</title>
  
     <!-- Fonts -->
@@ -26,6 +26,10 @@
             --foreground: #f0f6fc;
             --border: rgba(88, 166, 255, 0.2);
             --radius: 0.5rem;
+            --gold: #eab308;
+            --silver: #c0c0c0;
+            --bronze: #ea580c;
+            --rare-purple: #a855f7;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
         html {
@@ -119,7 +123,12 @@
             z-index: 100;
             width: 100%;
         }
-        .header-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .header-content { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            width: 100%; 
+        }
         .logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; cursor: pointer; }
         .logo-box {
             width: 48px; height: 48px; border: 1px solid var(--primary);
@@ -176,7 +185,7 @@
             font-weight: 800;
             text-decoration: underline;
         }
-        .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; margin-top: 8rem; }
+        .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; margin-top: 8rem; flex-wrap: wrap; gap: 2rem; }
         .grid-matches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
      
         .match-badge {
@@ -232,9 +241,96 @@
         #notif.show { transform: translateX(0); }
         #notif.success { background: linear-gradient(90deg, #22c55e, #15803d); border-left: 6px solid #000; border: 1px solid rgba(34, 197, 94, 0.3); }
         #notif.error { background: linear-gradient(90deg, #ef4444, #b91c1c); border-left: 6px solid #000; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+        /* ────────────────────────────────────────────── */
+        /*           NEW FEATURE STYLES - HIGH QUALITY      */
+        /* ────────────────────────────────────────────── */
+        .feature-showcase {
+            background: linear-gradient(135deg, rgba(88,166,255,0.07) 0%, rgba(0,255,255,0.05) 100%);
+            border: 1px solid rgba(0,255,255,0.18);
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            margin: 2.5rem 0;
+        }
+
+        .feature-showcase::before {
+            content: '';
+            position: absolute;
+            inset: -50%;
+            background: radial-gradient(circle at 20% 30%, rgba(88,166,255,0.12) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .feature-icon-big {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .coming-soon-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.65rem 1.5rem;
+            background: rgba(234,179,8,0.15);
+            color: var(--gold);
+            border: 1px solid rgba(234,179,8,0.5);
+            border-radius: 999px;
+            font-weight: 900;
+            font-size: 0.95rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .evolution-path {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+            margin: 3rem 0;
+            font-size: 1.1rem;
+            color: var(--muted);
+        }
+
+        .badge-evolution {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.4rem;
+            font-weight: 900;
+            border: 5px solid;
+            box-shadow: 0 0 30px;
+            background: rgba(0,0,0,0.4);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .badge-bronze { border-color: var(--bronze); color: var(--bronze); box-shadow: 0 0 30px rgba(234,88,12,0.4); }
+        .badge-silver { border-color: var(--silver); color: var(--silver); box-shadow: 0 0 35px rgba(192,192,192,0.5); }
+        .badge-gold   { border-color: var(--gold);   color: var(--gold);   box-shadow: 0 0 45px rgba(234,179,8,0.6); }
+
+        .arrow-connector {
+            font-size: 3rem;
+            color: var(--muted);
+            font-weight: 900;
+        }
+
+        .quest-card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
     </style>
 </head>
 <body>
+
     <header>
         <div class="container header-content">
             <a href="/" class="logo">
@@ -245,17 +341,22 @@
                 </div>
             </a>
          
-            <nav style="display: flex; gap: 3rem;">
+            <nav style="display: flex; gap: 2.2rem; flex-wrap: wrap; justify-content: center;">
                 <a href="#" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">Dashboard</a>
                 <a href="#matches" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">Matches</a>
+                <a href="#insights" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">AI Insights</a>
+                <a href="#leagues" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">Leagues</a>
                 <a href="#nfts" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">NFT Badges</a>
+                <a href="#token" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">RFP Token</a>
                 <a href="#roadmap" style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: white; opacity: 0.8; transition: 0.3s;">Roadmap</a>
             </nav>
+
             <div id="wallet-section">
                 <button onclick="connect()" id="connect-btn" class="cyber-button">Connect Wallet</button>
             </div>
         </div>
     </header>
+
     <main>
         <!-- HERO -->
         <section class="hero">
@@ -269,7 +370,8 @@
                 </div>
             </div>
         </section>
-        <!-- STATS BAR - Now with testnet instructions instead of fake stats -->
+
+        <!-- STATS BAR -->
         <div class="stats-bar">
             <div class="container stats-grid" style="grid-template-columns: 1fr; text-align: center;">
                 <div class="stats-message">
@@ -277,10 +379,12 @@
                     This is a testnet version running on Ronin Saigon. To play and test betting/claiming:<br>
                     Switch your Ronin Wallet to <strong>Saigon Testnet</strong> and get free test RON from the official faucet:<br>
                     <a href="https://faucet.roninchain.com" target="_blank" style="color: var(--primary); font-weight: 800; text-decoration: underline;">https://faucet.roninchain.com</a><br>
-                    (Connect your wallet there and request funds – it’s free and instant.)
+                    (Connect your wallet there and request funds – it’s free and instant.)<br><br>
+                    <strong>Important:</strong> Every correct prediction earns you <strong>points</strong>. These points will later be convertible to <strong>RFP tokens</strong> during the mainnet token launch.
                 </div>
             </div>
         </div>
+
         <!-- MATCHES -->
         <section id="matches" class="container" style="padding: 10rem 0;">
             <div class="section-header">
@@ -298,14 +402,101 @@
                 <!-- Demo matches injected here -->
             </div>
         </section>
-        <!-- NFTS -->
-        <section id="nfts" class="container" style="padding: 10rem 0; border-top: 1px solid var(--border);">
+
+        <!-- NEW FEATURE: AI-POWERED PREDICTION INSIGHTS -->
+        <section id="insights" class="container" style="padding: 10rem 0;">
+            <div class="section-header">
+                <div>
+                    <h2 class="neon-text" style="font-size: 4.2rem; line-height: 1.1;">AI-Powered Insights</h2>
+                    <p style="color: var(--muted); font-size: 1.5rem; max-width: 900px;">Turn predictions into data-driven skill — unique on Ronin</p>
+                </div>
+            </div>
+
+            <div class="feature-showcase" style="text-align:center;">
+                <div class="feature-icon-big"><i class="fas fa-brain"></i></div>
+                <div class="coming-soon-badge"><i class="fas fa-clock"></i> PREMIUM AI INSIGHTS — COMING Q2 2026</div>
+                
+                <h3 style="font-size: 2.1rem; margin: 2rem 0 1.5rem;">Smart Tips Examples you'll see:</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.6rem; max-width: 1100px; margin: 0 auto;">
+                    <div style="background:rgba(0,255,255,0.08); padding:1.6rem; border-radius:12px; border:1px solid rgba(0,255,255,0.25);">
+                        <strong>Pixels Daily:</strong><br>Speed Runners win 67% when quest difficulty < medium (last 45 days)
+                    </div>
+                    <div style="background:rgba(234,179,8,0.08); padding:1.6rem; border-radius:12px; border:1px solid rgba(234,179,8,0.25);">
+                        <strong>Axie Origin:</strong><br>Legends +12% winrate after Aqua meta patch vs Bird heavy teams
+                    </div>
+                    <div style="background:rgba(168,85,247,0.08); padding:1.6rem; border-radius:12px; border:1px solid rgba(168,85,247,0.25);">
+                        <strong>Meta Shift Alert:</strong><br>New Ronin Racing tire buff — Shadow Racers expected +18% speed advantage
+                    </div>
+                </div>
+
+                <p style="margin: 3rem 0; color:var(--muted); font-size:1.35rem;">
+                    Premium version: personalized models + real-time Grok-like analysis<br>
+                    Monetized via RFP token staking
+                </p>
+            </div>
+        </section>
+
+        <!-- SOCIAL LEAGUES & TOURNAMENTS -->
+        <section id="leagues" class="container" style="padding: 10rem 0;">
+            <div class="section-header">
+                <div>
+                    <h2 class="neon-text" style="font-size: 4.2rem;">Social Leagues & Tournaments</h2>
+                    <p style="color: var(--muted); font-size: 1.5rem;">The social virality engine — guild style competition</p>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2.5rem;">
+                <div class="cyber-card" style="text-align:center;">
+                    <div style="font-size:5rem; color:var(--accent); margin-bottom:1.5rem;"><i class="fas fa-users-crown"></i></div>
+                    <h3 style="font-size:2.2rem;">Private Leagues</h3>
+                    <p style="color:var(--muted); margin:1.5rem 0 2rem;">
+                        Create your own squad league (ChickenPets, Axie Guild, friends group...)<br>
+                        Custom rules • Shared prize pool • Weekly winners + NFT trophies
+                    </p>
+                    <div class="coming-soon-badge"><i class="fas fa-clock"></i> PRIVATE LEAGUES — COMING Q3 2026</div>
+                </div>
+
+                <div class="cyber-card" style="text-align:center; border-color:var(--gold); box-shadow:0 0 35px rgba(234,179,8,0.2);">
+                    <div style="font-size:5rem; color:var(--gold); margin-bottom:1.5rem;"><i class="fas fa-trophy-alt"></i></div>
+                    <h3 style="font-size:2.2rem;">Weekly Tournaments</h3>
+                    <p style="color:var(--muted); margin:1.5rem 0 2rem;">
+                        "Ronin Meta Challenge" series<br>
+                        Entry fees → huge RON pools<br>
+                        Top 3 → exclusive animated NFT trophies + title badges
+                    </p>
+                    <div class="coming-soon-badge"><i class="fas fa-clock"></i> WEEKLY TOURNAMENTS — COMING Q3 2026</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ENHANCED NFT SECTION + EVOLUTION -->
+        <section id="nfts" class="container" style="padding: 10rem 0;">
             <div style="display: flex; gap: 6rem; align-items: flex-start; flex-wrap: wrap;">
                 <div style="flex: 1.5; min-width: 300px;">
-                    <h2 class="neon-text" style="font-size: 4rem; margin-bottom: 2.5rem; line-height: 1;">Mastery Badges</h2>
-                    <p style="color: var(--muted); font-size: 1.5rem; margin-bottom: 4rem; line-height: 1.6;">Proof of your prediction legacy. Mint exclusive NFT badges on Ronin to unlock permanent perks and elite status.</p>
-                 
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                    <h2 class="neon-text" style="font-size: 4.2rem; margin-bottom: 1rem;">Mastery Badges</h2>
+                    <p style="color: var(--muted); font-size: 1.5rem; margin-bottom: 3rem;">Static → Evolving collectibles with real utility</p>
+
+                    <div class="feature-showcase">
+                        <div class="coming-soon-badge"><i class="fas fa-clock"></i> EVOLUTION SYSTEM — COMING Q3 2026</div>
+                        
+                        <h3 style="font-size: 2rem; margin: 2.5rem 0 2rem; text-align:center;">Badge Evolution Progression</h3>
+                        <div class="evolution-path">
+                            <div class="badge-evolution badge-bronze">B</div>
+                            <div class="arrow-connector">→</div>
+                            <div class="badge-evolution badge-silver">S</div>
+                            <div class="arrow-connector">→</div>
+                            <div class="badge-evolution badge-gold">G</div>
+                        </div>
+
+                        <p style="text-align:center; color:var(--muted); font-size:1.2rem; margin-top:2rem; line-height:1.6;">
+                            Earn points through accurate predictions<br>
+                            Reach point milestones to evolve your badge tier
+                        </p>
+                    </div>
+
+                    <!-- Original tiers kept exactly as they were -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 5rem;">
                         <div class="cyber-card">
                             <h3 style="color: #ea580c; margin-bottom: 1rem; font-size: 1.75rem;">Bronze Tier</h3>
                             <p style="font-size: 1rem; color: var(--muted); margin-bottom: 3rem; line-height: 1.5;">The initiate's mark. Prove your presence and track your first wins.</p>
@@ -319,6 +510,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div style="flex: 1; min-width: 300px;">
                     <h4 style="color: var(--muted); margin-bottom: 2rem; font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3em;">Collector's Vault</h4>
                     <div id="my-nfts" class="nft-grid">
@@ -330,62 +522,164 @@
                 </div>
             </div>
         </section>
-        <!-- ROADMAP -->
+
+        <!-- RFP TOKEN UTILITY -->
+        <section id="token" class="container" style="padding: 10rem 0;">
+            <div class="section-header">
+                <div>
+                    <h2 class="neon-text" style="font-size: 4.2rem;">RFP Token Economy</h2>
+                    <p style="color: var(--muted); font-size: 1.5rem;">The flywheel that powers long-term value & rewards</p>
+                </div>
+            </div>
+
+            <div class="feature-showcase">
+                <div class="coming-soon-badge"><i class="fas fa-clock"></i> RFP TOKEN & UTILITIES — COMING Q3 2026</div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; margin-top: 2.5rem;">
+                    <div class="cyber-card">
+                        <div style="font-size: 3.8rem; color: var(--gold); margin-bottom: 1rem;"><i class="fas fa-coins"></i></div>
+                        <h3>Mint / Burn Loop</h3>
+                        <p style="color:var(--muted);">Convert prediction points ↔ RFP tokens<br>Burn for permanent leaderboard rank boost</p>
+                    </div>
+                    <div class="cyber-card">
+                        <div style="font-size: 3.8rem; color: var(--accent); margin-bottom: 1rem;"><i class="fas fa-rocket"></i></div>
+                        <h3>Boost Bets</h3>
+                        <p style="color:var(--muted);">Spend RFP → 2× winnings multiplier<br>on selected prediction (limited uses)</p>
+                    </div>
+                    <div class="cyber-card">
+                        <div style="font-size: 3.8rem; color: var(--rare-purple); margin-bottom: 1rem;"><i class="fas fa-chart-line"></i></div>
+                        <h3>Staking Rewards</h3>
+                        <p style="color:var(--muted);">Stake RFP → earn % of platform fees<br>Passive income for long-term holders</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CROSS-GAME INTEGRATIONS & EVENTS -->
+        <section id="integrations" class="container" style="padding: 10rem 0;">
+            <div class="section-header">
+                <div>
+                    <h2 class="neon-text" style="font-size: 4.2rem;">Cross-Game Hub & Real-Time Events</h2>
+                    <p style="color: var(--muted); font-size: 1.5rem;">Become the central prediction layer for all Ronin gaming</p>
+                </div>
+            </div>
+
+            <div class="feature-showcase" style="text-align:center;">
+                <div class="coming-soon-badge"><i class="fas fa-clock"></i> CROSS-GAME INTEGRATIONS — COMING Q3/Q4 2026</div>
+
+                <div style="max-width:900px; margin:3rem auto; display:grid; gap:2rem;">
+                    <div style="background:rgba(0,255,255,0.07); padding:2rem; border-radius:12px; border:1px solid rgba(0,255,255,0.2);">
+                        Auto-generated predictions for official Axie tournaments & Pixels seasons
+                    </div>
+                    <div style="background:rgba(234,179,8,0.07); padding:2rem; border-radius:12px; border:1px solid rgba(234,179,8,0.2);">
+                        Real-time "Meta Shift Alerts" — patch notes + predicted meta winners
+                    </div>
+                    <div style="background:rgba(168,85,247,0.07); padding:2rem; border-radius:12px; border:1px solid rgba(168,85,247,0.2);">
+                        Potential official partnership badges & co-marketing with Pixels/Axie
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMMUNITY QUESTS & BOUNTY -->
+        <section id="community" class="container" style="padding: 10rem 0;">
+            <div class="section-header">
+                <div>
+                    <h2 class="neon-text" style="font-size: 4.2rem;">Community Quests & Bug Bounty</h2>
+                    <p style="color: var(--muted); font-size: 1.5rem;">Engage → Earn → Grow the ecosystem together</p>
+                </div>
+            </div>
+
+            <div class="quest-card-grid">
+                <div class="cyber-card">
+                    <div style="font-size:4rem; color:var(--accent); margin-bottom:1.2rem;"><i class="fas fa-tasks"></i></div>
+                    <h3>Weekly Prediction Quests</h3>
+                    <p style="color:var(--muted); margin:1.5rem 0;">
+                        Place 3 bets this week → 75 points + RFP airdrop raffle ticket
+                    </p>
+                    <div class="coming-soon-badge">ACTIVE QUESTS — SOON</div>
+                </div>
+
+                <div class="cyber-card">
+                    <div style="font-size:4rem; color:var(--gold); margin-bottom:1.2rem;"><i class="fas fa-bug"></i></div>
+                    <h3>Bug Bounty & Ideas</h3>
+                    <p style="color:var(--muted); margin:1.5rem 0;">
+                        Report bugs / suggest features → test RON + exclusive "Founder Hunter" badge
+                    </p>
+                    <div class="coming-soon-badge">BOUNTY PROGRAM — Q2 2026</div>
+                </div>
+
+                <div class="cyber-card">
+                    <div style="font-size:4rem; color:var(--rare-purple); margin-bottom:1.2rem;"><i class="fas fa-share-alt"></i></div>
+                    <h3>Social & Referral Quests</h3>
+                    <p style="color:var(--muted); margin:1.5rem 0;">
+                        Invite 5 active friends → special "Genesis Inviter" badge + bonus points
+                    </p>
+                    <div class="coming-soon-badge">SOCIAL REWARDS — SOON</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROADMAP - Enhanced & Updated -->
         <section id="roadmap" class="container" style="padding: 10rem 0; border-top: 1px solid var(--border);">
             <div class="section-header">
                 <div>
-                    <h2 class="neon-text" style="font-size: 4rem; line-height: 1;">Roadmap</h2>
-                    <p style="color: var(--muted); margin-top: 1rem; font-size: 1.25rem; font-weight: 500;">Our journey to dominate the Ronin prediction meta.</p>
+                    <h2 class="neon-text" style="font-size: 4.5rem; line-height: 1;">Roadmap</h2>
+                    <p style="color: var(--muted); margin-top: 1rem; font-size: 1.4rem;">From MVP to the #1 Prediction & Social Gaming Layer on Ronin</p>
                 </div>
             </div>
-            <div class="roadmap-grid">
-                <div class="roadmap-phase">
-                    <div class="phase-number">Q1</div>
-                    <div class="phase-status phase-live neon-text">Phase 1 – Genesis</div>
-                    <h3 style="margin-bottom: 1rem;">Launch & Demo</h3>
-                    <p style="color: var(--muted); line-height: 1.6;">
-                        • Stunning frontend live<br>
-                        • Mock predictions & wallet connect<br>
-                        • Community building on Discord & X<br>
-                        • First badge designs & hype
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2.5rem;">
+                <div class="cyber-card">
+                    <div class="phase-number" style="font-size:2.8rem; color:var(--primary);">Q1 2026</div>
+                    <div class="phase-status phase-live neon-text" style="font-size:1.6rem;">Genesis Launch</div>
+                    <p style="margin-top:1.5rem; line-height:1.7;">
+                        • Beautiful frontend live<br>
+                        • Mock + testnet predictions<br>
+                        • Wallet connect & basic UX<br>
+                        • Community building (X + Discord)
                     </p>
                 </div>
-                <div class="roadmap-phase">
-                    <div class="phase-number">Q2</div>
-                    <div class="phase-status phase-upcoming">Phase 2 – On-Chain</div>
-                    <h3 style="margin-bottom: 1rem;">Mainnet Deployment</h3>
-                    <p style="color: var(--muted); line-height: 1.6;">
-                        • Secure smart contract deployment<br>
-                        • Real RON betting live<br>
-                        • Mintable NFT badges<br>
-                        • Community governance start
+
+                <div class="cyber-card">
+                    <div class="phase-number" style="font-size:2.8rem; color:var(--accent);">Q2 2026</div>
+                    <div class="phase-status" style="color:var(--accent); font-size:1.6rem;">Core + AI Beta</div>
+                    <p style="margin-top:1.5rem; line-height:1.7;">
+                        • Mainnet deployment<br>
+                        • Real RON betting<br>
+                        • Genesis NFT badges minting<br>
+                        • AI-Powered Insights (beta)<br>
+                        • Bug bounty & first community quests
                     </p>
                 </div>
-                <div class="roadmap-phase">
-                    <div class="phase-number">Q3</div>
-                    <div class="phase-status phase-upcoming">Phase 3 – Expansion</div>
-                    <h3 style="margin-bottom: 1rem;">More Games & Features</h3>
-                    <p style="color: var(--muted); line-height: 1.6;">
-                        • Add Pixels, Axie, Ronin Racing events<br>
-                        • Tournaments & special bets<br>
-                        • Advanced badge tiers<br>
-                        • Partnerships & integrations
+
+                <div class="cyber-card">
+                    <div class="phase-number" style="font-size:2.8rem; color:var(--gold);">Q3 2026</div>
+                    <div class="phase-status" style="color:var(--gold); font-size:1.6rem;">Social & Token</div>
+                    <p style="margin-top:1.5rem; line-height:1.7;">
+                        • Private leagues & tournaments<br>
+                        • Badge evolution + fusion system<br>
+                        • RFP token launch & staking<br>
+                        • Boost bet mechanics<br>
+                        • Initial cross-game event integration
                     </p>
                 </div>
-                <div class="roadmap-phase">
-                    <div class="phase-number">Q4+</div>
-                    <div class="phase-status phase-upcoming">Phase 4 – Domination</div>
-                    <h3 style="margin-bottom: 1rem;">The Future</h3>
-                    <p style="color: var(--muted); line-height: 1.6;">
-                        • Cross-chain support<br>
-                        • Mobile app<br>
+
+                <div class="cyber-card">
+                    <div class="phase-number" style="font-size:2.8rem; color:var(--rare-purple);">Q4 2026+</div>
+                    <div class="phase-status" style="color:var(--rare-purple); font-size:1.6rem;">Ecosystem Domination</div>
+                    <p style="margin-top:1.5rem; line-height:1.7;">
+                        • Official Pixels / Axie partnerships<br>
+                        • Real-time meta shift alerts<br>
+                        • Mobile application<br>
                         • Full DAO governance<br>
-                        • Become Ronin’s #1 prediction hub
+                        • Cross-chain expansion & premium DeFi features
                     </p>
                 </div>
             </div>
         </section>
     </main>
+
     <footer style="padding: 100px 0; border-top: 1px solid var(--border); background: #010409; position: relative; z-index: 1;">
         <div class="container" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
             <div class="logo" style="margin-bottom: 2.5rem;">
@@ -406,7 +700,9 @@
             </div>
         </div>
     </footer>
+
     <div id="notif"></div>
+
     <script>
         let address = null;
         let userPoints = 500; // Demo starting points
@@ -553,15 +849,9 @@
         function updateWalletUI() {
             if (!address) return;
             document.getElementById('wallet-section').innerHTML = `
-                <div style="display: flex; align-items: center; gap: 1.5rem;">
-                    <div style="text-align: right; line-height: 1.1;">
-                        <div style="font-size: 0.75rem; font-weight: 900; color: var(--primary); letter-spacing: 0.1em;">RON</div>
-                        <div id="user-points" style="font-weight: 900; color: white; font-size: 1.5rem; font-family: 'Orbitron', sans-serif;">${userPoints.toFixed(3)}</div>
-                    </div>
-                    <div class="wallet-pill" onclick="disconnect()">
-                        <div class="wallet-status"></div>
-                        ${address.slice(0,6).toUpperCase()}...${address.slice(-4).toUpperCase()}
-                    </div>
+                <div class="wallet-pill" onclick="disconnect()">
+                    <div class="wallet-status"></div>
+                    ${address.slice(0,6).toUpperCase()}...${address.slice(-4).toUpperCase()}
                 </div>
             `;
         }
@@ -706,5 +996,3 @@
     </script>
 </body>
 </html>
-
-
